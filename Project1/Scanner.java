@@ -1,8 +1,8 @@
 class Scanner {
-	
 	// Constructor should open the file and find the first token
 	Scanner(String filename) {
-		
+		file = new BufferedReader(new FileReader(filename));
+		nextToken();
 	}
 
 	// nextToken should advance the scanner to the next token

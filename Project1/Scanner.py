@@ -47,14 +47,11 @@ class Scanner:
         return Core.LESS
     elif currentChar.isalpha():
       while(self.nextToken()):
+        if
+
 
     elif currentChar.isnumeric():
       while (self.nextToken()):
-
-
-
-
-
 
 
   # If the current token is ID, return the string value of the identifier
