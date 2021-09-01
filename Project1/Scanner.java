@@ -1,12 +1,23 @@
 class Scanner {
+    BufferedReader file = null;
 	// Constructor should open the file and find the first token
 	Scanner(String filename) {
-		file = new BufferedReader(new FileReader(filename));
+		file = new BufferedReader(new FileReader(new file(filename)));
 		nextToken();
 	}
 
 	// nextToken should advance the scanner to the next token
 	public void nextToken() {
+	    //"hi my name is" - break it up
+	    List<String> allLines = new LinkedList<String>;
+	    String singleLine = null;
+        while(singleLine = file.readLine() != null) {
+            allLines.add(singleLine);
+        }
+
+        //pop out each item in list, so each item is a sentence kinda
+        //split the sentence so tokenizes
+
 		
 	}
 
