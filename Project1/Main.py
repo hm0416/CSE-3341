@@ -3,21 +3,25 @@ from Core import Core
 import sys
 
 def main():
-  file = open('/Users/hm0416/Desktop/CSE-3341/Project1/Correct/1.code', "r")
-  lines = file.readlines()
-  tokens = []
-  mergedTokenList = []
-  for line in lines:
-    tokens.append(line.split())
-
-  for tokenList in tokens:
-    mergedTokenList += tokenList
-
-  for i, v in enumerate(mergedTokenList):
-    if ';' in v:
-      mergedTokenList[i] = v.replace(';', 'SEMICOLON')
-
-  print(mergedTokenList)
+  # S = Scanner('/Users/hm0416/Desktop/CSE-3341/Project1/Correct/1.code')
+  #
+  # file = open('/Users/hm0416/Desktop/CSE-3341/Project1/Correct/1.code', "r")
+  # lines = file.readlines()
+  # tokens = []
+  # mergedTokenList = []
+  # for line in lines:
+  #   tokens.append(line.split())
+  #
+  # for tokenList in tokens:
+  #   mergedTokenList += tokenList
+  #
+  # for i, v in enumerate(mergedTokenList):
+  #   if ';' in v:
+  #     mergedTokenList[i] = v.replace(';', 'SEMICOLON')
+  #
+  # tok = S.nextToken('/Users/hm0416/Desktop/CSE-3341/Project1/Correct/1.code')
+  #
+  # print(mergedTokenList)
 
 
 

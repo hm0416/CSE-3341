@@ -1,10 +1,11 @@
 from Core import Core
 
 class Scanner:
+
   # Constructor should open the file and find the first token
   def __init__(self, filename):
     file = open(filename, "r")
-    self.nextToken()
+    self.nextToken(filename)
 
   #tokenzies everything, then we need to go through each element in the mergedTokenList and replace its value with what
   #it's supposed to be based on ENUM
@@ -13,14 +14,18 @@ class Scanner:
     lines = file.readlines()
     tokens = []
     mergedTokenList = []
+    global tempMergedTokenList
+
     for line in lines:
       tokens.append(line.split())
 
     for tokenList in tokens:
       mergedTokenList += tokenList
 
+    tempMergedTokenList = mergedTokenList.copy()
+
     # return mergedTokenlist[index + 1]
-    # tempMergedTokenList = mergedTokenlist.copy()
+    # tempMergedTokenList = mergedTokenList.copy()
     # return tempMergedTokenList.pop(0)
 
     for i, v in enumerate(mergedTokenList):
@@ -102,12 +107,17 @@ class Scanner:
       # elif mergedTokenList[i].isnumeric():
       #   while (self.nextToken()):
 
+      return tempMergedTokenList
+
 
   # nextToken should advance the scanner to the next token
-  # def nextToken(self, filename):
+  def nextToken(self, filename):
+    list = self.tokenizer(filename)
+    return list.pop
 
   # currentToken should return the current token
-  # def currentToken(self, filename):
+  def currentToken(self, filename):
+    return tempMergedTokenList[0]
     # currentTok = self.nextToken(filename)
 
     # if currentTok == ';':
