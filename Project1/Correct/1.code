@@ -3,7 +3,7 @@ program int X , Y , XY 	;
 
           begin input X ; Y  = 0 ;
      
-	 
+
                               input XY, Y ; output XY ;
 
                               Y  = Y + XY ; X  = X - 1 ;
@@ -18,5 +18,5 @@ program int X , Y , XY 	;
 
 	       output Y ;
 
-          end  
-      
+          end
+
