@@ -33,8 +33,23 @@ class Scanner:
                 nextEle = next(list_cycle)
                 if v == "<" and nextEle == "=":
                     lineSplit[i:i+2] = [''.join(lineSplit[i:i+2])]
-                if v == "=" and next(list_cycle) == "=":
-                    lineSplit[i:i+2] = [''.join(lineSplit[i:i+2])]
+                # if v == "=" and next(list_cycle) == "=":
+                #     lineSplit[i:i+2] = [''.join(lineSplit[i:i+2])]
+
+                if v == "=":
+                    count = 1
+                    while nextEle == "=":
+                        count = count + 1
+                        nextEle = next(list_cycle)
+                        if nextEle != "=":
+                            break
+                    q = count // 2 #gives 1 so will have ONE assign
+                    qTemp = 0
+                    while qTemp < q:
+                        lineSplit[i:i+2] = [''.join(lineSplit[i:i+2])]
+                        qTemp = qTemp + 1
+                    break
+
 
             tokens.append(lineSplit)
 
@@ -134,7 +149,12 @@ class Scanner:
                     print("Integers larger than 1023 are not allowed.")
                 else:
                     return Core.CONST
+            elif v.isspace():
+                return ' '
+            elif v.isalnum() and not v.isnumeric():
+                return Core.ID
 
+    # or re.match(r'(\w+\d+)', v)
     # If the current token is ID, return the string value of the identifier
     # Otherwise, return value does not matter
     def getID(self, str):
