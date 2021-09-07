@@ -1,3 +1,5 @@
+import itertools
+
 from Core import Core
 import re
 
@@ -16,7 +18,24 @@ class Scanner:
         mergedTokenList = []
 
         for line in lines:
-            lineSplit = re.findall(r"[\w']+|[.,!?;=()<+*-]", line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
+            lineSplit = re.findall(r"[\w']+|[.,!?;<=()+*-]|[\s']+", line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
+            # i = 0
+            # while i <= len(lineSplit):
+            #     temp = i
+            #     if lineSplit[i] == "<" and lineSplit[temp + 1] == "=":
+            #         lineSplit[i:temp+2] = [''.join(lineSplit[i:temp+2])]
+            #     if lineSplit[i] == "=" and lineSplit[temp + 1] == "=":
+            #         lineSplit[i:temp+2] = [''.join(lineSplit[i:temp+2])]
+            #     i = i + 1
+            list_cycle = itertools.cycle(lineSplit)
+            next(list_cycle)
+            for i, v in enumerate(lineSplit):
+                nextEle = next(list_cycle)
+                if v == "<" and nextEle == "=":
+                    lineSplit[i:i+2] = [''.join(lineSplit[i:i+2])]
+                if v == "=" and next(list_cycle) == "=":
+                    lineSplit[i:i+2] = [''.join(lineSplit[i:i+2])]
+
             tokens.append(lineSplit)
 
         for tokenList in tokens:
@@ -25,7 +44,7 @@ class Scanner:
         return mergedTokenList
 
     # nextToken should advance the scanner to the next token
-    def nextToken(self, filename, list):
+    def nextToken(self, list):
         if len(list) == 0:
             exit()
         list.pop(0)
@@ -34,81 +53,92 @@ class Scanner:
     # currentToken should return the current token
     def currentToken(self, intialTokensList):
         for i, v in enumerate(intialTokensList):
-            if ';' in v:
+            if v == ';':
                 return Core.SEMICOLON
-            elif ',' in v:
+            elif v == ',':
                 return Core.COMMA
-            elif '!' in v:
+            elif v == '!':
                 return Core.NEGATION
-            elif '+' in v:
+            elif v == '+':
                 return Core.ADD
-            elif '-' in v:
+            elif v == '-':
                 return Core.SUB
-            elif '*' in v:
+            elif v == '*':
                 return Core.MULT
-            elif '(' in v:
+            elif v == '(':
                 return Core.LPAREN
-            elif ')' in v:
+            elif v == ')':
                 return Core.RPAREN
-            elif 'begin' in v:
+            elif v == 'begin':
                 return Core.BEGIN
-            elif 'program' in v:
+            elif v == 'program':
                 return Core.PROGRAM
-            elif 'end' in v:
+            elif v == 'end':
                 return Core.END
-            elif 'new' in v:
+            elif v == 'new':
                 return Core.NEW
-            elif 'define' in v:
+            elif v == 'define':
                 return Core.DEFINE
-            elif 'extends' in v:
+            elif v == 'extends':
                 return Core.EXTENDS
-            elif 'class' in v:
+            elif v == 'class':
                 return Core.CLASS
-            elif 'endclass' in v:
+            elif v == 'endclass':
                 return Core.ENDCLASS
-            elif 'int' in v:
+            elif v == 'int':
                 return Core.INT
-            elif 'endfunc' in v:
+            elif v == 'endfunc':
                 return Core.ENDFUNC
-            elif 'if' in v:
+            elif v == 'if':
                 return Core.IF
-            elif 'then' in v:
+            elif v == 'then':
                 return Core.THEN
-            elif 'else' in v:
+            elif v == 'else':
                 return Core.ELSE
-            elif 'while' in v:
+            elif v == 'while':
                 return Core.WHILE
-            elif 'endwhile' in v:
+            elif v == 'endwhile':
                 return Core.ENDWHILE
-            elif 'endif' in v:
+            elif v == 'endif':
                 return Core.ENDIF
-            elif 'input' in v:
+            elif v == 'input':
                 return Core.INPUT
-            elif 'output' in v:
+            elif v == 'output':
                 return Core.OUTPUT
-            elif 'ref' in v:
+            elif v == 'ref':
                 return Core.REF
-            elif 'eof' in v:
+            elif v == 'eof':
                 return Core.EOF
-            elif 'error' in v:
+            elif v == 'error':
                 return Core.ERROR
-            elif '==' in v:
-                return Core.EQUAL
-            elif '=' in v:
+            elif v == '=':
+                # if i < len(intialTokensList) and intialTokensList[i + 1] == "=":
+                #     i = i + 1
+                #     return Core.EQUAL
+                # else:
                 return Core.ASSIGN
-            elif '<' in v:
+            elif v == '==':
+                return Core.EQUAL
+            elif v == '<':
+                # if i < len(intialTokensList) and intialTokensList[i + 1] == "=":
+                #     i = i + 1
+                #     return Core.LESSEQUAL
+                # else:
                 return Core.LESS
-            elif '<=' in v:
+            elif v == '<=':
                 return Core.LESSEQUAL
             elif v.isalpha():
                 return Core.ID
             elif v.isnumeric():
-                return Core.CONST
+                if int(v) > 1023:
+                    print("Integers larger than 1023 are not allowed.")
+                else:
+                    return Core.CONST
 
     # If the current token is ID, return the string value of the identifier
     # Otherwise, return value does not matter
     def getID(self, str):
-        if str.isalpha():
+        if str.isalpha() or str.isalnum():
             return str
         else:
             return "not alpha"

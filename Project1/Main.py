@@ -2,10 +2,12 @@ from Scanner import Scanner
 from Core import Core
 import sys
 
+# sys.argv[1]
+
 def main():
     # Initialize the scanner with the input file
-    S = Scanner(sys.argv[1])
-    intialTokensList = S.tokenizer(sys.argv[1])
+    S = Scanner('/Users/hm0416/Desktop/CSE-3341/Project1/Correct/2.code')
+    intialTokensList = S.tokenizer('/Users/hm0416/Desktop/CSE-3341/Project1/Correct/2.code')
 
     # Print the token stream
     while (S.currentToken(intialTokensList) != Core.EOF and S.currentToken(intialTokensList) != Core.ERROR):
@@ -22,7 +24,7 @@ def main():
             print("[" + str(value) + "]", end='')
         print()
         # Advance to the next token
-        intialTokensList = S.nextToken(sys.argv[1], intialTokensList)
+        intialTokensList = S.nextToken(intialTokensList)
 
 
 if __name__ == "__main__":
