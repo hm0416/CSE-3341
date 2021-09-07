@@ -43,12 +43,15 @@ class Scanner:
                         nextEle = next(list_cycle)
                         if nextEle != "=":
                             break
-                    q = count // 2 #gives 1 so will have ONE assign
-                    qTemp = 0
-                    while qTemp < q:
-                        lineSplit[i:i+2] = [''.join(lineSplit[i:i+2])]
-                        qTemp = qTemp + 1
-                    break
+                    if count > 1:
+                        q = count // 2 #gives 1 so will have ONE assign
+                        qTemp = 0
+                        while qTemp < q:
+                            lineSplit[i:i+2] = [''.join(lineSplit[i:i+2])]
+                            qTemp = qTemp + 1
+                        break
+                    else:
+                        continue
 
 
             tokens.append(lineSplit)
