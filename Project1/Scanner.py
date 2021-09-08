@@ -7,8 +7,8 @@ class Scanner:
 
     # Constructor should open the file and find the first token
     def __init__(self, filename):
-        file = open(filename, "r")
-        # file.close()
+        self.file = open(filename, "r")
+        self.file.close()
 
     # Goes through each line in the input file and tokenizes
     def tokenizer(self, filename):
@@ -18,7 +18,16 @@ class Scanner:
         mergedTokenList = [] #all tokens in one list for the entire file
 
         for line in lines:
-            lineSplit = re.findall(r"[\w']+|[.,!?;$:%_<~=()+*-]|[\s']+", line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
+            if ' ' in line:
+                lineSplit = re.findall(r"[\w']+|[.,!?;$:%_><~=()+*-]|[\s']+", line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
+            elif re.match('(\d+)', line):
+                lineSplit = re.split('(\d+)', line)
+                for ele in lineSplit:
+                    if ele == '':
+                        lineSplit.remove('')
+            else:
+                lineSplit = re.findall(r"[\w']+|[.,!?;$:%_<~=()+*-]|[\s']+", line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
+
             list_cycle = itertools.cycle(lineSplit) #https://www.kite.com/python/answers/how-to-get-the-next-element-while-cycling-through-a-list-in-python
             next(list_cycle)
             for i, v in enumerate(lineSplit):
@@ -45,21 +54,9 @@ class Scanner:
                         break
                     else:
                         continue
-                #if string starts with numbers then we want to split it
-                if re.match('(\d+)', v):
-                    #find v in list and replace it with the split string
-                    # tempLineSplit = lineSplit.copy()
-                    indexOfV = lineSplit.index(v)
-                    vSplit = re.split('(\d+)', v)
-                    # tempLineSplit.pop(indexOfV)
-                    # for ele in vSplit:
-                    #     tempLineSplit.insert(indexOfV, ele)
 
             tokens.append(lineSplit)
 
-        tokens.pop(indexOfV)
-        for ele in vSplit:
-            tokens.insert(indexOfV, ele)
         #appends all tokens into one big list
         for tokenList in tokens:
             mergedTokenList += tokenList
@@ -173,7 +170,9 @@ class Scanner:
     # Otherwise, return value does not matter
     def getCONST(self, numStr):
         #checks that string is only numerical
-        if numStr.isnumeric() or re.search("^[0-9]+[a-zA-Z]+?", numStr):
+        if numStr.isnumeric():
             return numStr
         else:
             return "Not a digit."
+
+# re.search("^[0-9]+[a-zA-Z]+?", numStr)

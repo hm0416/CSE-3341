@@ -7,8 +7,8 @@ import sys
 
 def main():
     # Initialize the scanner with the input file
-    S = Scanner('/Users/hm0416/Desktop/CSE-3341/Project1/Correct/test')
-    initialTokensList = S.tokenizer('/Users/hm0416/Desktop/CSE-3341/Project1/Correct/test')
+    S = Scanner(sys.argv[1])
+    initialTokensList = S.tokenizer(sys.argv[1])
 
     # Print the token stream
     while (S.currentToken(initialTokensList) != Core.EOF and S.currentToken(initialTokensList) != Core.ERROR):
