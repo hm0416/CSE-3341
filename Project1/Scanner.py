@@ -8,69 +8,76 @@ class Scanner:
     # Constructor should open the file and find the first token
     def __init__(self, filename):
         file = open(filename, "r")
+        # file.close()
 
-    # tokenzies everything, then we need to go through each element in the mergedTokenList and replace its value with what
-    # it's supposed to be based on ENUM
+    # Goes through each line in the input file and tokenizes
     def tokenizer(self, filename):
         file = open(filename, "r")
         lines = file.readlines()
         tokens = []
-        mergedTokenList = []
+        mergedTokenList = [] #all tokens in one list for the entire file
 
         for line in lines:
-            lineSplit = re.findall(r"[\w']+|[.,!?;<=()+*-]|[\s']+", line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
-            # i = 0
-            # while i <= len(lineSplit):
-            #     temp = i
-            #     if lineSplit[i] == "<" and lineSplit[temp + 1] == "=":
-            #         lineSplit[i:temp+2] = [''.join(lineSplit[i:temp+2])]
-            #     if lineSplit[i] == "=" and lineSplit[temp + 1] == "=":
-            #         lineSplit[i:temp+2] = [''.join(lineSplit[i:temp+2])]
-            #     i = i + 1
-            list_cycle = itertools.cycle(lineSplit)
+            lineSplit = re.findall(r"[\w']+|[.,!?;$:%_<~=()+*-]|[\s']+", line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
+            list_cycle = itertools.cycle(lineSplit) #https://www.kite.com/python/answers/how-to-get-the-next-element-while-cycling-through-a-list-in-python
             next(list_cycle)
             for i, v in enumerate(lineSplit):
                 nextEle = next(list_cycle)
+                # special case - when string is <=
                 if v == "<" and nextEle == "=":
-                    lineSplit[i:i+2] = [''.join(lineSplit[i:i+2])]
-                # if v == "=" and next(list_cycle) == "=":
-                #     lineSplit[i:i+2] = [''.join(lineSplit[i:i+2])]
-
+                    lineSplit[i:i+2] = [''.join(lineSplit[i:i+2])] #if < is proceeded by = without a space/any other chars between them, then joins the two elements
+                # special case - to figure out how many ASSIGN's and EQUAL's to output when there are multiple ='s
                 if v == "=":
-                    count = 1
+                    count = 1 #number of EQUAL signs
                     while nextEle == "=":
                         count = count + 1
                         nextEle = next(list_cycle)
                         if nextEle != "=":
                             break
                     if count > 1:
-                        q = count // 2 #gives 1 so will have ONE assign
+                        q = count // 2 #gets quotient
                         qTemp = 0
+                        k = i
                         while qTemp < q:
-                            lineSplit[i:i+2] = [''.join(lineSplit[i:i+2])]
+                            lineSplit[k:k+2] = [''.join(lineSplit[k:k+2])]
+                            k = k + 1
                             qTemp = qTemp + 1
                         break
                     else:
                         continue
-
+                #if string starts with numbers then we want to split it
+                if re.match('(\d+)', v):
+                    #find v in list and replace it with the split string
+                    # tempLineSplit = lineSplit.copy()
+                    indexOfV = lineSplit.index(v)
+                    vSplit = re.split('(\d+)', v)
+                    # tempLineSplit.pop(indexOfV)
+                    # for ele in vSplit:
+                    #     tempLineSplit.insert(indexOfV, ele)
 
             tokens.append(lineSplit)
 
+        tokens.pop(indexOfV)
+        for ele in vSplit:
+            tokens.insert(indexOfV, ele)
+        #appends all tokens into one big list
         for tokenList in tokens:
             mergedTokenList += tokenList
 
         return mergedTokenList
 
     # nextToken should advance the scanner to the next token
-    def nextToken(self, list):
-        if len(list) == 0:
+    def nextToken(self, listOfToks):
+        if len(listOfToks) == 0: #checks if list is empty
             exit()
-        list.pop(0)
-        return list  # need to modify the actual list
+
+        listOfToks.pop(0) #gets next token and modifies the list by removing the next token
+        return listOfToks
 
     # currentToken should return the current token
-    def currentToken(self, intialTokensList):
-        for i, v in enumerate(intialTokensList):
+    def currentToken(self, initialTokensList):
+        #goes through each token and returns corresponding ENUM
+        for i, v in enumerate(initialTokensList):
             if v == ';':
                 return Core.SEMICOLON
             elif v == ',':
@@ -130,18 +137,10 @@ class Scanner:
             elif v == 'error':
                 return Core.ERROR
             elif v == '=':
-                # if i < len(intialTokensList) and intialTokensList[i + 1] == "=":
-                #     i = i + 1
-                #     return Core.EQUAL
-                # else:
                 return Core.ASSIGN
             elif v == '==':
                 return Core.EQUAL
             elif v == '<':
-                # if i < len(intialTokensList) and intialTokensList[i + 1] == "=":
-                #     i = i + 1
-                #     return Core.LESSEQUAL
-                # else:
                 return Core.LESS
             elif v == '<=':
                 return Core.LESSEQUAL
@@ -149,27 +148,32 @@ class Scanner:
                 return Core.ID
             elif v.isnumeric():
                 if int(v) > 1023:
-                    print("Integers larger than 1023 are not allowed.")
+                    print("Integers larger than 1023 are not allowed.\n")
+                    quit()
                 else:
                     return Core.CONST
             elif v.isspace():
                 return ' '
             elif v.isalnum() and not v.isnumeric():
                 return Core.ID
+            else:
+                print("Error " + v + " is not part of the language \n")
+                quit()
 
-    # or re.match(r'(\w+\d+)', v)
     # If the current token is ID, return the string value of the identifier
     # Otherwise, return value does not matter
     def getID(self, str):
+        #checks if string is only alphabetical or alphanumerical
         if str.isalpha() or str.isalnum():
             return str
         else:
-            return "not alpha"
+            return "Not alphabetical."
 
     # If the current token is CONST, return the numerical value of the constant
     # Otherwise, return value does not matter
     def getCONST(self, numStr):
-        if numStr.isnumeric():
+        #checks that string is only numerical
+        if numStr.isnumeric() or re.search("^[0-9]+[a-zA-Z]+?", numStr):
             return numStr
         else:
-            return "not digit"
+            return "Not a digit."

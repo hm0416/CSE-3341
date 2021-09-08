@@ -7,27 +7,27 @@ import sys
 
 def main():
     # Initialize the scanner with the input file
-    S = Scanner('/Users/hm0416/Desktop/CSE-3341/Project1/Correct/11.code')
-    intialTokensList = S.tokenizer('/Users/hm0416/Desktop/CSE-3341/Project1/Correct/11.code')
+    S = Scanner('/Users/hm0416/Desktop/CSE-3341/Project1/Correct/test')
+    initialTokensList = S.tokenizer('/Users/hm0416/Desktop/CSE-3341/Project1/Correct/test')
 
     # Print the token stream
-    while (S.currentToken(intialTokensList) != Core.EOF and S.currentToken(intialTokensList) != Core.ERROR):
+    while (S.currentToken(initialTokensList) != Core.EOF and S.currentToken(initialTokensList) != Core.ERROR):
         # Print the current token, with any extra data needed
-        if S.currentToken(intialTokensList) != None:
-            if S.currentToken(intialTokensList) != ' ':
-                print(S.currentToken(intialTokensList).name, end='')
-            if S.currentToken(intialTokensList) == Core.ID:
-                currentStr = intialTokensList[0]
+        if S.currentToken(initialTokensList) != None:
+            if S.currentToken(initialTokensList) != ' ': #as long as token is not a space
+                print(S.currentToken(initialTokensList).name, end='')
+            if S.currentToken(initialTokensList) == Core.ID:
+                currentStr = initialTokensList[0]
                 value = S.getID(currentStr)
                 print("[" + value + "]", end='')
-            elif S.currentToken(intialTokensList) == Core.CONST:
-                numStr = intialTokensList[0]
+            elif S.currentToken(initialTokensList) == Core.CONST:
+                numStr = initialTokensList[0]
                 value = S.getCONST(numStr)
                 print("[" + str(value) + "]", end='')
-        if S.currentToken(intialTokensList) != ' ':
+        if S.currentToken(initialTokensList) != ' ':
             print()
         # Advance to the next token
-        intialTokensList = S.nextToken(intialTokensList)
+        initialTokensList = S.nextToken(initialTokensList)
 
 
 if __name__ == "__main__":
