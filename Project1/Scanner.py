@@ -3,6 +3,7 @@ import itertools
 from Core import Core
 import re
 
+
 class Scanner:
 
     # Constructor should open the file and find the first token
@@ -15,40 +16,42 @@ class Scanner:
         file = open(filename, "r")
         lines = file.readlines()
         tokens = []
-        mergedTokenList = [] #all tokens in one list for the entire file
+        mergedTokenList = []  # all tokens in one list for the entire file
 
         for line in lines:
             if ' ' in line:
-                lineSplit = re.findall(r"[\w']+|[.,!?;$:%_><~=()+*-]|[\s']+", line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
-            elif re.match('(\d+)', line):
-                lineSplit = re.split('(\d+)', line)
+                lineSplit = re.findall(r"[\w']+|[@#&^`/{}|.,!?;$:%_><~=()+*-]|[\s']+",
+                                       line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
+            elif re.match('(\d+)', line):  # Special case - when a string starts with digits and ends with non-digits
+                lineSplit = re.split('(\d+)', line)  # split the numbers and chars
                 for ele in lineSplit:
                     if ele == '':
-                        lineSplit.remove('')
+                        lineSplit.remove('')  # remove unecessary char
             else:
-                lineSplit = re.findall(r"[\w']+|[.,!?;$:%_<~=()+*-]|[\s']+", line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
+                lineSplit = re.findall(r"[\w']+|[@#&^`/{}|.,!?;$:%_><~=()+*-]|[\s']+", line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
 
-            list_cycle = itertools.cycle(lineSplit) #https://www.kite.com/python/answers/how-to-get-the-next-element-while-cycling-through-a-list-in-python
-            next(list_cycle)
+            list_cycle = itertools.cycle(
+                lineSplit)  # https://www.kite.com/python/answers/how-to-get-the-next-element-while-cycling-through-a-list-in-python
+            next(list_cycle) # using this to peek at the next token, dont want to use the nextToken() method because that modifies the list
             for i, v in enumerate(lineSplit):
                 nextEle = next(list_cycle)
                 # special case - when string is <=
                 if v == "<" and nextEle == "=":
-                    lineSplit[i:i+2] = [''.join(lineSplit[i:i+2])] #if < is proceeded by = without a space/any other chars between them, then joins the two elements
+                    lineSplit[i:i + 2] = [''.join(lineSplit[i:i + 2])]  # if < is proceeded by = without a space/any other chars between them, then joins the two elements
                 # special case - to figure out how many ASSIGN's and EQUAL's to output when there are multiple ='s
                 if v == "=":
-                    count = 1 #number of EQUAL signs
+                    count = 1  # number of EQUAL signs
                     while nextEle == "=":
                         count = count + 1
                         nextEle = next(list_cycle)
                         if nextEle != "=":
                             break
                     if count > 1:
-                        q = count // 2 #gets quotient
+                        q = count // 2  # gets quotient
                         qTemp = 0
                         k = i
                         while qTemp < q:
-                            lineSplit[k:k+2] = [''.join(lineSplit[k:k+2])]
+                            lineSplit[k:k + 2] = [''.join(lineSplit[k:k + 2])] #joins separated equal signs - if there are two ==, the program separates them, so need to join them
                             k = k + 1
                             qTemp = qTemp + 1
                         break
@@ -57,23 +60,24 @@ class Scanner:
 
             tokens.append(lineSplit)
 
-        #appends all tokens into one big list
+        # appends all tokens into one big list
         for tokenList in tokens:
             mergedTokenList += tokenList
 
+        file.close()
         return mergedTokenList
 
     # nextToken should advance the scanner to the next token
     def nextToken(self, listOfToks):
-        if len(listOfToks) == 0: #checks if list is empty
+        if len(listOfToks) == 0:  # checks if list is empty
             exit()
 
-        listOfToks.pop(0) #gets next token and modifies the list by removing the next token
+        listOfToks.pop(0)  # gets next token and modifies the list by removing the next token
         return listOfToks
 
     # currentToken should return the current token
     def currentToken(self, initialTokensList):
-        #goes through each token and returns corresponding ENUM
+        # goes through each token and returns corresponding ENUM
         for i, v in enumerate(initialTokensList):
             if v == ';':
                 return Core.SEMICOLON
@@ -160,7 +164,7 @@ class Scanner:
     # If the current token is ID, return the string value of the identifier
     # Otherwise, return value does not matter
     def getID(self, str):
-        #checks if string is only alphabetical or alphanumerical
+        # checks if string is only alphabetical or alphanumerical
         if str.isalpha() or str.isalnum():
             return str
         else:
@@ -169,10 +173,8 @@ class Scanner:
     # If the current token is CONST, return the numerical value of the constant
     # Otherwise, return value does not matter
     def getCONST(self, numStr):
-        #checks that string is only numerical
+        # checks that string is only numerical
         if numStr.isnumeric():
             return numStr
         else:
             return "Not a digit."
-
-# re.search("^[0-9]+[a-zA-Z]+?", numStr)
