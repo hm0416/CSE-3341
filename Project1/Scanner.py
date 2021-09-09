@@ -39,24 +39,24 @@ class Scanner:
                 if v == "<" and nextEle == "=":
                     lineSplit[i:i + 2] = [''.join(lineSplit[i:i + 2])]  # if < is proceeded by = without a space/any other chars between them, then joins the two elements
                 # special case - to figure out how many ASSIGN's and EQUAL's to output when there are multiple ='s
-                if v == "=":
-                    count = 1  # number of EQUAL signs
-                    while nextEle == "=":
-                        count = count + 1
-                        nextEle = next(list_cycle)
-                        if nextEle != "=":
-                            break
-                    if count > 1:
-                        q = count // 2  # gets quotient
-                        qTemp = 0
-                        k = i
-                        while qTemp < q:
-                            lineSplit[k:k + 2] = [''.join(lineSplit[k:k + 2])] #joins separated equal signs - if there are two ==, the program separates them, so need to join them
-                            k = k + 1
-                            qTemp = qTemp + 1
-                        break
-                    else:
-                        continue
+                # if v == "=":
+                #     count = 1  # number of EQUAL signs
+                #     while nextEle == '=':
+                #         count = count + 1
+                #         nextEle = next(list_cycle)
+                #         if nextEle != '=':
+                #             break
+                #     if count > 1:
+                #         q = count // 2  # gets quotient
+                #         qTemp = 0
+                #         k = i
+                #         while qTemp < q:
+                #             lineSplit[k:k + 2] = [''.join(lineSplit[k:k + 2])] #joins equal signs, EX: if the quotient is 2 then that means there will be two EQUALs
+                #             k = k + 1
+                #             qTemp = qTemp + 1
+                #         break
+                #     else:
+                #         continue
 
             tokens.append(lineSplit)
 
@@ -131,6 +131,8 @@ class Scanner:
                 return Core.INPUT
             elif v == 'output':
                 return Core.OUTPUT
+            elif v == 'or':
+                return Core.OR
             elif v == 'ref':
                 return Core.REF
             elif v == 'eof':
@@ -138,7 +140,12 @@ class Scanner:
             elif v == 'error':
                 return Core.ERROR
             elif v == '=':
-                return Core.ASSIGN
+                list_cycle = itertools.cycle(initialTokensList)
+                n = next(list_cycle)
+                if n == "=":
+                    return Core.EQUAL
+                else:
+                    return Core.ASSIGN
             elif v == '==':
                 return Core.EQUAL
             elif v == '<':
