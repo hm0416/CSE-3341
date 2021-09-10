@@ -1,8 +1,5 @@
-import itertools
-
 from Core import Core
 import re
-import os
 
 
 class Scanner:
@@ -114,10 +111,11 @@ class Scanner:
             elif v == 'error':
                 return Core.ERROR
             elif v == '<':
+                #checks to see what the next char is after <
                 if initialTokensList.index(v) != (len(initialTokensList) - 1):
                     nextChar = initialTokensList[i + 1]
                     if nextChar == "=":
-                        initialTokensList[i:i + 2] = [''.join(initialTokensList[i:i + 2])]
+                        initialTokensList[i:i + 2] = [''.join(initialTokensList[i:i + 2])] #joins < and = to make <=
                     else:
                         return Core.LESS
                 else:
@@ -125,10 +123,11 @@ class Scanner:
             elif v == "<=":
                 return Core.LESSEQUAL
             elif v == '=':
+                #checks to see what the next char is after =
                 if initialTokensList.index(v) != (len(initialTokensList) - 1):
                     nextChar = initialTokensList[i + 1]
                     if nextChar == "=":
-                        initialTokensList[i:i + 2] = [''.join(initialTokensList[i:i + 2])]
+                        initialTokensList[i:i + 2] = [''.join(initialTokensList[i:i + 2])] #joins the two = symbols to make an EQUAL
                     else:
                         return Core.ASSIGN
                 else:
@@ -168,53 +167,3 @@ class Scanner:
             return numStr
         else:
             return "Not a digit."
-
-
-# for line in lines:
-#     # for char in line:
-#
-#     # if len(lines) == 1 and re.match("^=+$", lines[0]):
-#     #     line + os.linesep
-#
-#     if ' ' in line:
-#         lineSplit = re.findall(r"[\w']+|[@#&^`/{}|.,!?;$:%_><~=()+*-]|[\s']+",
-#                                line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
-#     elif re.match('(\d+)', line):  # Special case - when a string starts with digits and ends with non-digits
-#         lineSplit = re.split('(\d+)', line)  # split the numbers and chars
-#         for ele in lineSplit:
-#             if ele == '':
-#                 lineSplit.remove('')  # remove unecessary char
-#     else:
-#         lineSplit = re.findall(r"[\w']+|[@#&^`/{}|.,!?;$:%_><~=()+*-]|[\s']+",
-#                                line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
-#
-#     list_cycle = itertools.cycle(
-#         lineSplit)  # https://www.kite.com/python/answers/how-to-get-the-next-element-while-cycling-through-a-list-in-python
-#     next(
-#         list_cycle)  # using this to peek at the next token, dont want to use the nextToken() method because that modifies the list
-#     for i, v in enumerate(lineSplit):
-#         nextEle = next(list_cycle)
-#         # special case - when string is <=
-#         if v == "<" and nextEle == "=":
-#             lineSplit[i:i + 2] = [''.join(lineSplit[
-#                                           i:i + 2])]  # if < is proceeded by = without a space/any other chars between them, then joins the two elements
-#         # special case - to figure out how many ASSIGN's and EQUAL's to output when there are multiple ='s
-#         if v == "=":
-#             count = 1  # number of EQUAL signs
-#             while nextEle == '=':
-#                 count = count + 1
-#                 nextEle = next(list_cycle)
-#                 if nextEle != '=':
-#                     break
-#             if count > 1:
-#                 q = count // 2  # gets quotient
-#                 qTemp = 0
-#                 k = i
-#                 while qTemp < q:
-#                     lineSplit[k:k + 2] = [''.join(lineSplit[
-#                                                   k:k + 2])]  # joins equal signs, EX: if the quotient is 2 then that means there will be two EQUALs
-#                     k = k + 1
-#                     qTemp = qTemp + 1
-#                 break
-#             else:
-#                 continue
