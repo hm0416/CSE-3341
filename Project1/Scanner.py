@@ -17,18 +17,7 @@ class Scanner:
         mergedTokenList = []  # all tokens in one list for the entire file
 
         for line in lines:
-            if ' ' in line:
-                lineSplit = re.findall(r"[\w']+|[@#&^`/{}|.,!?;$:%_><~=()+*-]|[\s']+",
-                                       line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
-            elif re.match('(\d+)', line):  # Special case - when a string starts with digits and ends with non-digits
-                lineSplit = re.split('(\d+)', line)  # split the numbers and chars
-                for ele in lineSplit:
-                    if ele == '':
-                        lineSplit.remove('')  # remove unecessary char
-            else:
-                lineSplit = re.findall(r"[\w']+|[@#&^`/{}|.,!?;$:%_><~=()+*-]|[\s']+",
-                                       line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
-
+            lineSplit = re.findall(r"[\w']+|[@#&^`/{}|.,!?;$:%_><~=()+*-]|[\s']+",line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
             tokens.append(lineSplit)
 
         # appends all tokens into one big list
@@ -106,10 +95,6 @@ class Scanner:
                 return Core.OR
             elif v == 'ref':
                 return Core.REF
-            elif v == 'eof':
-                return Core.EOF
-            elif v == 'error':
-                return Core.ERROR
             elif v == '<':
                 #checks to see what the next char is after <
                 if initialTokensList.index(v) != (len(initialTokensList) - 1):
@@ -144,11 +129,26 @@ class Scanner:
                     return Core.CONST
             elif v.isspace():
                 return ' '
-            elif v.isalnum() and not v.isnumeric():
-                return Core.ID
+            elif v.isalnum():
+                #checking if the beginning of the string contains digits
+                if re.match('^(\d+)', v):
+                    splitAlnum = re.split('(\d+)', v) #splits the digits from the non-digits
+                    for ele in splitAlnum:
+                        if ele == '':
+                            splitAlnum.remove('')  # remove unecessary char
+                    #replaces alphanumerical string with two separate strings - one being the digits and the other being the non-digits
+                    initialTokensList.remove(v)
+                    for ele in splitAlnum:
+                        if splitAlnum.index(ele) == 0: #the digit
+                            initialTokensList.insert(i, ele)
+                        else:
+                            initialTokensList.insert(i + 1, ele) #the non-digits
+                else:
+                    return Core.ID
             else:
                 print("Error " + v + " is not part of the language \n")
                 quit()
+
 
     # If the current token is ID, return the string value of the identifier
     # Otherwise, return value does not matter
