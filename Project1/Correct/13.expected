@@ -1,43 +1,15 @@
-PROGRAM
-INT
-ID[x]
-COMMA
-ID[y]
-COMMA
-ID[z]
-SEMICOLON
-ID[A]
-LPAREN
-ID[a]
-COMMA
-ID[b]
-COMMA
-ID[c]
-RPAREN
-BEGIN
-ID[a]
-ASSIGN
-ID[b]
-LESS
-ID[c]
-SEMICOLON
-ENDFUNC
-BEGIN
-INPUT
-ID[x]
-COMMA
-ID[y]
-COMMA
-ID[z]
-SEMICOLON
-ID[A]
-LPAREN
-ID[x]
-COMMA
-ID[y]
-COMMA
-ID[z]
-RPAREN
-SEMICOLON
-END
-
+program
+	int x,y,z;
+begin
+	x=1;
+	y=10;
+	z=100;
+	while !(x==y) begin
+		x=z-x;
+		while 1<=z begin
+			z=z-1;
+			x=y;
+		endwhile
+	endwhile
+	output x;
+end

@@ -1,1 +1,8 @@
-int x, y,z;
+program
+	int x,y,z;
+	ref a	,b	,c	;
+begin
+	input x;
+	output 4;
+	a	=	new;
+end

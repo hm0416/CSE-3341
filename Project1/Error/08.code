@@ -1,0 +1,6 @@
+program
+	int x, y, z;
+	begin
+	class a, b, c;
+	x = class b;
+end

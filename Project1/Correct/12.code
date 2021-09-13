@@ -1,1 +1,8 @@
-pRogram Input outpUt iF TheN ENDIF BEGIN EnD ref EOS
+program
+	int x, y;
+begin
+	x = 1;
+	y = 2;
+	output x;
+	output y;
+end
