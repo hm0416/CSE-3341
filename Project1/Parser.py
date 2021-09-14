@@ -33,6 +33,7 @@ class Parser:
             self.declSeq(filename, tokensList)
 
     def stmtSeq(self, filename, tokensList):
+
         self.decl(filename, tokensList)
         self.declSeq(filename, tokensList)
 
@@ -66,17 +67,45 @@ class Parser:
         if self.scan.currentToken(tokensList) == Core.ID:
             val = self.getID()
             self.nextToken(filename)
+            if self.scan.currentToken(tokensList) == Core.COMMA:
+                self.nextToken(filename)
+                self.idList(filename, tokensList)
+            else:
+                print("ERROR: Token should be 'comma'")
         else:
             print("ERROR: Token should be 'id'")
-        self.idList(filename, tokensList)
 
     def stmt(self, filename, tokensList):
         self.decl(filename, tokensList)
         self.declSeq(filename, tokensList)
 
     def assign(self, filename, tokensList):
-        self.decl(filename, tokensList)
-        self.declSeq(filename, tokensList)
+        if self.scan.currentToken(tokensList) == Core.ID:
+            self.nextToken(filename)
+        else:
+            print("ERROR: Token should be 'id'")
+
+        if self.scan.currentToken(tokensList) == Core.ASSIGN:
+            self.nextToken(filename)
+            if self.scan.currentToken(tokensList) != Core.NEW or self.scan.currentToken(tokensList) != Core.REF:
+                self.expr(filename, tokensList)
+        else:
+            print("ERROR: Token should be 'assign'")
+
+        if self.scan.currentToken(tokensList) == Core.NEW:
+            self.nextToken(filename)
+        else:
+            print("ERROR: Token should be 'new'")
+
+        if self.scan.currentToken(tokensList) == Core.REF:
+            self.nextToken(filename)
+        else:
+            print("ERROR: Token should be 'ref'")
+
+        if self.scan.currentToken(tokensList) == Core.SEMICOLON:
+            self.nextToken(filename)
+        else:
+            print("ERROR: Token should be ';'")
 
     def IN(self, filename, tokensList):
         if self.scan.currentToken(tokensList) == Core.INPUT:
@@ -166,8 +195,8 @@ class Parser:
         elif self.scan.currentToken(tokensList) == Core.LPAREN:
             self.nextToken(filename)
             self.expr(filename, tokensList)
-            #check for RPAREN
-
+            if self.scan.currentToken(tokensList) == Core.RPAREN:
+                self.nextToken(filename)
 
 
 
