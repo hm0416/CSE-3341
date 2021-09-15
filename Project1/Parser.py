@@ -1,18 +1,17 @@
 import Scanner
 import Core
+import ParseTree
 
 class Parser:
     def __init__(self, filename, tokensList):
         self.scan = Scanner(filename)
-        self.parseTree = None
+        self.parseTree = ParseTree()
         self.currentTok = self.scan.nextToken(tokensList) #should return PROGRAM
 
     def progParse(self, filename, tokensList):
         if self.scan.currentToken(tokensList) == Core.PROGRAM:
             self.parseTree += "program"
             self.nextToken(tokensList)
-            if self.scan.currentToken(tokensList) != Core.BEGIN:
-                self.declSeq()
         else:
             print("ERROR: First token should be 'program'")
 
@@ -20,8 +19,10 @@ class Parser:
             self.parseTree += "begin"
             self.nextToken(tokensList)
         else:
-            print("ERROR: Token should be 'begin'")
-        self.stmtSeq()
+            self.declSeq(filename, tokensList)
+            self.nextToken(tokensList)
+
+        self.stmtSeq(filename, tokensList)
 
         if self.scan.currentToken(tokensList) == Core.END:
             self.parseTree += "end"
@@ -30,10 +31,8 @@ class Parser:
             print("ERROR: Token should be 'end'")
 
     def declSeq(self, filename, tokensList):
+        self.decl(filename, tokensList)
         if self.scan.currentToken(tokensList) == Core.INT or self.scan.currentToken(tokensList) == Core.REF:
-            self.decl(filename, tokensList)
-        else:
-            self.decl(filename, tokensList)
             self.declSeq(filename, tokensList)
 
     def stmtSeq(self, filename, tokensList):
@@ -46,6 +45,11 @@ class Parser:
             self.declInt(filename, tokensList)
         elif self.scan.currentToken(tokensList) == Core.REF:
             self.declClass(filename, tokensList)
+
+        if self.scan.currentToken(tokensList) == Core.SEMICOLON:
+            self.nextToken(tokensList)
+        else:
+            print("ERROR: Token should be ';'")
 
     def declInt(self, filename, tokensList):
         if self.scan.currentToken(tokensList) == Core.INT:
@@ -73,13 +77,14 @@ class Parser:
         if self.scan.currentToken(tokensList) == Core.ID:
             val = self.getID()
             self.nextToken(tokensList)
-            if self.scan.currentToken(tokensList) == Core.COMMA:
-                self.nextToken(tokensList)
-                self.idList(filename, tokensList)
-            else:
-                print("ERROR: Token should be 'comma'")
         else:
             print("ERROR: Token should be 'id'")
+
+        if self.scan.currentToken(tokensList) == Core.COMMA:
+            self.nextToken(tokensList)
+            self.idList(filename, tokensList)
+        else:
+            print("ERROR: Token should be 'comma'")
 
     def stmt(self, filename, tokensList):
         if self.scan.currentToken(tokensList) == Core.ID:
@@ -107,7 +112,7 @@ class Parser:
         else:
             print("ERROR: Token should be 'output'")
 
-        if self.scan.currentToken(tokensList) == Core.INT or self.scan.currentToken(tokensList) == Core.REF :
+        if self.scan.currentToken(tokensList) == Core.INT or self.scan.currentToken(tokensList) == Core.REF:
             self.decl(filename, tokensList)
         else:
             print("ERROR: Token should be 'int or ref'")
@@ -183,8 +188,6 @@ class Parser:
         if self.scan.currentToken(tokensList) == Core.ELSE:
             self.nextToken(tokensList)
             self.stmtSeq(filename, tokensList)
-        else:
-            print("ERROR: Token should be 'else'")
 
         if self.scan.currentToken(tokensList) == Core.ENDIF:
             self.nextToken(tokensList)
