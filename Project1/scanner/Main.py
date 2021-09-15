@@ -1,4 +1,4 @@
-from Scanner import Scanner
+from Project1.scanner.Scanner import Scanner
 from Core import Core
 import sys
 

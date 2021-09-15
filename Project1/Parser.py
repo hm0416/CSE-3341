@@ -1,4 +1,4 @@
-import Scanner
+from Project1.scanner import Scanner
 import Core
 import ParseTree
 
