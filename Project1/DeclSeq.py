@@ -1,11 +1,9 @@
-import Core
-import DeclSeq
-import Decl
-
+from Core import Core
+from Decl import Decl
 
 class DeclSeq:
-    global d
-    global ds
+    # global d
+    # global ds
 
     def parse(self, S): #should not output anything unless error case
         d = Decl()
@@ -17,10 +15,10 @@ class DeclSeq:
             ds = DeclSeq() # this class will handle the consuming of toks
             ds.parse(S) #consume all toks that make up declSeq
 
-    def print(self):
-        print("program")
-        if ds != None:
-            ds.print(1) #indent by 1
-        print("begin")
-        ss.print(1) #has to be there
-        print("end")
+    # def print(self):
+    #     print("program")
+    #     if ds != None:
+    #         ds.print(1) #indent by 1
+    #     print("begin")
+    #     ss.print(1) #has to be there
+    #     print("end")

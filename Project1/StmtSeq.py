@@ -1,24 +1,20 @@
-import Core
-import StmtSeq
-import Stmt
-
+from Core import Core
 
 class StmtSeq:
-    global s
-    global ss
+    def __init__(self):
+        self.s = None
+        self.ss = None
 
     def parse(self, S): #should not output anything unless error case
-        s = Stmt()
-        s.parse(S)
+        self.s = Stmt()
+        self.s.parse(S)
 
         if S.currentToken == Core.ID or S.currentToken == Core.IF or S.currentToken == Core.WHILE or S.currentToken == Core.INPUT or S.currentToken == Core.OUTPUT or S.currentToken == Core.INT or S.currentToken == Core.REF:
-            ss = StmtSeq() # this class will handle the consuming of toks
-            ss.parse(S) #consume all toks that make up declSeq
+            self.ss = StmtSeq() # this class will handle the consuming of toks
+            self.ss.parse(S) #consume all toks that make up declSeq
 
     def print(self):
-        print("program")
-        if ds != None:
-            ds.print(1) #indent by 1
-        print("begin")
-        ss.print(1) #has to be there
-        print("end")
+        self.s.print()
+        self.ss.print() #has to be there
+
+from Stmt import Stmt

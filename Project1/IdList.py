@@ -1,10 +1,7 @@
-import Core
-import IdList
-
+from Core import Core
 
 class IdList:
-    global idList
-    global ss
+    # global idList
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() != Core.ID:
@@ -18,10 +15,10 @@ class IdList:
             idL = IdList()
             idL.parse(S)
 
-    def print(self):
-        print("program")
-        if ds != None:
-            ds.print(1) #indent by 1
-        print("begin")
-        ss.print(1) #has to be there
-        print("end")
+    # def print(self):
+    #     print("program")
+    #     if ds != None:
+    #         ds.print(1) #indent by 1
+    #     print("begin")
+    #     ss.print(1) #has to be there
+    #     print("end")

@@ -1,10 +1,11 @@
-import Core
-import Cond
-import Cmpr
+from Core import Core
+from Cmpr import Cmpr
 
 class Cond:
-    global condNonTerm
-    global cmprNonTerm
+
+    def __init__(self):
+        self.condNonTerm = None
+        self.cmprNonTerm = None
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() == Core.NEGATION:
@@ -24,10 +25,10 @@ class Cond:
                 condNonTerm = Cond()
                 condNonTerm.parse(S)
 
-    def print(self):
-        print("program")
-        if ds != None:
-            ds.print(1) #indent by 1
-        print("begin")
-        ss.print(1) #has to be there
-        print("end")
+    # def print(self):
+    #     print("program")
+    #     if ds != None:
+    #         ds.print(1) #indent by 1
+    #     print("begin")
+    #     ss.print(1) #has to be there
+    #     print("end")

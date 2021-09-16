@@ -1,9 +1,9 @@
-import Core
-import Expr
+from Core import Core
+from Expr import Expr
 
 
 class OUT:
-    global exprNonTerm
+    # global exprNonTerm
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() == Core.OUTPUT:
@@ -16,10 +16,10 @@ class OUT:
             quit()
         S.nextToken()
 
-    def print(self):
-        print("program")
-        if ds != None:
-            ds.print(1) #indent by 1
-        print("begin")
-        ss.print(1) #has to be there
-        print("end")
+    # def print(self):
+    #     print("program")
+    #     if ds != None:
+    #         ds.print(1) #indent by 1
+    #     print("begin")
+    #     ss.print(1) #has to be there
+    #     print("end")

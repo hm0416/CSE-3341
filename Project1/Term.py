@@ -1,11 +1,10 @@
-import Core
-import Term
-import Factor
+from Core import Core
+from Factor import Factor
 
 class Term:
     #potential children
-    global factorNonTerm
-    global termNonTerm
+    # global factorNonTerm
+    # global termNonTerm
 
     #no error checking needed here
     def parse(self, S):

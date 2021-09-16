@@ -1,18 +1,23 @@
-import Core
-import DeclInt
-import DeclClass
+from Core import Core
+from DeclInt import DeclInt
+from DeclClass import DeclClass
 
 class Decl:
-    global dInt
-    global dClass
+
+    def __int__(self):
+        self.dInt = None
+        self.dClass = None
+        self.whichStr = ""
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() == Core.INT:
-            dInt = DeclInt()
-            dInt.parse(S)
+            self.whichStr = "int"
+            self.dInt = DeclInt()
+            self.dInt.parse(S)
         elif S.currentToken() == Core.REF:
-            dClass = DeclClass()
-            dClass.parse(S)
+            self.whichString = "ref"
+            self.dClass = DeclClass()
+            self.dClass.parse(S)
 
         if S.currentToken() != Core.SEMICOLON:
             print("ERROR: Token should be ';'")
@@ -21,9 +26,7 @@ class Decl:
 
 
     def print(self):
-        print("program")
-        if ds != None:
-            ds.print(1) #indent by 1
-        print("begin")
-        ss.print(1) #has to be there
-        print("end")
+        if self.whichStr == "int":
+            self.dInt.print() #indent by 1
+        elif self.whichStr == "ref":
+            self.dClass.print() #has to be there

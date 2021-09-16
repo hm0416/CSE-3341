@@ -1,12 +1,11 @@
-import Core
-import DeclSeq
-import StmtSeq
+from Core import Core
+from DeclSeq import DeclSeq
+from StmtSeq import StmtSeq
 
 class Prog:
-    global ds
-    global ss
-
-    # def __init__(self):
+    def __init__(self):
+        self.ds = None
+        self.ss = None
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() != Core.PROGRAM:
@@ -14,15 +13,15 @@ class Prog:
             quit()
         S.nextToken() #scanner starts at declSeq
         if S.currentToken() == Core.INT or S.currentToken() == Core.REF:
-            ds = DeclSeq() # this class will handle the consuming of toks
-            ds.parse(S) #consume all toks that make up declSeq
+            self.ds = DeclSeq() # this class will handle the consuming of toks
+            self.ds.parse(S) #consume all toks that make up declSeq
 
         if S.currentToken() != Core.BEGIN:
             print("ERROR")
             quit()
         S.nextToken()
-        ss = StmtSeq()
-        ss.parse(S)
+        self.ss = StmtSeq()
+        self.ss.parse(S)
 
         if S.currentToken() != Core.END:
             print("ERROR")
@@ -35,8 +34,8 @@ class Prog:
 
     def print(self):
         print("program")
-        if ds != None:
-            ds.print() #indent by 1
+        if self.ds != None:
+            self.ds.print() #indent by 1
         print("begin")
-        ss.print() #has to be there
-        print("end")
+        self.ss.print() #has to be there
+        print("end\n")

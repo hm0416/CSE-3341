@@ -1,44 +1,45 @@
-import Core
-import Assign
-import Loop
-import OUT
-import IN
-import Decl
-import IF
+from Core import Core
+from Decl import Decl
+from Assign import Assign
+from Loop import Loop
+from OUT import OUT
+from IN import IN
+from IF import IF
 
 
 class Stmt:
-    global assignNonTerm
-    global ifNonTerm
-    global inputNonTerm
-    global outputNonTerm
-    global loopNonTerm
-    global declNonTerm
+    def __init__(self):
+        self.assignNonTerm = None
+        self.ifNonTerm = None
+        self.inputNonTerm = None
+        self.outputNonTerm = None
+        self.loopNonTerm = None
+        self.declNonTerm = None
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() == Core.ID:
-            assignNonTerm = Assign()
-            assignNonTerm.parse(S)
+            self.assignNonTerm = Assign()
+            self.assignNonTerm.parse(S)
         if S.currentToken() == Core.IF:
-            ifNonTerm = IF()
-            ifNonTerm.parse(S)
+            self.ifNonTerm = IF()
+            self.ifNonTerm.parse(S)
         if S.currentToken() == Core.WHILE:
-            loopNonTerm = Loop()
-            loopNonTerm.parse(S)
-        if S.currentToken()== Core.INPUT:
-            inputNonTerm = IN()
-            assignNonTerm.parse(S)
+            self.loopNonTerm = Loop()
+            self.loopNonTerm.parse(S)
+        if S.currentToken() == Core.INPUT:
+            self.inputNonTerm = IN()
+            self.assignNonTerm.parse(S)
         if S.currentToken() == Core.OUTPUT:
-            outputNonTerm = OUT()
-            outputNonTerm.parse(S)
+            self.outputNonTerm = OUT()
+            self.outputNonTerm.parse(S)
         if S.currentToken() == Core.INT or S.currentToken == Core.REF:
-            declNonTerm = Decl()
-            declNonTerm.parse(S)
+            self.declNonTerm = Decl()
+            self.declNonTerm.parse(S)
 
     def print(self):
-        print("program")
-        if ds != None:
-            ds.print(1) #indent by 1
-        print("begin")
-        ss.print(1) #has to be there
-        print("end")
+        self.assignNonTerm.print()
+        self.ifNonTerm.print()
+        self.inputNonTerm.print()
+        self.outputNonTerm.print()
+        self.loopNonTerm.print()
+        self.declNonTerm.print()

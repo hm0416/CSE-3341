@@ -1,29 +1,38 @@
-import Expr
-import Core
+from Core import Core
+from Expr import Expr
 
 class Cmpr:
-    global exprNonTerm
+    def __init__(self):
+        self.exprNonTerm = None
+        self.operator = 0 #0 for none, 1 for equal, 2 for less, 3 for lessequal
 
     def parse(self, S): #should not output anything unless error case
-        exprNonTerm = Expr()
-        exprNonTerm.parse(S)
+        self.exprNonTerm = Expr()
+        self.exprNonTerm.parse(S)
         if S.currentToken() == Core.EQUAL:
+            self.operator = 1
             S.nextToken()
-            exprNonTerm = Expr()
-            exprNonTerm.parse(S)
+            self.exprNonTerm = Expr()
+            self.exprNonTerm.parse(S)
         elif S.currentToken() == Core.LESS:
+            self.operator = 2
             S.nextToken()
-            exprNonTerm = Expr()
-            exprNonTerm.parse(S)
+            self.exprNonTerm = Expr()
+            self.exprNonTerm.parse(S)
         elif S.currentToken() == Core.LESSEQUAL:
+            self.operator = 3
             S.nextToken()
-            exprNonTerm = Expr()
-            exprNonTerm.parse(S)
+            self.exprNonTerm = Expr()
+            self.exprNonTerm.parse(S)
 
     def print(self):
-        print("program")
-        if ds != None:
-            ds.print(1) #indent by 1
-        print("begin")
-        ss.print(1) #has to be there
-        print("end")
+        self.exprNonTerm.print()
+        if self.operator == 1:
+            print("=")
+            self.exprNonTerm.print()
+        elif self.operator == 2:
+            print("<")
+            self.exprNonTerm.print()
+        elif self.operator == 3:
+            print("<=")
+            self.exprNonTerm.print()

@@ -1,6 +1,6 @@
 from Project1.scanner import Scanner
-import Core
-import ParseTree
+from Core import Core
+from ParseTree import ParseTree
 
 class Parser:
     def __init__(self, filename, tokensList):
