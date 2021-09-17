@@ -26,8 +26,8 @@ class Loop:
         S.nextToken()
 
     def print(self):
-        print("while", end = '')
+        print("while ", end = '')
         self.condNonTerm.print()
-        print("begin")
+        print(" begin")
         self.ss.print() #has to be there
         print("endwhile")

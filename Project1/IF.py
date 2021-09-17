@@ -24,7 +24,7 @@ class IF:
         self.ss.parse(S)
 
         if S.currentToken() == Core.ELSE:
-            self.whichStr == 1
+            self.whichStr = 1
             S.nextToken()
             self.ss = StmtSeq()
             self.ss.parse(S)

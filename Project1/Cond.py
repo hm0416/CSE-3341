@@ -29,9 +29,9 @@ class Cond:
 
     def print(self):
         if self.whichStr == 1:
-            print(" !(", end = '')
+            print("!(", end = '')
             self.condNonTerm.print()
-            print(")")
+            print(")", end = '')
         elif self.whichStr == 2:
             self.cmprNonTerm.print()
             print(" or ", end = '')

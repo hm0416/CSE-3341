@@ -34,4 +34,4 @@ class Factor:
         else:
             print(" (", end = '')
             self.expr.print()
-            print(")")
+            print(")", end = '')
