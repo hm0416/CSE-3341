@@ -1,31 +1,33 @@
 from Core import Core
 from Cond import Cond
-import StmtSeq
+from StmtSeq import StmtSeq
 
 class Loop:
-    # global condNonTerm
-    # global ss
+    def __init__(self):
+        self.condNonTerm = None
+        self.ss = None
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() != Core.WHILE:
             print("ERROR")
             quit()
         S.nextToken()
-        condNonTerm = Cond()
-        condNonTerm.parse(S)
+        self.condNonTerm = Cond()
+        self.condNonTerm.parse(S)
 
         if S.currentToken() == Core.BEGIN:
             S.nextToken()
-        ss = StmtSeq()
-        ss.parse(S)
+        self.ss = StmtSeq()
+        self.ss.parse(S)
 
-        if S.currentToken() == Core.ENDWHILE:
-            S.nextToken()
+        if S.currentToken() != Core.ENDWHILE:
+            print("ERROR: Token should be 'endwhile'")
+            quit()
+        S.nextToken()
 
-    # def print(self):
-    #     print("program")
-    #     if ds != None:
-    #         ds.print(1) #indent by 1
-    #     print("begin")
-    #     ss.print(1) #has to be there
-    #     print("end")
+    def print(self):
+        print("while")
+        self.condNonTerm.print()
+        print("begin")
+        self.ss.print() #has to be there
+        print("endwhile")

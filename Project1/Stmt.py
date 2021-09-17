@@ -37,9 +37,15 @@ class Stmt:
             self.declNonTerm.parse(S)
 
     def print(self):
-        self.assignNonTerm.print()
-        self.ifNonTerm.print()
-        self.inputNonTerm.print()
-        self.outputNonTerm.print()
-        self.loopNonTerm.print()
-        self.declNonTerm.print()
+        if self.assignNonTerm != None:
+            self.assignNonTerm.print()
+        if self.ifNonTerm != None:
+            self.ifNonTerm.print()
+        if self.inputNonTerm != None:
+            self.inputNonTerm.print()
+        if self.outputNonTerm != None:
+            self.outputNonTerm.print()
+        if self.loopNonTerm != None:
+            self.loopNonTerm.print()
+        if self.declNonTerm != None:
+            self.declNonTerm.print()

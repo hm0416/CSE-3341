@@ -9,7 +9,7 @@ class Assign:
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() != Core.ID:
-            print("ERROR")
+            print("ERROR: Token should be 'id'")
             quit()
         S.nextToken()
 

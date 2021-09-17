@@ -15,6 +15,7 @@ class StmtSeq:
 
     def print(self):
         self.s.print()
-        self.ss.print() #has to be there
+        if self.ss != None:
+            self.ss.print() #has to be there
 
 from Stmt import Stmt

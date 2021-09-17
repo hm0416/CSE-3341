@@ -1,7 +1,9 @@
 from Core import Core
 
 class IdList:
-    # global idList
+    def __init__(self):
+        self.idL = None
+        self.whichStr = 0 #0 for none, 1 for comma
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() != Core.ID:
@@ -11,14 +13,14 @@ class IdList:
         S.nextToken()
 
         if S.currentToken() == Core.COMMA:
+            self.whichStr = 1
             S.nextToken()
-            idL = IdList()
-            idL.parse(S)
+            self.idL = IdList()
+            self.idL.parse(S)
 
-    # def print(self):
-    #     print("program")
-    #     if ds != None:
-    #         ds.print(1) #indent by 1
-    #     print("begin")
-    #     ss.print(1) #has to be there
-    #     print("end")
+    def print(self):
+        print("id")
+        if self.whichStr == 1:
+            print("id")
+            print(",")
+            self.idL.print()

@@ -14,10 +14,6 @@ class IN:
             quit()
         S.nextToken()
 
-    # def print(self):
-    #     print("program")
-    #     if ds != None:
-    #         ds.print(1) #indent by 1
-    #     print("begin")
-    #     ss.print(1) #has to be there
-    #     print("end")
+    def print(self):
+        print("input")
+        print("id")
