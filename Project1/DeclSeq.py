@@ -10,9 +10,9 @@ class DeclSeq:
         self.d = Decl()
         self.d.parse(S)
 
-        if S.currentToken == Core.BEGIN:
-            S.nextToken()
-        if S.currentToken == Core.INT or S.currentToken == Core.REF:
+        # if S.currentToken() == Core.BEGIN:
+        #     S.nextToken()
+        if S.currentToken() == Core.INT or S.currentToken() == Core.REF:
             self.ds = DeclSeq() # this class will handle the consuming of toks
             self.ds.parse(S) #consume all toks that make up declSeq
 

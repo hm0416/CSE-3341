@@ -18,6 +18,6 @@ class DeclInt:
         S.nextToken()
 
     def print(self):
-        print("int")
+        print("int ", end = '')
         self.idL.print()
         print(";")

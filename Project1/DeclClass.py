@@ -19,6 +19,6 @@ class DeclClass:
         S.nextToken()
 
     def print(self):
-        print("ref")
+        print(" ref ", end = '')
         self.idL.print()
         print(";")

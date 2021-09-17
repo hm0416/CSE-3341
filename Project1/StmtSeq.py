@@ -9,7 +9,7 @@ class StmtSeq:
         self.s = Stmt()
         self.s.parse(S)
 
-        if S.currentToken == Core.ID or S.currentToken == Core.IF or S.currentToken == Core.WHILE or S.currentToken == Core.INPUT or S.currentToken == Core.OUTPUT or S.currentToken == Core.INT or S.currentToken == Core.REF:
+        if S.currentToken() == Core.ID or S.currentToken() == Core.IF or S.currentToken() == Core.WHILE or S.currentToken() == Core.INPUT or S.currentToken() == Core.OUTPUT or S.currentToken() == Core.INT or S.currentToken() == Core.REF:
             self.ss = StmtSeq() # this class will handle the consuming of toks
             self.ss.parse(S) #consume all toks that make up declSeq
 

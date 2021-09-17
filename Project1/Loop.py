@@ -9,7 +9,7 @@ class Loop:
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() != Core.WHILE:
-            print("ERROR")
+            print("ERROR: Token should be 'while'")
             quit()
         S.nextToken()
         self.condNonTerm = Cond()
@@ -26,7 +26,7 @@ class Loop:
         S.nextToken()
 
     def print(self):
-        print("while")
+        print("while", end = '')
         self.condNonTerm.print()
         print("begin")
         self.ss.print() #has to be there

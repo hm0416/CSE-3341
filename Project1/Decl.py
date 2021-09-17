@@ -4,7 +4,7 @@ from DeclClass import DeclClass
 
 class Decl:
 
-    def __int__(self):
+    def __init__(self):
         self.dInt = None
         self.dClass = None
         self.whichStr = ""
@@ -18,11 +18,6 @@ class Decl:
             self.whichString = "ref"
             self.dClass = DeclClass()
             self.dClass.parse(S)
-
-        if S.currentToken() != Core.SEMICOLON:
-            print("ERROR: Token should be ';'")
-            quit()
-        S.nextToken()
 
 
     def print(self):

@@ -1,6 +1,6 @@
 program
 	int x, y, z;
 	begin
-	class a, b, c;
-	x = class b;
+	ref a, b, c;
+	x = ref b;
 end

@@ -3,7 +3,7 @@ program
 begin
 	x=1-1-1-1;
 	output x;
-	class a,b,c;
-	a=class b;
-	c=class a;
+	ref a,b,c;
+	a=ref b;
+	c=ref a;
 end

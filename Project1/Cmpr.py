@@ -28,11 +28,11 @@ class Cmpr:
     def print(self):
         self.exprNonTerm.print()
         if self.operator == 1:
-            print("=")
+            print(" == ", end = '')
             self.exprNonTerm.print()
         elif self.operator == 2:
-            print("<")
+            print(" < ", end = '')
             self.exprNonTerm.print()
         elif self.operator == 3:
-            print("<=")
+            print(" <= ", end = '')
             self.exprNonTerm.print()

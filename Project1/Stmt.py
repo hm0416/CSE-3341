@@ -28,7 +28,7 @@ class Stmt:
             self.loopNonTerm.parse(S)
         if S.currentToken() == Core.INPUT:
             self.inputNonTerm = IN()
-            self.assignNonTerm.parse(S)
+            self.inputNonTerm.parse(S)
         if S.currentToken() == Core.OUTPUT:
             self.outputNonTerm = OUT()
             self.outputNonTerm.parse(S)

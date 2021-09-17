@@ -1,4 +1,4 @@
-from Project1.Scanner import Scanner
+from Scanner import Scanner
 import sys
 from Prog import Prog
 

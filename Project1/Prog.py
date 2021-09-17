@@ -9,26 +9,36 @@ class Prog:
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() != Core.PROGRAM:
-            print("ERROR")
+            print("ERROR: Token should be 'program'")
             quit()
         S.nextToken() #scanner starts at declSeq
-        if S.currentToken() == Core.INT or S.currentToken() == Core.REF:
+
+        if S.currentToken() == Core.BEGIN:
+            S.nextToken()
+        else:
             self.ds = DeclSeq() # this class will handle the consuming of toks
             self.ds.parse(S) #consume all toks that make up declSeq
-
-        if S.currentToken() != Core.BEGIN:
-            print("ERROR")
-            quit()
-        S.nextToken()
+            S.nextToken() #begin tok
         self.ss = StmtSeq()
         self.ss.parse(S)
 
+        # if S.currentToken() == Core.INT or S.currentToken() == Core.REF:
+        #     self.ds = DeclSeq() # this class will handle the consuming of toks
+        #     self.ds.parse(S) #consume all toks that make up declSeq
+        #
+        # if S.currentToken() != Core.BEGIN:
+        #     print("ERROR: Token should be 'begin'")
+        #     quit()
+        # S.nextToken()
+        # self.ss = StmtSeq()
+        # self.ss.parse(S)
+
         if S.currentToken() != Core.END:
-            print("ERROR")
+            print("ERROR: Token should be 'end'")
             quit()
         S.nextToken()
         if S.currentToken() != Core.EOF:
-            print("ERROR")
+            print("ERROR: Program should be at the end of the file")
             quit()
         S.nextToken()
 

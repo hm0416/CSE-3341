@@ -14,28 +14,27 @@ class Cond:
             S.nextToken()
             if S.currentToken() == Core.LPAREN:
                 S.nextToken()
-                condNonTerm = Cond()
-                condNonTerm.parse(S)
+                self.condNonTerm = Cond()
+                self.condNonTerm.parse(S)
                 if S.currentToken() == Core.RPAREN:
                     S.nextToken()
         else:
-            cmprNonTerm = Cmpr()
-            cmprNonTerm.parse(S)
+            self.cmprNonTerm = Cmpr()
+            self.cmprNonTerm.parse(S)
             if S.currentToken() == Core.OR:
                 self.whichStr = 2
                 S.nextToken()
-                condNonTerm = Cond()
-                condNonTerm.parse(S)
+                self.condNonTerm = Cond()
+                self.condNonTerm.parse(S)
 
     def print(self):
         if self.whichStr == 1:
-            print("!")
-            print("(")
+            print(" !(", end = '')
             self.condNonTerm.print()
             print(")")
         elif self.whichStr == 2:
             self.cmprNonTerm.print()
-            print("or")
+            print(" or ", end = '')
             self.condNonTerm.print()
         else:
             self.cmprNonTerm.print()

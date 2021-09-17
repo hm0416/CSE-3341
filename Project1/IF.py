@@ -3,14 +3,14 @@ from Cond import Cond
 from StmtSeq import StmtSeq
 
 class IF:
-    def __int__(self):
+    def __init__(self):
         self.condNonTerm = None
         self.ss = None
         self.whichStr = 0 #0 for none, 1 for else
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() != Core.IF:
-            print("ERROR")
+            print("ERROR: Token should be 'if'")
             quit()
         S.nextToken()
         self.condNonTerm = Cond()
@@ -36,12 +36,12 @@ class IF:
             S.nextToken()
 
     def print(self):
-        print("if")
+        print("if ", end = '')
         self.condNonTerm.print()
-        print("then")
+        print(" then ")
         self.ss.print()
         if self.whichStr == 1:
-            print("else")
+            print("else ")
             self.ss.print()
             print("endif")
         else:

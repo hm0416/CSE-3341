@@ -19,6 +19,6 @@ class OUT:
         S.nextToken()
 
     def print(self):
-        print("output")
+        print("output ", end = '')
         self.exprNonTerm.print()
         print(";")
