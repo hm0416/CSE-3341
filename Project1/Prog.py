@@ -48,4 +48,4 @@ class Prog:
             self.ds.print() #indent by 1
         print("begin")
         self.ss.print() #has to be there
-        print("end\n")
+        print("end")

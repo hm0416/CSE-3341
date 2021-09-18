@@ -15,7 +15,7 @@ class Decl:
             self.dInt = DeclInt()
             self.dInt.parse(S)
         elif S.currentToken() == Core.REF:
-            self.whichString = "ref"
+            self.whichStr = "ref"
             self.dClass = DeclClass()
             self.dClass.parse(S)
 

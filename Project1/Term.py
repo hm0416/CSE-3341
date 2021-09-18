@@ -21,7 +21,7 @@ class Term:
     def print(self):
         self.factorNonTerm.print()
         if self.operator == 1:
-            print(" * ", end = '')
+            print("*", end = '')
             self.termNonTerm.print()
 
 

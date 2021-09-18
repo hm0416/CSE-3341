@@ -41,11 +41,11 @@ class Stmt:
             self.assignNonTerm.print()
         if self.ifNonTerm != None:
             self.ifNonTerm.print()
+        if self.loopNonTerm != None:
+            self.loopNonTerm.print()
         if self.inputNonTerm != None:
             self.inputNonTerm.print()
         if self.outputNonTerm != None:
             self.outputNonTerm.print()
-        if self.loopNonTerm != None:
-            self.loopNonTerm.print()
         if self.declNonTerm != None:
             self.declNonTerm.print()

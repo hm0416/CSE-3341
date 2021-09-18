@@ -21,6 +21,7 @@ class IdList:
 
     def print(self):
         print(self.identifier, end = '')
-        if self.whichStr == 1:
-            print(", ", end = '')
+        if self.idL != None:
+        # if self.whichStr == 1:
+            print(",", end = '')
             self.idL.print()

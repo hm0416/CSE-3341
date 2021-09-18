@@ -10,7 +10,8 @@ class DeclClass:
         if S.currentToken() != Core.REF:
             print("ERROR: Token should be 'ref'")
             quit()
-        S.nextToken()
+        # if S.currentToken() == Core.REF:
+        #     S.nextToken()
         self.idL = IdList()
         self.idL.parse(S)
         if S.currentToken() != Core.SEMICOLON:
@@ -19,6 +20,6 @@ class DeclClass:
         S.nextToken()
 
     def print(self):
-        print(" ref ", end = '')
+        print("ref ", end = '')
         self.idL.print()
         print(";")

@@ -28,8 +28,8 @@ class Expr:
         self.term.print()
         if self.exprNonTerm != None:
             if self.operator == 1:
-                print(" + ", end = '')
+                print("+", end = '')
                 self.exprNonTerm.print()
             elif self.operator == 2:
-                print(" - ", end = '')
+                print("-", end = '')
                 self.exprNonTerm.print()
