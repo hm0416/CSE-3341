@@ -23,11 +23,11 @@ class DeclClass:
         i = 0
         while i < numOfIndents:
             tab += "\t"
-
+            i += 1
         return tab
 
-    def print(self, numOfIndents):
-        numIndents = "\t"
-        print(numIndents + "ref ", end = '')
+    def print(self, numIndents):
+        # numIndents = self.createIndents(numOfIndents)
+        print(("\t" * numIndents) + "ref ", end = '')
         self.idL.print(0)
         print(";")

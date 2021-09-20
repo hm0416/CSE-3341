@@ -25,18 +25,11 @@ class Loop:
             quit()
         S.nextToken()
 
-    def createIndents(self, numOfIndents):
-        tab = ""
-        i = 0
-        while i < numOfIndents:
-            tab += "\t"
-
-        return tab
-
-    def print(self, numOfIndents):
-        numIndents = "\t\t"
-        print(numIndents + "while ", end = '')
+    def print(self, numIndents):
+        print(("\t" * numIndents) + "while ", end = '')
         self.condNonTerm.print(0)
         print(" begin")
-        self.ss.print(0) #has to be there
-        print(numIndents + "endwhile")
+        self.ss.print(numIndents + 1) #has to be there
+        print(("\t" * numIndents) + "endwhile")
+
+    # def semantic(self):

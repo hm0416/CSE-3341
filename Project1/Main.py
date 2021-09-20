@@ -9,7 +9,7 @@ def main():
 
     root.parse(S)
     # root.semantic()
-    root.print(0)
+    root.print(1)
 
 if __name__ == "__main__":
     main()

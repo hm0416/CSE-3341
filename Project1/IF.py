@@ -30,7 +30,7 @@ class IF:
             self.elseSS = StmtSeq()
             self.elseSS.parse(S)
         if S.currentToken() != Core.ENDIF:
-            print("ERROR: Token should be 'then'")
+            print("ERROR: Token should be 'endif'")
             quit()
         S.nextToken()
 
@@ -39,21 +39,19 @@ class IF:
         i = 0
         while i < numOfIndents:
             tab += "\t"
-
+            i += 1
         return tab
 
-    def print(self, numOfIndents):
-        numIndents = "\t"
-        print(numIndents + "if ", end = '')
+    def print(self, numIndents):
+        # numIndents = self.createIndents(numOfIndents)
+        print(("\t" * numIndents) + "if ", end = '')
         self.condNonTerm.print(0)
         print(" then")
-        print("\t", end = '')
-        self.ss.print(0)
+        self.ss.print(numIndents + 1)
         if self.elseSS != None:
             # if self.whichStr == 1:
-            print(numIndents + "else ")
-            print("\t", end = '')
-            self.elseSS.print(0)
-            print(numIndents + "endif")
+            print(("\t" * numIndents) + "else")
+            self.elseSS.print(numIndents + 1)
+            print(("\t" * numIndents) + "endif")
         else:
-            print(numIndents + "endif")
+            print(("\t" * numIndents) + "endif")

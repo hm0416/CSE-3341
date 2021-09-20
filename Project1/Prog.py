@@ -42,20 +42,14 @@ class Prog:
             quit()
         S.nextToken()
 
-    def createIndents(self, numOfIndents):
-        tab = ""
-        i = 0
-        while i < numOfIndents:
-            tab += "\t"
-
-        return tab
-
     def print(self, numOfIndents):
-        numIndents = self.createIndents(numOfIndents)
         print("program")
         if self.ds != None:
-            self.ds.print(0) #indent by 1
+            self.ds.print(numOfIndents) #indent by 1
         print("begin")
-        self.ss.print(0) #has to be there
+        self.ss.print(numOfIndents) #has to be there
         print("end")
+
+    # def semantic(self):
+
 

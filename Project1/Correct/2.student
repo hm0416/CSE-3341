@@ -1,5 +1,5 @@
 program
-int x;
+	int x;
 begin
-x=0-10;
+	x=0-10;
 end

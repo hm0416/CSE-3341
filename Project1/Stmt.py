@@ -36,25 +36,16 @@ class Stmt:
             self.declNonTerm = Decl()
             self.declNonTerm.parse(S)
 
-    def createIndents(self, numOfIndents):
-        tab = ""
-        i = 0
-        while i < numOfIndents:
-            tab += "\t"
-
-        return tab
-
     def print(self, numOfIndents):
-        numIndents = self.createIndents(numOfIndents)
         if self.assignNonTerm != None:
-            self.assignNonTerm.print(0)
+            self.assignNonTerm.print(numOfIndents)
         if self.ifNonTerm != None:
-            self.ifNonTerm.print(0)
+            self.ifNonTerm.print(numOfIndents)
         if self.loopNonTerm != None:
-            self.loopNonTerm.print(0)
+            self.loopNonTerm.print(numOfIndents)
         if self.inputNonTerm != None:
-            self.inputNonTerm.print(0)
+            self.inputNonTerm.print(numOfIndents)
         if self.outputNonTerm != None:
-            self.outputNonTerm.print(0)
+            self.outputNonTerm.print(numOfIndents)
         if self.declNonTerm != None:
-            self.declNonTerm.print(0)
+            self.declNonTerm.print(numOfIndents)

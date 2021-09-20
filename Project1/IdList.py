@@ -19,17 +19,8 @@ class IdList:
             self.idL = IdList()
             self.idL.parse(S)
 
-    def createIndents(self, numOfIndents):
-        tab = ""
-        i = 0
-        while i < numOfIndents:
-            tab += "\t"
-
-        return tab
-
-    def print(self, numOfIndents):
-        numIndents = ""
-        print(numIndents + self.identifier, end = '')
+    def print(self, numIndents):
+        print(("\t" * numIndents) + self.identifier, end = '')
         if self.idL != None:
         # if self.whichStr == 1:
             print(",", end = '')

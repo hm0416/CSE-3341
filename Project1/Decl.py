@@ -19,18 +19,8 @@ class Decl:
             self.dClass = DeclClass()
             self.dClass.parse(S)
 
-
-    def createIndents(self, numOfIndents):
-        tab = ""
-        i = 0
-        while i < numOfIndents:
-            tab += "\t"
-
-        return tab
-
     def print(self, numOfIndents):
-        numIndents = self.createIndents(numOfIndents)
         if self.whichStr == "int":
-            self.dInt.print(0) #indent by 1
+            self.dInt.print(numOfIndents) #indent by 1
         elif self.whichStr == "ref":
-            self.dClass.print(0) #has to be there
+            self.dClass.print(numOfIndents) #has to be there

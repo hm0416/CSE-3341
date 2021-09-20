@@ -39,23 +39,14 @@ class Assign:
             quit()
         S.nextToken()
 
-    def createIndents(self, numOfIndents):
-        tab = ""
-        i = 0
-        while i < numOfIndents:
-            tab += "\t"
-
-        return tab
-
-    def print(self, numOfIndents):
-        numIndents = "\t"
+    def print(self, numIndents):
         if self.exprNonTerm != None:
-            print(numIndents + self.identifier1 + "=", end = '') #indent by 1
+            print(("\t" * numIndents) + self.identifier1 + "=", end = '') #indent by 1
             self.exprNonTerm.print(0)
             print(";")
         elif self.whichString == "new":
-            print(numIndents + self.identifier1 + "=" + "new;")
+            print(("\t" * numIndents) + self.identifier1 + "=" + "new;")
         elif self.whichString == "ref":
-            print(numIndents + self.identifier1 + "=" + "ref " + self.identifier2 + ";")
+            print(("\t" * numIndents) + self.identifier1 + "=" + "ref " + self.identifier2 + ";")
 
 

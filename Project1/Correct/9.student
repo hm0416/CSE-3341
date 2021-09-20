@@ -1,6 +1,6 @@
 program
-int x;
+	int x;
 begin
-x=10;
-output x;
+	x=10;
+	output x;
 end

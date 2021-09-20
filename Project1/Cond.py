@@ -32,11 +32,10 @@ class Cond:
         i = 0
         while i < numOfIndents:
             tab += "\t"
-
+            i += 1
         return tab
 
     def print(self, numOfIndents):
-        numIndents = self.createIndents(numOfIndents)
         if self.whichStr == 1:
             print("!(", end = '')
             self.condNonTerm.print(0)

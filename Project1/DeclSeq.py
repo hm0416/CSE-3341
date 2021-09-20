@@ -22,16 +22,7 @@ class DeclSeq:
         #     self.ds = DeclSeq() # this class will handle the consuming of toks
         #     self.ds.parse(S) #consume all toks that make up declSeq
 
-    def createIndents(self, numOfIndents):
-        tab = ""
-        i = 0
-        while i < numOfIndents:
-            tab += "\t"
-
-        return tab
-
     def print(self, numOfIndents):
-        numIndents = self.createIndents(numOfIndents)
-        self.d.print(0)
+        self.d.print(numOfIndents)
         if self.ds != None:
-            self.ds.print(0)
+            self.ds.print(numOfIndents)

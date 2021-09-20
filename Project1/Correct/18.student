@@ -1,8 +1,8 @@
 program
-int x,y,z;
+	int x,y,z;
 begin
-x=5;
-y=10;
-z=x-y-5-5;
-output z;
+	x=5;
+	y=10;
+	z=x-y-5-5;
+	output z;
 end
