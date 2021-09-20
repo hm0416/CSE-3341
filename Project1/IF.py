@@ -34,15 +34,26 @@ class IF:
             quit()
         S.nextToken()
 
-    def print(self):
-        print("if ", end = '')
-        self.condNonTerm.print()
-        print(" then ")
-        self.ss.print()
+    def createIndents(self, numOfIndents):
+        tab = ""
+        i = 0
+        while i < numOfIndents:
+            tab += "\t"
+
+        return tab
+
+    def print(self, numOfIndents):
+        numIndents = "\t"
+        print(numIndents + "if ", end = '')
+        self.condNonTerm.print(0)
+        print(" then")
+        print("\t", end = '')
+        self.ss.print(0)
         if self.elseSS != None:
             # if self.whichStr == 1:
-            print("else ")
-            self.elseSS.print()
-            print("endif")
+            print(numIndents + "else ")
+            print("\t", end = '')
+            self.elseSS.print(0)
+            print(numIndents + "endif")
         else:
-            print("endif")
+            print(numIndents + "endif")

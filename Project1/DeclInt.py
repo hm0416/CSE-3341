@@ -17,7 +17,16 @@ class DeclInt:
             quit()
         S.nextToken()
 
-    def print(self):
-        print("int ", end = '')
-        self.idL.print()
+    def createIndents(self, numOfIndents):
+        tab = ""
+        i = 0
+        while i < numOfIndents:
+            tab += "\t"
+
+        return tab
+
+    def print(self, numOfIndents):
+        numIndents = "\t"
+        print(numIndents + "int ", end = '')
+        self.idL.print(0)
         print(";")

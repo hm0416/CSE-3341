@@ -17,6 +17,15 @@ class IN:
             quit()
         S.nextToken()
 
-    def print(self):
-        print("input ", end = '')
+    def createIndents(self, numOfIndents):
+        tab = ""
+        i = 0
+        while i < numOfIndents:
+            tab += "\t"
+
+        return tab
+
+    def print(self, numOfIndents):
+        numIndents = "\t"
+        print(numIndents + "input ", end = '')
         print(self.identifier + ";")

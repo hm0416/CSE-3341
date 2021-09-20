@@ -26,14 +26,23 @@ class Cmpr:
             self.exprNonTerm2 = Expr()
             self.exprNonTerm2.parse(S)
 
-    def print(self):
-        self.exprNonTerm1.print()
+    def createIndents(self, numOfIndents):
+        tab = ""
+        i = 0
+        while i < numOfIndents:
+            tab += "\t"
+
+        return tab
+
+    def print(self, numOfIndents):
+        numIndents = self.createIndents(numOfIndents)
+        self.exprNonTerm1.print(0)
         if self.operator == 1:
             print("==", end = '')
-            self.exprNonTerm2.print()
+            self.exprNonTerm2.print(0)
         elif self.operator == 2:
             print("<", end = '')
-            self.exprNonTerm2.print()
+            self.exprNonTerm2.print(0)
         elif self.operator == 3:
             print("<=", end = '')
-            self.exprNonTerm2.print()
+            self.exprNonTerm2.print(0)

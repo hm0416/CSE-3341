@@ -18,7 +18,7 @@ class Prog:
         else:
             self.ds = DeclSeq() # this class will handle the consuming of toks
             self.ds.parse(S) #consume all toks that make up declSeq
-            S.nextToken() #begin tok
+            # S.nextToken() #begin tok
         self.ss = StmtSeq()
         self.ss.parse(S)
 
@@ -42,10 +42,20 @@ class Prog:
             quit()
         S.nextToken()
 
-    def print(self):
+    def createIndents(self, numOfIndents):
+        tab = ""
+        i = 0
+        while i < numOfIndents:
+            tab += "\t"
+
+        return tab
+
+    def print(self, numOfIndents):
+        numIndents = self.createIndents(numOfIndents)
         print("program")
         if self.ds != None:
-            self.ds.print() #indent by 1
+            self.ds.print(0) #indent by 1
         print("begin")
-        self.ss.print() #has to be there
+        self.ss.print(0) #has to be there
         print("end")
+

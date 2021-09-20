@@ -10,8 +10,7 @@ class DeclClass:
         if S.currentToken() != Core.REF:
             print("ERROR: Token should be 'ref'")
             quit()
-        # if S.currentToken() == Core.REF:
-        #     S.nextToken()
+        S.nextToken()
         self.idL = IdList()
         self.idL.parse(S)
         if S.currentToken() != Core.SEMICOLON:
@@ -19,7 +18,16 @@ class DeclClass:
             quit()
         S.nextToken()
 
-    def print(self):
-        print("ref ", end = '')
-        self.idL.print()
+    def createIndents(self, numOfIndents):
+        tab = ""
+        i = 0
+        while i < numOfIndents:
+            tab += "\t"
+
+        return tab
+
+    def print(self, numOfIndents):
+        numIndents = "\t"
+        print(numIndents + "ref ", end = '')
+        self.idL.print(0)
         print(";")

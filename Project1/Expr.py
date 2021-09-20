@@ -24,12 +24,21 @@ class Expr:
             self.exprNonTerm = Expr()
             self.exprNonTerm.parse(S)
 
-    def print(self):
-        self.term.print()
+    def createIndents(self, numOfIndents):
+        tab = ""
+        i = 0
+        while i < numOfIndents:
+            tab += "\t"
+
+        return tab
+
+    def print(self, numOfIndents):
+        numIndents = self.createIndents(numOfIndents)
+        self.term.print(0)
         if self.exprNonTerm != None:
             if self.operator == 1:
                 print("+", end = '')
-                self.exprNonTerm.print()
+                self.exprNonTerm.print(0)
             elif self.operator == 2:
                 print("-", end = '')
-                self.exprNonTerm.print()
+                self.exprNonTerm.print(0)

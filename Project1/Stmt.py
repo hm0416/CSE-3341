@@ -32,20 +32,29 @@ class Stmt:
         if S.currentToken() == Core.OUTPUT:
             self.outputNonTerm = OUT()
             self.outputNonTerm.parse(S)
-        if S.currentToken() == Core.INT or S.currentToken == Core.REF:
+        if S.currentToken() == Core.INT or S.currentToken() == Core.REF:
             self.declNonTerm = Decl()
             self.declNonTerm.parse(S)
 
-    def print(self):
+    def createIndents(self, numOfIndents):
+        tab = ""
+        i = 0
+        while i < numOfIndents:
+            tab += "\t"
+
+        return tab
+
+    def print(self, numOfIndents):
+        numIndents = self.createIndents(numOfIndents)
         if self.assignNonTerm != None:
-            self.assignNonTerm.print()
+            self.assignNonTerm.print(0)
         if self.ifNonTerm != None:
-            self.ifNonTerm.print()
+            self.ifNonTerm.print(0)
         if self.loopNonTerm != None:
-            self.loopNonTerm.print()
+            self.loopNonTerm.print(0)
         if self.inputNonTerm != None:
-            self.inputNonTerm.print()
+            self.inputNonTerm.print(0)
         if self.outputNonTerm != None:
-            self.outputNonTerm.print()
+            self.outputNonTerm.print(0)
         if self.declNonTerm != None:
-            self.declNonTerm.print()
+            self.declNonTerm.print(0)

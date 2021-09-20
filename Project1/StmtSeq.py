@@ -13,9 +13,18 @@ class StmtSeq:
             self.ss = StmtSeq() # this class will handle the consuming of toks
             self.ss.parse(S) #consume all toks that make up declSeq
 
-    def print(self):
-        self.s.print()
+    def createIndents(self, numOfIndents):
+        tab = ""
+        i = 0
+        while i < numOfIndents:
+            tab += "\t"
+
+        return tab
+
+    def print(self, numOfIndents):
+        numIndents = numOfIndents
+        self.s.print(0)
         if self.ss != None:
-            self.ss.print() #has to be there
+            self.ss.print(0) #has to be there
 
 from Stmt import Stmt

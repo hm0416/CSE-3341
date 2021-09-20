@@ -18,11 +18,20 @@ class Term:
             self.termNonTerm = Term()
             self.termNonTerm.parse(S)
 
-    def print(self):
-        self.factorNonTerm.print()
+    def createIndents(self, numOfIndents):
+        tab = ""
+        i = 0
+        while i < numOfIndents:
+            tab += "\t"
+
+        return tab
+
+    def print(self, numOfIndents):
+        numIndents = self.createIndents(numOfIndents)
+        self.factorNonTerm.print(0)
         if self.operator == 1:
             print("*", end = '')
-            self.termNonTerm.print()
+            self.termNonTerm.print(0)
 
 
 

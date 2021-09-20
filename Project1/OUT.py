@@ -18,7 +18,16 @@ class OUT:
             quit()
         S.nextToken()
 
-    def print(self):
-        print("output ", end = '')
-        self.exprNonTerm.print()
+    def createIndents(self, numOfIndents):
+        tab = ""
+        i = 0
+        while i < numOfIndents:
+            tab += "\t"
+
+        return tab
+
+    def print(self, numOfIndents):
+        numIndents = "\t"
+        print(numIndents + "output ", end = '')
+        self.exprNonTerm.print(0)
         print(";")

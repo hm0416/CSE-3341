@@ -26,12 +26,21 @@ class Factor:
             if S.currentToken() == Core.RPAREN:
                 S.nextToken()
 
-    def print(self):
+    def createIndents(self, numOfIndents):
+        tab = ""
+        i = 0
+        while i < numOfIndents:
+            tab += "\t"
+
+        return tab
+
+    def print(self, numOfIndents):
+        numIndents = self.createIndents(numOfIndents)
         if self.whichStr == 1:
             print(self.identifier, end = '')
         elif self.whichStr == 2:
             print(self.const, end = '')
         elif self.exprNonTerm != None:
             print(" (", end = '')
-            self.exprNonTerm.print()
+            self.exprNonTerm.print(0)
             print(")", end = '')

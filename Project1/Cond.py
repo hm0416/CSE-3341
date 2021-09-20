@@ -27,14 +27,23 @@ class Cond:
                 self.condNonTerm = Cond()
                 self.condNonTerm.parse(S)
 
-    def print(self):
+    def createIndents(self, numOfIndents):
+        tab = ""
+        i = 0
+        while i < numOfIndents:
+            tab += "\t"
+
+        return tab
+
+    def print(self, numOfIndents):
+        numIndents = self.createIndents(numOfIndents)
         if self.whichStr == 1:
             print("!(", end = '')
-            self.condNonTerm.print()
+            self.condNonTerm.print(0)
             print(")", end = '')
         elif self.whichStr == 2:
-            self.cmprNonTerm.print()
+            self.cmprNonTerm.print(0)
             print(" or ", end = '')
-            self.condNonTerm.print()
+            self.condNonTerm.print(0)
         else:
-            self.cmprNonTerm.print()
+            self.cmprNonTerm.print(0)
