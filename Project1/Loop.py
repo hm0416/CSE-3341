@@ -32,4 +32,10 @@ class Loop:
         self.ss.print(numIndents + 1) #has to be there
         print(("\t" * numIndents) + "endwhile")
 
-    # def semantic(self):
+    def semantic(self, symbolTableGlobal, symbolTableLocal):
+        symbolTableLocal.append("while")
+        self.condNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+        symbolTableLocal.append("begin")
+        self.ss.semantic(symbolTableGlobal, symbolTableLocal)
+        symbolTableLocal.append("endwhile")
+

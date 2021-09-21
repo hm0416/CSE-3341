@@ -49,4 +49,20 @@ class Assign:
         elif self.whichString == "ref":
             print(("\t" * numIndents) + self.identifier1 + "=" + "ref " + self.identifier2 + ";")
 
-
+    def semantic(self, symbolTableGlobal, symbolTableLocal):
+        if self.exprNonTerm != None:
+            symbolTableLocal.append(self.identifier1)
+            symbolTableLocal.append("=")
+            self.exprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+            symbolTableLocal.append(";")
+        elif self.whichString == "new":
+            symbolTableLocal.append(self.identifier1)
+            symbolTableLocal.append("=")
+            symbolTableLocal.append("new")
+            symbolTableLocal.append(";")
+        elif self.whichString == "ref":
+            symbolTableLocal.append(self.identifier1)
+            symbolTableLocal.append("=")
+            symbolTableLocal.append("ref")
+            symbolTableLocal.append(self.identifier2)
+            symbolTableLocal.append(";")

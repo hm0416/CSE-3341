@@ -20,3 +20,9 @@ class IN:
     def print(self, numIndents):
         print(("\t" * numIndents) + "input ", end = '')
         print(self.identifier + ";")
+
+    def semantic(self, symbolTableGlobal, symbolTableLocal):
+        symbolTableLocal.append("input")
+        symbolTableLocal.append(self.identifier)
+        symbolTableLocal.append(";")
+

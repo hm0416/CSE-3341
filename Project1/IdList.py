@@ -25,3 +25,9 @@ class IdList:
         # if self.whichStr == 1:
             print(",", end = '')
             self.idL.print(0)
+
+    def semantic(self, symbolTableGlobal, symbolTableLocal):
+        symbolTableGlobal.append(self.identifier)
+        if self.idL != None:
+            symbolTableGlobal.append(",")
+            self.idL.semantic(symbolTableGlobal, symbolTableLocal)

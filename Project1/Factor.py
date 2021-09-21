@@ -35,3 +35,13 @@ class Factor:
             print("(", end = '')
             self.exprNonTerm.print(0)
             print(")", end = '')
+
+    def semantic(self, symbolTableGlobal, symbolTableLocal):
+        if self.whichStr == 1:
+            symbolTableLocal.append(self.identifier)
+        elif self.whichStr == 2:
+            symbolTableLocal.append(self.const)
+        elif self.exprNonTerm != None:
+            symbolTableLocal.append("(")
+            self.exprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+            symbolTableLocal.append(")")

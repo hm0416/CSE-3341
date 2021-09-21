@@ -22,3 +22,8 @@ class OUT:
         print(("\t" * numIndents) + "output ", end = '')
         self.exprNonTerm.print(0)
         print(";")
+
+    def semantic(self, symbolTableGlobal, symbolTableLocal):
+        symbolTableLocal.append("output")
+        self.exprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+        symbolTableLocal.append(";")

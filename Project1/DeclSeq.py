@@ -26,3 +26,8 @@ class DeclSeq:
         self.d.print(numOfIndents)
         if self.ds != None:
             self.ds.print(numOfIndents)
+
+    def semantic(self, symbolTableGlobal, symbolTableLocal):
+        self.d.semantic(symbolTableGlobal, symbolTableLocal)
+        if self.ds != None:
+            self.ds.semantic(symbolTableGlobal, symbolTableLocal)

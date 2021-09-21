@@ -50,6 +50,9 @@ class Prog:
         self.ss.print(numOfIndents) #has to be there
         print("end")
 
-    # def semantic(self):
+    def semantic(self, symbolTableGlobal, symbolTableLocal):
+        if self.ds != None:
+            self.ds.semantic(symbolTableGlobal, symbolTableLocal)
+        self.ss.semantic(symbolTableGlobal, symbolTableLocal)
 
 

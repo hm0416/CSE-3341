@@ -37,3 +37,15 @@ class Cmpr:
         elif self.operator == 3:
             print("<=", end = '')
             self.exprNonTerm2.print(0)
+
+    def semantic(self, symbolTableGlobal, symbolTableLocal):
+        self.exprNonTerm1.semantic(symbolTableGlobal, symbolTableLocal)
+        if self.operator == 1:
+            symbolTableLocal.append("==")
+            self.exprNonTerm2.semantic(symbolTableGlobal, symbolTableLocal)
+        elif self.operator == 2:
+            symbolTableLocal.append("<")
+            self.exprNonTerm2.semantic(symbolTableGlobal, symbolTableLocal)
+        elif self.operator == 3:
+            symbolTableLocal.append("<=")
+            self.exprNonTerm2.semantic(symbolTableGlobal, symbolTableLocal)

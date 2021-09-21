@@ -31,3 +31,7 @@ class DeclClass:
         print(("\t" * numIndents) + "ref ", end = '')
         self.idL.print(0)
         print(";")
+
+    def semantic(self, symbolTableGlobal, symbolTableLocal):
+        symbolTableGlobal.append("ref")
+        self.idL.semantic(symbolTableGlobal, symbolTableLocal)

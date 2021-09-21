@@ -18,4 +18,9 @@ class StmtSeq:
         if self.ss != None:
             self.ss.print(numOfIndents)
 
+    def semantic(self, symbolTableGlobal, symbolTableLocal):
+        self.s.semantic(symbolTableGlobal, symbolTableLocal)
+        if self.ss != None:
+            self.ss.semantic(symbolTableGlobal, symbolTableLocal)
+
 from Stmt import Stmt

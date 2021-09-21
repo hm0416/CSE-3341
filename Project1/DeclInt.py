@@ -21,3 +21,7 @@ class DeclInt:
         print(("\t" * numIndents) + "int ", end = '')
         self.idL.print(0)
         print(";")
+
+    def semantic(self, symbolTableGlobal, symbolTableLocal):
+        symbolTableGlobal.append("int")
+        self.idL.semantic(symbolTableGlobal, symbolTableLocal)
