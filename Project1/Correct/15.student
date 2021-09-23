@@ -1,1 +1,17 @@
-ERROR: Variable y is not declared.
+program
+	int x,y;
+begin
+	x=1;
+	y=1;
+	if x==y then
+		x=0;
+		if x<y then
+			x=10;
+		endif
+	else
+		if x<=y then
+			x=5;
+		endif
+	endif
+	output x;
+end

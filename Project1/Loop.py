@@ -36,14 +36,3 @@ class Loop:
         self.ss.print(numIndents + 1) #has to be there
         print(("\t" * numIndents) + "endwhile")
 
-    # def semantic(self, symbolTableGlobal, symbolTableLocal):
-    #     symbolTableLocal.append("while")
-    #     self.condNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-    #     symbolTableLocal.append("begin")
-    #     self.ss.semantic(symbolTableGlobal, symbolTableLocal)
-    #     symbolTableLocal.append("endwhile")
-
-    def semantic(self, symTable, globalSymTable, indx):
-        symTable.append({}) #new scoop - loop
-        self.condNonTerm.semantic(symTable, globalSymTable)
-        self.ss.semantic(symTable, globalSymTable, len(symTable)-1)

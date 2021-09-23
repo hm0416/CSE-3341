@@ -43,22 +43,3 @@ class IF:
             print(("\t" * numIndents) + "endif")
         else:
             print(("\t" * numIndents) + "endif")
-
-    # def semantic(self, symbolTableGlobal, symbolTableLocal):
-    #     symbolTableLocal.append("if")
-    #     self.condNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-    #     symbolTableLocal.append("then")
-    #     self.ss.semantic(symbolTableGlobal, symbolTableLocal)
-    #     if self.elseSS != None:
-    #         symbolTableLocal.append("else")
-    #         self.elseSS.semantic(symbolTableGlobal, symbolTableLocal)
-    #         symbolTableLocal.append("endif")
-    #     else:
-    #         symbolTableLocal.append("endif")
-
-    def semantic(self, symTable, globalSymTable, indx):
-        symTable.append({}) #new scope
-        self.condNonTerm.semantic(symTable, globalSymTable)
-        self.ss.semantic(symTable, globalSymTable, len(symTable)-1)
-        if self.elseSS != None:
-            self.elseSS.semantic(symTable, globalSymTable, len(symTable)-1)

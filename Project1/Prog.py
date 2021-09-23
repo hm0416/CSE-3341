@@ -13,11 +13,14 @@ class Prog:
             quit()
         S.nextToken() #scanner starts at declSeq
 
-        if S.currentToken() == Core.BEGIN:
-            S.nextToken()
-        else:
-            self.ds = DeclSeq() # this class will handle the consuming of toks
-            self.ds.parse(S) #consume all toks that make up declSeq
+        self.ds = DeclSeq() # this class will handle the consuming of toks
+        self.ds.parse(S) #consume all toks that make up declSeq
+
+        if S.currentToken() != Core.BEGIN:
+            print("ERROR: Token should be 'begin'")
+            quit()
+        S.nextToken() #scanner starts at declSeq
+
         self.ss = StmtSeq()
         self.ss.parse(S)
 
@@ -26,7 +29,7 @@ class Prog:
             quit()
         S.nextToken()
         if S.currentToken() != Core.EOF:
-            print("ERROR: Program should be at the end of the file")
+            print("ERROR: There is code after the end of the program. Program should be at the end of the file.")
             quit()
         S.nextToken()
 
@@ -37,16 +40,3 @@ class Prog:
         print("begin")
         self.ss.print(numOfIndents) #has to be there
         print("end")
-
-    # def semantic(self, symbolTableGlobal, symbolTableLocal):
-    #     if self.ds != None:
-    #         self.ds.semantic(symbolTableGlobal, symbolTableLocal)
-    #     self.ss.semantic(symbolTableGlobal, symbolTableLocal)
-
-    def semantic(self, symTable, globalSymTable):
-        indx = 0
-        symTable.append({}) #new scope - local
-        if self.ds != None:
-            self.ds.semantic(symTable, globalSymTable, indx)
-        self.ss.semantic(symTable, globalSymTable, indx)
-

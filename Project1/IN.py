@@ -27,12 +27,3 @@ class IN:
         print(("\t" * numIndents) + "input ", end = '')
         print(self.identifier + ";")
 
-    # def semantic(self, symbolTableGlobal, symbolTableLocal):
-    #     symbolTableLocal.append("input")
-    #     symbolTableLocal.append(self.identifier)
-    #     symbolTableLocal.append(";")
-
-    # def semantic(self, symTable):
-    #     symbolTableLocal.append("input")
-    #     symbolTableLocal.append(self.identifier)
-    #     symbolTableLocal.append(";")

@@ -1,1 +1,11 @@
-ERROR: Variable n is not declared.
+program
+	int x,n;
+begin
+	n=5;
+	x=4;
+	while !(x==0) begin
+		n=n*x;
+		x=x-1;
+		output n;
+	endwhile
+end

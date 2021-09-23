@@ -38,21 +38,3 @@ class Expr:
             elif self.operator == 2:
                 print("-", end = '')
                 self.exprNonTerm.print(0)
-
-    # def semantic(self, symbolTableGlobal, symbolTableLocal):
-    #     self.term.semantic(symbolTableGlobal, symbolTableLocal)
-    #     if self.exprNonTerm != None:
-    #         if self.operator == 1:
-    #             symbolTableLocal.append("+")
-    #             self.exprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-    #         elif self.operator == 2:
-    #             symbolTableLocal.append("-")
-    #             self.exprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-
-    def semantic(self, symTable, globalSymTable):
-        self.term.semantic(symTable, globalSymTable)
-        if self.exprNonTerm != None:
-            if self.operator == 1:
-                self.exprNonTerm.semantic(symTable, globalSymTable)
-            elif self.operator == 2:
-                self.exprNonTerm.semantic(symTable, globalSymTable)

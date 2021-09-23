@@ -22,13 +22,3 @@ class DeclInt:
         self.idL.print(0)
         print(";")
 
-    # def semantic(self, symbolTableGlobal, symbolTableLocal):
-    #     symbolTableGlobal.append("int")
-    #     self.idL.semantic(symbolTableGlobal, symbolTableLocal)
-
-    def semantic(self, symTable, globalSymTable, indx):
-        dict = symTable[indx]
-        dict[self.idL.getIdentifier()] = "int"
-        # if self.idL.isComma() == 1:
-        #     globalSymTable[self.idL.getIdentifier()] = "int"
-        self.idL.semantic(symTable, globalSymTable)

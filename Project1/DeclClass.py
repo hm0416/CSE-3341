@@ -23,11 +23,3 @@ class DeclClass:
         self.idL.print(0)
         print(";")
 
-    # def semantic(self, symbolTableGlobal, symbolTableLocal):
-    #     symbolTableGlobal.append("ref")
-    #     self.idL.semantic(symbolTableGlobal, symbolTableLocal)
-
-    def semantic(self, symTable, globalSymTable, indx):
-        ele = symTable[indx]
-        ele[self.idL.getIdentifier()] = "ref"
-        self.idL.semantic(symTable, globalSymTable)

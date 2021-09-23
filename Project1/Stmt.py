@@ -49,31 +49,3 @@ class Stmt:
             self.outputNonTerm.print(numOfIndents)
         if self.declNonTerm != None:
             self.declNonTerm.print(numOfIndents)
-
-    # def semantic(self, symbolTableGlobal, symbolTableLocal):
-    #     if self.assignNonTerm != None:
-    #         self.assignNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-    #     if self.ifNonTerm != None:
-    #         self.ifNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-    #     if self.loopNonTerm != None:
-    #         self.loopNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-    #     if self.inputNonTerm != None:
-    #         self.inputNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-    #     if self.outputNonTerm != None:
-    #         self.outputNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-    #     if self.declNonTerm != None:
-    #         self.declNonTerm.semantic(symbolTableLocal, symbolTableLocal)
-
-    def semantic(self, symTable, globalSymTable, indx):
-        if self.assignNonTerm != None:
-            self.assignNonTerm.semantic(symTable, globalSymTable)
-        if self.ifNonTerm != None:
-            self.ifNonTerm.semantic(symTable, globalSymTable, indx)
-        if self.loopNonTerm != None:
-            self.loopNonTerm.semantic(symTable, globalSymTable, indx)
-        # if self.inputNonTerm != None:
-        #     self.inputNonTerm.semantic(symTable)
-        # if self.outputNonTerm != None:
-        #     self.outputNonTerm.semantic(symTable)
-        if self.declNonTerm != None: #local
-            self.declNonTerm.semantic(symTable, globalSymTable, len(symTable)-1)

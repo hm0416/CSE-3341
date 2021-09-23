@@ -37,30 +37,3 @@ class Factor:
             print("(", end = '')
             self.exprNonTerm.print(0)
             print(")", end = '')
-
-    # def semantic(self, symbolTableGlobal, symbolTableLocal):
-    #     if self.whichStr == 1:
-    #         symbolTableLocal.append(self.identifier)
-    #     elif self.whichStr == 2:
-    #         symbolTableLocal.append(self.const)
-    #     elif self.exprNonTerm != None:
-    #         symbolTableLocal.append("(")
-    #         self.exprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-    #         symbolTableLocal.append(")")
-
-    def semantic(self, symTable, globalSymTable):
-        inScope = any(self.identifier in d for d in symTable)
-        if inScope == False:
-            print("ERROR: Variable " + self.identifier + " is not declared.")
-            quit()
-
-        # if self.whichStr == 1:
-        #     if self.identifier not in globalSymTable:
-        #         for ele in symTable:
-        #             if self.identifier not in ele:
-        #                 print("ERROR: Variable " + self.identifier + " is not declared.")
-        #                 quit()
-                                # elif self.whichStr == 2:
-        #     local[self.identifier] = "const"
-        if self.exprNonTerm != None:
-            self.exprNonTerm.semantic(symTable, globalSymTable)

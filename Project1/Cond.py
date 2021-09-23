@@ -44,24 +44,3 @@ class Cond:
             self.condNonTerm.print(0)
         else:
             self.cmprNonTerm.print(0)
-
-    # def semantic(self, symbolTableGlobal, symbolTableLocal):
-    #     if self.whichStr == 1:
-    #         symbolTableLocal.append("!(")
-    #         self.condNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-    #         symbolTableLocal.append(")")
-    #     elif self.whichStr == 2:
-    #         self.cmprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-    #         symbolTableLocal.append("or")
-    #         self.condNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-    #     else:
-    #         self.cmprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-
-    def semantic(self, symTable, globalSymTable):
-        if self.whichStr == 1:
-            self.condNonTerm.semantic(symTable, globalSymTable)
-        elif self.whichStr == 2:
-            self.cmprNonTerm.semantic(symTable, globalSymTable)
-            self.condNonTerm.semantic(symTable, globalSymTable)
-        else:
-            self.cmprNonTerm.semantic(symTable, globalSymTable)

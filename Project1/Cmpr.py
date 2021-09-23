@@ -13,6 +13,9 @@ class Cmpr:
         if S.currentToken() == Core.EQUAL:
             self.operator = 1
             S.nextToken()
+            if S.currentToken() == Core.ASSIGN:
+                print("ERROR: ASSIGN is in the condition.")
+                quit()
             self.exprNonTerm2 = Expr()
             self.exprNonTerm2.parse(S)
         elif S.currentToken() == Core.LESS:
@@ -40,24 +43,3 @@ class Cmpr:
         elif self.operator == 3:
             print("<=", end = '')
             self.exprNonTerm2.print(0)
-
-    # def semantic(self, symbolTableGlobal, symbolTableLocal):
-    #     self.exprNonTerm1.semantic(symbolTableGlobal, symbolTableLocal)
-    #     if self.operator == 1:
-    #         symbolTableLocal.append("==")
-    #         self.exprNonTerm2.semantic(symbolTableGlobal, symbolTableLocal)
-    #     elif self.operator == 2:
-    #         symbolTableLocal.append("<")
-    #         self.exprNonTerm2.semantic(symbolTableGlobal, symbolTableLocal)
-    #     elif self.operator == 3:
-    #         symbolTableLocal.append("<=")
-    #         self.exprNonTerm2.semantic(symbolTableGlobal, symbolTableLocal)
-
-    def semantic(self, symTable, globalSymTable):
-        self.exprNonTerm1.semantic(symTable, globalSymTable)
-        if self.operator == 1:
-            self.exprNonTerm2.semantic(symTable, globalSymTable)
-        elif self.operator == 2:
-            self.exprNonTerm2.semantic(symTable, globalSymTable)
-        elif self.operator == 3:
-            self.exprNonTerm2.semantic(symTable, globalSymTable)

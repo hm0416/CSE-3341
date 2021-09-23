@@ -48,27 +48,3 @@ class Assign:
             print(("\t" * numIndents) + self.identifier1 + "=" + "new;")
         elif self.whichString == "ref":
             print(("\t" * numIndents) + self.identifier1 + "=" + "ref " + self.identifier2 + ";")
-
-    # def semantic(self, symbolTableGlobal, symbolTableLocal):
-    #     if self.exprNonTerm != None:
-    #         symbolTableLocal.append(self.identifier1)
-    #         symbolTableLocal.append("=")
-    #         self.exprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-    #     elif self.whichString == "new":
-    #         symbolTableLocal.append(self.identifier1)
-    #         symbolTableLocal.append("=")
-    #         symbolTableLocal.append("new")
-    #     elif self.whichString == "ref":
-    #         symbolTableLocal.append(self.identifier1)
-    #         symbolTableLocal.append("=")
-    #         symbolTableLocal.append("ref")
-    #         symbolTableLocal.append(self.identifier2)
-
-    def semantic(self, symTable, globalSymTable):
-        inScope = any(self.identifier1 in d for d in symTable)
-        if inScope == False:
-            print("ERROR: Variable " + self.identifier1 + " is not declared.")
-            quit()
-
-        if self.exprNonTerm != None:
-            self.exprNonTerm.semantic(symTable, globalSymTable)
