@@ -8,9 +8,15 @@ class IN:
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() == Core.INPUT:
             S.nextToken()
+        else:
+            print("ERROR: Token should be 'input'")
+            quit()
         if S.currentToken() == Core.ID:
             self.identifier = S.getID()
             S.nextToken()
+        else:
+            print("ERROR: Token should be an 'id'")
+            quit()
 
         if S.currentToken() != Core.SEMICOLON:
             print("ERROR: Token should be ';'")
@@ -21,8 +27,12 @@ class IN:
         print(("\t" * numIndents) + "input ", end = '')
         print(self.identifier + ";")
 
-    def semantic(self, symbolTableGlobal, symbolTableLocal):
-        symbolTableLocal.append("input")
-        symbolTableLocal.append(self.identifier)
-        symbolTableLocal.append(";")
+    # def semantic(self, symbolTableGlobal, symbolTableLocal):
+    #     symbolTableLocal.append("input")
+    #     symbolTableLocal.append(self.identifier)
+    #     symbolTableLocal.append(";")
 
+    # def semantic(self, symTable):
+    #     symbolTableLocal.append("input")
+    #     symbolTableLocal.append(self.identifier)
+    #     symbolTableLocal.append(";")

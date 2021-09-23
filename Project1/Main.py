@@ -7,12 +7,16 @@ from Prog import Prog
 
 def main():
     S = Scanner(sys.argv[1])
-    symbolTableGlobal = []
-    symbolTableLocal = []
+    # symbolTableGlobal = [{}]
+    # symbolTableLocal = [{}]
+    globalSymTable = {}
+    symTable = [{}]
 
     root = Prog()
     root.parse(S)
-    root.semantic(symbolTableGlobal, symbolTableLocal)
+    # root.semantic(symbolTableGlobal, symbolTableLocal)
+    root.semantic(symTable, globalSymTable)
+    print(symTable)
 
     # for ele in symbolTableLocal:
     #     for ele2 in symbolTableGlobal:

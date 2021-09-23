@@ -21,13 +21,19 @@ class Decl:
 
     def print(self, numOfIndents):
         if self.whichStr == "int":
-            self.dInt.print(numOfIndents) #indent by 1
+            self.dInt.print(numOfIndents)
         elif self.whichStr == "ref":
-            self.dClass.print(numOfIndents) #has to be there
+            self.dClass.print(numOfIndents)
 
-    def semantic(self, symbolTableGlobal, symbolTableLocal):
+    # def semantic(self, symbolTableGlobal, symbolTableLocal):
+    #     if self.whichStr == "int":
+    #         self.dInt.semantic(symbolTableGlobal, symbolTableLocal) #indent by 1
+    #     elif self.whichStr == "ref":
+    #         self.dClass.semantic(symbolTableGlobal, symbolTableLocal) #has to be there
+
+    def semantic(self, symTable, globalSymTable, indx):
         if self.whichStr == "int":
-            self.dInt.semantic(symbolTableGlobal, symbolTableLocal) #indent by 1
+            self.dInt.semantic(symTable, globalSymTable, indx) #indent by 1
         elif self.whichStr == "ref":
-            self.dClass.semantic(symbolTableGlobal, symbolTableLocal) #has to be there
+            self.dClass.semantic(symTable, globalSymTable, indx) #has to be there
 

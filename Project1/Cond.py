@@ -18,6 +18,12 @@ class Cond:
                 self.condNonTerm.parse(S)
                 if S.currentToken() == Core.RPAREN:
                     S.nextToken()
+                else:
+                    print("ERROR: Right parenthesis expected")
+                    quit()
+            else:
+                print("ERROR: Left parenthesis expected")
+                quit()
         else:
             self.cmprNonTerm = Cmpr()
             self.cmprNonTerm.parse(S)
@@ -26,14 +32,6 @@ class Cond:
                 S.nextToken()
                 self.condNonTerm = Cond()
                 self.condNonTerm.parse(S)
-
-    def createIndents(self, numOfIndents):
-        tab = ""
-        i = 0
-        while i < numOfIndents:
-            tab += "\t"
-            i += 1
-        return tab
 
     def print(self, numOfIndents):
         if self.whichStr == 1:
@@ -47,14 +45,23 @@ class Cond:
         else:
             self.cmprNonTerm.print(0)
 
-    def semantic(self, symbolTableGlobal, symbolTableLocal):
+    # def semantic(self, symbolTableGlobal, symbolTableLocal):
+    #     if self.whichStr == 1:
+    #         symbolTableLocal.append("!(")
+    #         self.condNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+    #         symbolTableLocal.append(")")
+    #     elif self.whichStr == 2:
+    #         self.cmprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+    #         symbolTableLocal.append("or")
+    #         self.condNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+    #     else:
+    #         self.cmprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+
+    def semantic(self, symTable, globalSymTable):
         if self.whichStr == 1:
-            symbolTableLocal.append("!(")
-            self.condNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-            symbolTableLocal.append(")")
+            self.condNonTerm.semantic(symTable, globalSymTable)
         elif self.whichStr == 2:
-            self.cmprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-            symbolTableLocal.append("or")
-            self.condNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+            self.cmprNonTerm.semantic(symTable, globalSymTable)
+            self.condNonTerm.semantic(symTable, globalSymTable)
         else:
-            self.cmprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+            self.cmprNonTerm.semantic(symTable, globalSymTable)

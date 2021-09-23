@@ -18,20 +18,16 @@ class DeclClass:
             quit()
         S.nextToken()
 
-    def createIndents(self, numOfIndents):
-        tab = ""
-        i = 0
-        while i < numOfIndents:
-            tab += "\t"
-            i += 1
-        return tab
-
     def print(self, numIndents):
-        # numIndents = self.createIndents(numOfIndents)
         print(("\t" * numIndents) + "ref ", end = '')
         self.idL.print(0)
         print(";")
 
-    def semantic(self, symbolTableGlobal, symbolTableLocal):
-        symbolTableGlobal.append("ref")
-        self.idL.semantic(symbolTableGlobal, symbolTableLocal)
+    # def semantic(self, symbolTableGlobal, symbolTableLocal):
+    #     symbolTableGlobal.append("ref")
+    #     self.idL.semantic(symbolTableGlobal, symbolTableLocal)
+
+    def semantic(self, symTable, globalSymTable, indx):
+        ele = symTable[indx]
+        ele[self.idL.getIdentifier()] = "ref"
+        self.idL.semantic(symTable, globalSymTable)

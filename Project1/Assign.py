@@ -11,16 +11,16 @@ class Assign:
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() != Core.ID:
-            print("ERROR: Token should be 'id'")
+            print("ERROR: Token should be an 'id'")
             quit()
-        self.identifier1 = S.getID()
+        self.identifier1 = S.getID() #gets first ID value
         S.nextToken()
 
         if S.currentToken() == Core.ASSIGN:
             S.nextToken()
-            # if S.currentToken() != Core.NEW or S.currentToken() != Core.REF:
-            #     self.exprNonTerm = Expr()
-            #     self.exprNonTerm.parse(S)
+        else:
+            print("ERROR: Token should be 'assign (=)'")
+            quit()
 
         if S.currentToken() == Core.NEW:
             self.whichString = "new"
@@ -28,8 +28,8 @@ class Assign:
         elif S.currentToken() == Core.REF:
             self.whichString = "ref"
             S.nextToken()
-            self.identifier2 = S.getID()
-            S.nextToken() ##extra to get the begin tok
+            self.identifier2 = S.getID() #gets second ID value
+            S.nextToken() #extra to get the begin tok
         else:
             self.exprNonTerm = Expr()
             self.exprNonTerm.parse(S)
@@ -40,7 +40,7 @@ class Assign:
         S.nextToken()
 
     def print(self, numIndents):
-        if self.exprNonTerm != None:
+        if self.exprNonTerm != None: #if expr non terminal is used
             print(("\t" * numIndents) + self.identifier1 + "=", end = '') #indent by 1
             self.exprNonTerm.print(0)
             print(";")
@@ -49,20 +49,26 @@ class Assign:
         elif self.whichString == "ref":
             print(("\t" * numIndents) + self.identifier1 + "=" + "ref " + self.identifier2 + ";")
 
-    def semantic(self, symbolTableGlobal, symbolTableLocal):
+    # def semantic(self, symbolTableGlobal, symbolTableLocal):
+    #     if self.exprNonTerm != None:
+    #         symbolTableLocal.append(self.identifier1)
+    #         symbolTableLocal.append("=")
+    #         self.exprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+    #     elif self.whichString == "new":
+    #         symbolTableLocal.append(self.identifier1)
+    #         symbolTableLocal.append("=")
+    #         symbolTableLocal.append("new")
+    #     elif self.whichString == "ref":
+    #         symbolTableLocal.append(self.identifier1)
+    #         symbolTableLocal.append("=")
+    #         symbolTableLocal.append("ref")
+    #         symbolTableLocal.append(self.identifier2)
+
+    def semantic(self, symTable, globalSymTable):
+        inScope = any(self.identifier1 in d for d in symTable)
+        if inScope == False:
+            print("ERROR: Variable " + self.identifier1 + " is not declared.")
+            quit()
+
         if self.exprNonTerm != None:
-            symbolTableLocal.append(self.identifier1)
-            symbolTableLocal.append("=")
-            self.exprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-            symbolTableLocal.append(";")
-        elif self.whichString == "new":
-            symbolTableLocal.append(self.identifier1)
-            symbolTableLocal.append("=")
-            symbolTableLocal.append("new")
-            symbolTableLocal.append(";")
-        elif self.whichString == "ref":
-            symbolTableLocal.append(self.identifier1)
-            symbolTableLocal.append("=")
-            symbolTableLocal.append("ref")
-            symbolTableLocal.append(self.identifier2)
-            symbolTableLocal.append(";")
+            self.exprNonTerm.semantic(symTable, globalSymTable)

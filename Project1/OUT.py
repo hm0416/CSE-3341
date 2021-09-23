@@ -3,13 +3,15 @@ from Expr import Expr
 
 
 class OUT:
-    # global exprNonTerm
     def __init__(self):
         self.exprNonTerm = None
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() == Core.OUTPUT:
             S.nextToken()
+        else:
+            print("ERROR: Token should be 'output'")
+            quit()
         self.exprNonTerm = Expr()
         self.exprNonTerm.parse(S)
 
@@ -23,7 +25,7 @@ class OUT:
         self.exprNonTerm.print(0)
         print(";")
 
-    def semantic(self, symbolTableGlobal, symbolTableLocal):
-        symbolTableLocal.append("output")
-        self.exprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-        symbolTableLocal.append(";")
+    # def semantic(self, symbolTableGlobal, symbolTableLocal):
+    #     symbolTableLocal.append("output")
+    #     self.exprNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+    #     symbolTableLocal.append(";")

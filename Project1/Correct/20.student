@@ -1,8 +1,1 @@
-program
-	int x,y,z;
-begin
-	x=5;
-	y=10;
-	z=x-y*5-5;
-	output z;
-end
+ERROR: Variable y is not declared.

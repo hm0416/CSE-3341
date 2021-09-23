@@ -6,8 +6,7 @@ class IF:
     def __init__(self):
         self.condNonTerm = None
         self.ss = None
-        self.elseSS = None
-        # self.whichStr = 0 #0 for none, 1 for else
+        self.elseSS = None #second stmtSeq when there is an else statment
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() != Core.IF:
@@ -25,7 +24,6 @@ class IF:
         self.ss.parse(S)
 
         if S.currentToken() == Core.ELSE:
-            # self.whichStr = 1
             S.nextToken()
             self.elseSS = StmtSeq()
             self.elseSS.parse(S)
@@ -34,36 +32,33 @@ class IF:
             quit()
         S.nextToken()
 
-    def createIndents(self, numOfIndents):
-        tab = ""
-        i = 0
-        while i < numOfIndents:
-            tab += "\t"
-            i += 1
-        return tab
-
     def print(self, numIndents):
-        # numIndents = self.createIndents(numOfIndents)
         print(("\t" * numIndents) + "if ", end = '')
         self.condNonTerm.print(0)
         print(" then")
         self.ss.print(numIndents + 1)
         if self.elseSS != None:
-            # if self.whichStr == 1:
             print(("\t" * numIndents) + "else")
             self.elseSS.print(numIndents + 1)
             print(("\t" * numIndents) + "endif")
         else:
             print(("\t" * numIndents) + "endif")
 
-    def semantic(self, symbolTableGlobal, symbolTableLocal):
-        symbolTableLocal.append("if")
-        self.condNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-        symbolTableLocal.append("then")
-        self.ss.semantic(symbolTableGlobal, symbolTableLocal)
+    # def semantic(self, symbolTableGlobal, symbolTableLocal):
+    #     symbolTableLocal.append("if")
+    #     self.condNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+    #     symbolTableLocal.append("then")
+    #     self.ss.semantic(symbolTableGlobal, symbolTableLocal)
+    #     if self.elseSS != None:
+    #         symbolTableLocal.append("else")
+    #         self.elseSS.semantic(symbolTableGlobal, symbolTableLocal)
+    #         symbolTableLocal.append("endif")
+    #     else:
+    #         symbolTableLocal.append("endif")
+
+    def semantic(self, symTable, globalSymTable, indx):
+        symTable.append({}) #new scope
+        self.condNonTerm.semantic(symTable, globalSymTable)
+        self.ss.semantic(symTable, globalSymTable, len(symTable)-1)
         if self.elseSS != None:
-            symbolTableLocal.append("else")
-            self.elseSS.semantic(symbolTableGlobal, symbolTableLocal)
-            symbolTableLocal.append("endif")
-        else:
-            symbolTableLocal.append("endif")
+            self.elseSS.semantic(symTable, globalSymTable, len(symTable)-1)

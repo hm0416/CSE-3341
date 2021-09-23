@@ -1,9 +1,1 @@
-program
-	int x;
-begin
-	x=1-1-1-1;
-	output x;
-	ref a,b,c;
-	a=ref b;
-	c=ref a;
-end
+ERROR: Variable c is not declared.

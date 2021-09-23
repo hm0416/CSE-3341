@@ -18,20 +18,8 @@ class Prog:
         else:
             self.ds = DeclSeq() # this class will handle the consuming of toks
             self.ds.parse(S) #consume all toks that make up declSeq
-            # S.nextToken() #begin tok
         self.ss = StmtSeq()
         self.ss.parse(S)
-
-        # if S.currentToken() == Core.INT or S.currentToken() == Core.REF:
-        #     self.ds = DeclSeq() # this class will handle the consuming of toks
-        #     self.ds.parse(S) #consume all toks that make up declSeq
-        #
-        # if S.currentToken() != Core.BEGIN:
-        #     print("ERROR: Token should be 'begin'")
-        #     quit()
-        # S.nextToken()
-        # self.ss = StmtSeq()
-        # self.ss.parse(S)
 
         if S.currentToken() != Core.END:
             print("ERROR: Token should be 'end'")
@@ -50,9 +38,15 @@ class Prog:
         self.ss.print(numOfIndents) #has to be there
         print("end")
 
-    def semantic(self, symbolTableGlobal, symbolTableLocal):
-        if self.ds != None:
-            self.ds.semantic(symbolTableGlobal, symbolTableLocal)
-        self.ss.semantic(symbolTableGlobal, symbolTableLocal)
+    # def semantic(self, symbolTableGlobal, symbolTableLocal):
+    #     if self.ds != None:
+    #         self.ds.semantic(symbolTableGlobal, symbolTableLocal)
+    #     self.ss.semantic(symbolTableGlobal, symbolTableLocal)
 
+    def semantic(self, symTable, globalSymTable):
+        indx = 0
+        symTable.append({}) #new scope - local
+        if self.ds != None:
+            self.ds.semantic(symTable, globalSymTable, indx)
+        self.ss.semantic(symTable, globalSymTable, indx)
 

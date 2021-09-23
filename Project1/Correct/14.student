@@ -1,10 +1,1 @@
-program
-	int x,y;
-begin
-	x=10;
-	y=5;
-	if x==y then
-		output x;
-	endif
-	output y;
-end
+ERROR: Variable y is not declared.

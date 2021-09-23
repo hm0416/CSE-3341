@@ -24,10 +24,13 @@ class Term:
             print("*", end = '')
             self.termNonTerm.print(0)
 
-    def semantic(self, symbolTableGlobal, symbolTableLocal):
-        self.factorNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+    # def semantic(self, symbolTableGlobal, symbolTableLocal):
+    #     self.factorNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+    #     if self.operator == 1:
+    #         symbolTableLocal.append("*")
+    #         self.termNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
+
+    def semantic(self, symTable, globalSymTable):
+        self.factorNonTerm.semantic(symTable, globalSymTable)
         if self.operator == 1:
-            symbolTableLocal.append("*")
-            self.termNonTerm.semantic(symbolTableGlobal, symbolTableLocal)
-
-
+            self.termNonTerm.semantic(symTable, globalSymTable)
