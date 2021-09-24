@@ -1,1 +1,6 @@
-int x1, y123y,z9z9z9z;
+program
+	int x;
+begin
+	x = 10;
+	output x;
+end

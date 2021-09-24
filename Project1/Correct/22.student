@@ -1,0 +1,13 @@
+program
+	int x,y,z;
+begin
+	x=5;
+	y=10;
+	int a,b,c;
+	if x<y then
+		while (0-10)<x begin
+			x=x-1;
+		endwhile
+	endif
+	output x;
+end

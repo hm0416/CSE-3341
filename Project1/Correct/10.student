@@ -1,15 +1,9 @@
-IF
-LPAREN
-ID[x]
-EQUAL
-ID[y]
-RPAREN
-THEN
-INPUT
-ID[x]
-SEMICOLON
-ELSE
-OUTPUT
-ID[x]
-SEMICOLON
-
+program
+	int x;
+begin
+	x=1-1-1-1;
+	output x;
+	ref a,b,c;
+	a=ref b;
+	c=ref a;
+end

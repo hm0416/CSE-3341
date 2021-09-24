@@ -1,4 +1,5 @@
-PROGRAM
-BEGIN
-END
-
+program
+	int x;
+begin
+	input x;
+end

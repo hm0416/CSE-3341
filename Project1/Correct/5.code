@@ -1,17 +1,10 @@
-
-program int X , Y , XY 	;
-
-        input X, Y;
-		
-		while !(X = 0) begin
-		
-			Y = Y * Y;
-			X = X - 1;
-			
-		endwhile;
-		
-		output Y;
-		
-		
-end  
-      
+program
+	int x;
+begin
+	if 1 == 1 then
+		x = 1;
+	else
+		x = 2;
+	endif
+	output x;
+end

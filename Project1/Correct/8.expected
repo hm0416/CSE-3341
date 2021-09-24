@@ -1,8 +1,8 @@
-INT
-ID[x]
-COMMA
-ID[y]
-COMMA
-ID[z]
-SEMICOLON
-
+program
+	int x,y,z;
+	ref a,b,c;
+begin
+	input x;
+	output 4;
+	a=new;
+end

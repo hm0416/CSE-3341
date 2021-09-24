@@ -1,0 +1,6 @@
+program
+	int x, y, z;
+	begin
+	ref a, b, c;
+	x = ref b;
+end

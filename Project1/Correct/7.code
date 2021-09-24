@@ -1,1 +1,5 @@
-program begin end
+program
+	int x;
+begin
+	input x;
+end

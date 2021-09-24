@@ -1,169 +1,141 @@
+from string import whitespace, ascii_letters, digits
 from Core import Core
-import re
-
 
 class Scanner:
 
-    # Constructor should open the file and find the first token
-    def __init__(self, filename):
-        self.file = open(filename, "r")
-        self.file.close()
+    def __init__(self, text_stream):
+        # Create a scanner from an opened text stream
+        self._ts = open(text_stream, 'r')
+        self._curr_pos = self._ts.tell()
+        self._prev_pos = None
+        self._buffer = None
+        self.token = None
+        self.id = None
+        self.const = None
+        self.nextToken()
 
-    # Goes through each line in the input file and tokenizes
-    def tokenizer(self, filename):
-        file = open(filename, "r")
-        lines = file.readlines()
-        tokens = []
-        mergedTokenList = []  # all tokens in one list for the entire file
+    def reset(self):
+        self._ts.seek(0)
 
-        for line in lines:
-            lineSplit = re.findall(r"[\w']+|[@#&^`/{}|.,!?;$:%_><~=()+*-]|[\s']+",line)  # taken from stack overflow - https://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
-            tokens.append(lineSplit)
+    def readChar(self):
+        char = self._ts.read(1)
+        self._prev_pos = self._curr_pos
+        self._curr_pos = self._ts.tell()
+        return char
 
-        # appends all tokens into one big list
-        for tokenList in tokens:
-            mergedTokenList += tokenList
+    def pushChar(self):
+        self._ts.seek(self._prev_pos)
+        self._curr_pos = self._prev_pos
+        self._prev_pos = None
 
-        file.close()
-        return mergedTokenList
+    def errrorMessage(self, badThing):
+        print("ERROR: Invalid character or constant: " + badThing)
+        self.token=Core.ERROR
 
-    # nextToken should advance the scanner to the next token
-    def nextToken(self, listOfToks):
-        if len(listOfToks) == 0:  # checks if list is empty
-            exit()
+    def nextToken(self):
+        c = self.readChar()
+        # Skip all whitespaces
+        while c in whitespace and c!="":
+            c = self.readChar()
 
-        listOfToks.pop(0)  # gets next token and modifies the list by removing the next token
-        return listOfToks
-
-    # currentToken should return the current token
-    def currentToken(self, initialTokensList):
-        # goes through each token and returns corresponding ENUM
-        for i, v in enumerate(initialTokensList):
-            if v == ';':
-                return Core.SEMICOLON
-            elif v == ',':
-                return Core.COMMA
-            elif v == '!':
-                return Core.NEGATION
-            elif v == '+':
-                return Core.ADD
-            elif v == '-':
-                return Core.SUB
-            elif v == '*':
-                return Core.MULT
-            elif v == '(':
-                return Core.LPAREN
-            elif v == ')':
-                return Core.RPAREN
-            elif v == 'begin':
-                return Core.BEGIN
-            elif v == 'program':
-                return Core.PROGRAM
-            elif v == 'end':
-                return Core.END
-            elif v == 'new':
-                return Core.NEW
-            elif v == 'define':
-                return Core.DEFINE
-            elif v == 'extends':
-                return Core.EXTENDS
-            elif v == 'class':
-                return Core.CLASS
-            elif v == 'endclass':
-                return Core.ENDCLASS
-            elif v == 'int':
-                return Core.INT
-            elif v == 'endfunc':
-                return Core.ENDFUNC
-            elif v == 'if':
-                return Core.IF
-            elif v == 'then':
-                return Core.THEN
-            elif v == 'else':
-                return Core.ELSE
-            elif v == 'while':
-                return Core.WHILE
-            elif v == 'endwhile':
-                return Core.ENDWHILE
-            elif v == 'endif':
-                return Core.ENDIF
-            elif v == 'input':
-                return Core.INPUT
-            elif v == 'output':
-                return Core.OUTPUT
-            elif v == 'or':
-                return Core.OR
-            elif v == 'ref':
-                return Core.REF
-            elif v == '<':
-                #checks to see what the next char is after <
-                if initialTokensList.index(v) != (len(initialTokensList) - 1):
-                    nextChar = initialTokensList[i + 1]
-                    if nextChar == "=":
-                        initialTokensList[i:i + 2] = [''.join(initialTokensList[i:i + 2])] #joins < and = to make <=
-                    else:
-                        return Core.LESS
-                else:
-                    return Core.LESS
-            elif v == "<=":
-                return Core.LESSEQUAL
-            elif v == '=':
-                #checks to see what the next char is after =
-                if initialTokensList.index(v) != (len(initialTokensList) - 1):
-                    nextChar = initialTokensList[i + 1]
-                    if nextChar == "=":
-                        initialTokensList[i:i + 2] = [''.join(initialTokensList[i:i + 2])] #joins the two = symbols to make an EQUAL
-                    else:
-                        return Core.ASSIGN
-                else:
-                    return Core.ASSIGN
-            elif v == '==':
-                return Core.EQUAL
-            elif v.isalpha():
-                return Core.ID
-            elif v.isnumeric():
-                if int(v) > 1023:
-                    print("Integers larger than 1023 are not allowed.\n")
-                    quit()
-                else:
-                    return Core.CONST
-            elif v.isspace():
-                return ' '
-            elif v.isalnum():
-                #checking if the beginning of the string contains digits
-                if re.match('^(\d+)', v):
-                    splitAlnum = re.split('(\d+)', v) #splits the digits from the non-digits
-                    for ele in splitAlnum:
-                        if ele == '':
-                            splitAlnum.remove('')  # remove unecessary char
-                    #replaces alphanumerical string with two separate strings - one being the digits and the other being the non-digits
-                    initialTokensList.remove(v)
-                    for ele in splitAlnum:
-                        if splitAlnum.index(ele) == 0: #the digit
-                            initialTokensList.insert(i, ele)
-                        else:
-                            initialTokensList.insert(i + 1, ele) #the non-digits
-                else:
-                    return Core.ID
+        # Handle the end of the stream
+        if c=="":
+            self.token = Core.EOF
+        elif c in ascii_letters:
+            tokString=""
+            while (c in ascii_letters or c in digits) and c!="":
+                tokString+=c
+                c=self.readChar()
+            self.pushChar()
+            if tokString=="program":
+                self.token=Core.PROGRAM
+            elif tokString=="begin":
+                self.token=Core.BEGIN
+            elif tokString=="end":
+                self.token=Core.END
+            elif tokString=="new":
+                self.token=Core.NEW
+            elif tokString=="define":
+                self.token=Core.DEFINE
+            elif tokString=="extends":
+                self.token=Core.EXTENDS
+            elif tokString=="class":
+                self.token=Core.CLASS
+            elif tokString=="endclass":
+                self.token=Core.ENDCLASS
+            elif tokString=="int":
+                self.token=Core.INT
+            elif tokString=="ref":
+                self.token=Core.REF
+            elif tokString=="endfunc":
+                self.token=Core.ENDFUNC
+            elif tokString=="if":
+                self.token=Core.IF
+            elif tokString=="then":
+                self.token=Core.THEN
+            elif tokString=="else":
+                self.token=Core.ELSE
+            elif tokString=="while":
+                self.token=Core.WHILE
+            elif tokString=="endwhile":
+                self.token=Core.ENDWHILE
+            elif tokString=="endif":
+                self.token=Core.ENDIF
+            elif tokString=="input":
+                self.token=Core.INPUT
+            elif tokString=="output":
+                self.token=Core.OUTPUT
             else:
-                print("Error " + v + " is not part of the language \n")
-                quit()
-
-
-    # If the current token is ID, return the string value of the identifier
-    # Otherwise, return value does not matter
-    def getID(self, str):
-        # checks if string is only alphabetical or alphanumerical
-        if str.isalpha() or str.isalnum():
-            return str
+                self.token=Core.ID
+                self.id=tokString
+        elif c in digits:
+            tokString=""
+            while c in digits and c!="":
+                tokString+=c
+                c=self.readChar()
+            self.pushChar()
+            self.const = int(tokString)
+            self.token=Core.CONST
+            if self.const > 1023:
+                self.errrorMessage(tokString)
+        elif c==';':
+            self.token = Core.SEMICOLON
+        elif c=='(':
+            self.token = Core.LPAREN
+        elif c==')':
+            self.token = Core.RPAREN
+        elif c==',':
+            self.token = Core.COMMA
+        elif c=='!':
+            self.token = Core.NEGATION
+        elif c=='+':
+            self.token = Core.ADD
+        elif c=='-':
+            self.token = Core.SUB
+        elif c=='*':
+            self.token = Core.MULT
+        elif c=='=':
+            nextChar = self.readChar()
+            if nextChar=='=':
+                self.token=Core.EQUAL
+            else:
+                self.pushChar()
+                self.token=Core.ASSIGN
+        elif c=='<':
+            nextChar = self.readChar()
+            if nextChar=='=':
+                self.token=Core.LESSEQUAL
+            else:
+                self.pushChar()
+                self.token=Core.LESS
         else:
-            return "Not alphabetical."
+            self.errrorMessage(c)
+        
+    def currentToken(self):
+        return self.token
 
-    # If the current token is CONST, return the numerical value of the constant
-    # Otherwise, return value does not matter
-    def getCONST(self, numStr):
-        # checks that string is only numerical
-        if numStr.isnumeric():
-            return numStr
-        else:
-            return "Not a digit."
+    def getID(self):
+        return self.id
+
+    def getCONST(self):
+        return self.const

@@ -1,11 +1,8 @@
-ID[pRogram]
-ID[Input]
-ID[outpUt]
-ID[iF]
-ID[TheN]
-ID[ENDIF]
-ID[BEGIN]
-ID[EnD]
-REF
-ID[EOS]
-
+program
+	int x,y;
+begin
+	x=1;
+	y=2;
+	output x;
+	output y;
+end
