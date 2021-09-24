@@ -27,7 +27,7 @@ StmtSeq.py
 Term.py
 Prog.py
 
-Special features/comments:
+Special features/comments: N/A
 
 Description of overall design of the parser: The parser calls the Scanner to get the tokens that the scanner generates. The parser then
 creates a parse tree with these tokens. This tree then gets passed to the semantic function to perform a semantic analysis. I made all the
