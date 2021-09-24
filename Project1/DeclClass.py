@@ -14,7 +14,7 @@ class DeclClass:
         self.idL = IdList()
         self.idL.parse(S)
         if S.currentToken() != Core.SEMICOLON:
-            print("ERROR: Token should be ';'")
+            print("ERROR: Token should be ';', token should NOT be a " + S.currentToken().name)
             quit()
         S.nextToken()
 

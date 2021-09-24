@@ -1,42 +1,8 @@
 program
     int a;
-    ref b;
+
 begin
-    int c, d, e;
-    ref f, g, h;
-
-    f = new;
-    g = ref h;
-    a = b;
-    c = 5;
-    d = a + c - e + a * c + (a + c) * (d - e);
-
-    input a;
-    output a + c - e + a * c + (a + c) * (d - e);
-
-    if !(a + c == d - e) then
-    a = b;
-    a = b;
-    if !(!(a == b)) then
-    a = 12;
-    endif
-    endif
-    if !(a + c == d - e) then
-    a = b;
-    a = b;
-    while !(a + c == d - e) begin
-    a = a - 1;
-    if !(a <= 666) then
-    a = 0;
-    endif
-    endwhile
-    else
-    a = b;
-    a = b;
-    endif
-
-    while !(a + c == d - e) begin
-    a = b;
-    a = b;
-    endwhile
+     if 1==1 then
+        int z;
+     endif
 end

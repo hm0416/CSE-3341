@@ -18,8 +18,8 @@ class Term:
             self.termNonTerm = Term()
             self.termNonTerm.parse(S)
 
-    def print(self, numOfIndents):
-        self.factorNonTerm.print(1)
+    def print(self):
+        self.factorNonTerm.print()
         if self.operator == 1:
             print("*", end = '')
-            self.termNonTerm.print(0)
+            self.termNonTerm.print()

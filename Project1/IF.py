@@ -17,7 +17,7 @@ class IF:
         self.condNonTerm.parse(S)
 
         if S.currentToken() != Core.THEN:
-            print("ERROR: Token should be 'then'")
+            print("ERROR: Token should be 'then', token should NOT be a " + S.currentToken().name)
             quit()
         S.nextToken()
         self.ss = StmtSeq()
@@ -28,13 +28,13 @@ class IF:
             self.elseSS = StmtSeq()
             self.elseSS.parse(S)
         if S.currentToken() != Core.ENDIF:
-            print("ERROR: Token should be 'endif'")
+            print("ERROR: Token should be 'endif', token should NOT be a " + S.currentToken().name)
             quit()
         S.nextToken()
 
     def print(self, numIndents):
         print(("\t" * numIndents) + "if ", end = '')
-        self.condNonTerm.print(0)
+        self.condNonTerm.print()
         print(" then")
         self.ss.print(numIndents + 1)
         if self.elseSS != None:

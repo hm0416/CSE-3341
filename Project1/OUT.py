@@ -16,11 +16,11 @@ class OUT:
         self.exprNonTerm.parse(S)
 
         if S.currentToken() != Core.SEMICOLON:
-            print("ERROR: Token should be ';'")
+            print("ERROR: Token should be ';', token should NOT be a " + S.currentToken().name)
             quit()
         S.nextToken()
 
     def print(self, numIndents):
         print(("\t" * numIndents) + "output ", end = '')
-        self.exprNonTerm.print(0)
+        self.exprNonTerm.print()
         print(";")

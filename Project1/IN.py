@@ -15,11 +15,11 @@ class IN:
             self.identifier = S.getID()
             S.nextToken()
         else:
-            print("ERROR: Token should be an 'id'")
+            print("ERROR: Token should be an 'id', token should NOT be a " + S.currentToken().name)
             quit()
 
         if S.currentToken() != Core.SEMICOLON:
-            print("ERROR: Token should be ';'")
+            print("ERROR: Token should be ';', token should NOT be a " + S.currentToken().name)
             quit()
         S.nextToken()
 

@@ -9,7 +9,7 @@ class IdList:
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() != Core.ID:
-            print("ERROR: Token should be 'id'")
+            print("ERROR: Token should be 'id', token should NOT be a " + S.currentToken().name)
             quit()
         self.identifier = S.getID()
         S.nextToken()

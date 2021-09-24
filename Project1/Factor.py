@@ -28,12 +28,12 @@ class Factor:
                 print("ERROR: Right parenthesis is missing")
                 quit()
 
-    def print(self, numOfIndents):
+    def print(self):
         if self.whichStr == 1:
             print(self.identifier, end = '')
         elif self.whichStr == 2:
             print(self.const, end = '')
         elif self.exprNonTerm != None:
             print("(", end = '')
-            self.exprNonTerm.print(0)
+            self.exprNonTerm.print()
             print(")", end = '')

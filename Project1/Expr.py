@@ -29,12 +29,12 @@ class Expr:
             self.exprNonTerm = Expr()
             self.exprNonTerm.parse(S)
 
-    def print(self, numOfIndents):
-        self.term.print(1)
+    def print(self):
+        self.term.print()
         if self.exprNonTerm != None:
             if self.operator == 1:
                 print("+", end = '')
-                self.exprNonTerm.print(0)
+                self.exprNonTerm.print()
             elif self.operator == 2:
                 print("-", end = '')
-                self.exprNonTerm.print(0)
+                self.exprNonTerm.print()

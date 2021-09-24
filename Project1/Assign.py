@@ -19,7 +19,7 @@ class Assign:
         if S.currentToken() == Core.ASSIGN:
             S.nextToken()
         else:
-            print("ERROR: Token should be 'assign (=)'")
+            print("ERROR: Token should be 'assign (=)', token should NOT be a " + S.currentToken().name)
             quit()
 
         if S.currentToken() == Core.NEW:
@@ -35,14 +35,14 @@ class Assign:
             self.exprNonTerm.parse(S)
 
         if S.currentToken() != Core.SEMICOLON:
-            print("ERROR: Token should be ';'")
+            print("ERROR: Token should be ';', token should NOT be a " + S.currentToken().name)
             quit()
         S.nextToken()
 
     def print(self, numIndents):
         if self.exprNonTerm != None: #if expr non terminal is used
             print(("\t" * numIndents) + self.identifier1 + "=", end = '') #indent by 1
-            self.exprNonTerm.print(0)
+            self.exprNonTerm.print()
             print(";")
         elif self.whichString == "new":
             print(("\t" * numIndents) + self.identifier1 + "=" + "new;")

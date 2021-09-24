@@ -32,14 +32,14 @@ class Cmpr:
             print("ERROR: Symbol not valid")
             quit()
 
-    def print(self, numOfIndents):
-        self.exprNonTerm1.print(1)
+    def print(self):
+        self.exprNonTerm1.print()
         if self.operator == 1:
             print("==", end = '')
-            self.exprNonTerm2.print(0)
+            self.exprNonTerm2.print()
         elif self.operator == 2:
             print("<", end = '')
-            self.exprNonTerm2.print(0)
+            self.exprNonTerm2.print()
         elif self.operator == 3:
             print("<=", end = '')
-            self.exprNonTerm2.print(0)
+            self.exprNonTerm2.print()

@@ -18,20 +18,20 @@ class Loop:
         if S.currentToken() == Core.BEGIN:
             S.nextToken()
         else:
-            print("ERROR: Token should be 'begin'")
+            print("ERROR: Token should be 'begin', token should NOT be a " + S.currentToken().name)
             quit()
 
         self.ss = StmtSeq()
         self.ss.parse(S)
 
         if S.currentToken() != Core.ENDWHILE:
-            print("ERROR: Token should be 'endwhile'")
+            print("ERROR: Token should be 'endwhile', token should NOT be a " + S.currentToken().name)
             quit()
         S.nextToken()
 
     def print(self, numIndents):
         print(("\t" * numIndents) + "while ", end = '')
-        self.condNonTerm.print(0)
+        self.condNonTerm.print()
         print(" begin")
         self.ss.print(numIndents + 1) #has to be there
         print(("\t" * numIndents) + "endwhile")

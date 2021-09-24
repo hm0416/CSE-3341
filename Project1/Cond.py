@@ -22,7 +22,7 @@ class Cond:
                     print("ERROR: Right parenthesis expected")
                     quit()
             else:
-                print("ERROR: Left parenthesis expected")
+                print("ERROR: Left parenthesis expected, token should NOT be a " + S.currentToken().name)
                 quit()
         else:
             self.cmprNonTerm = Cmpr()
@@ -33,14 +33,14 @@ class Cond:
                 self.condNonTerm = Cond()
                 self.condNonTerm.parse(S)
 
-    def print(self, numOfIndents):
+    def print(self):
         if self.whichStr == 1:
             print("!(", end = '')
-            self.condNonTerm.print(0)
+            self.condNonTerm.print()
             print(")", end = '')
         elif self.whichStr == 2:
-            self.cmprNonTerm.print(0)
+            self.cmprNonTerm.print()
             print(" or ", end = '')
-            self.condNonTerm.print(0)
+            self.condNonTerm.print()
         else:
-            self.cmprNonTerm.print(0)
+            self.cmprNonTerm.print()

@@ -9,7 +9,7 @@ class Prog:
 
     def parse(self, S): #should not output anything unless error case
         if S.currentToken() != Core.PROGRAM:
-            print("ERROR: Token should be 'program'")
+            print("ERROR: Token should be 'program', token should NOT be a " + S.currentToken().name)
             quit()
         S.nextToken() #scanner starts at declSeq
 
@@ -17,7 +17,7 @@ class Prog:
         self.ds.parse(S) #consume all toks that make up declSeq
 
         if S.currentToken() != Core.BEGIN:
-            print("ERROR: Token should be 'begin'")
+            print("ERROR: Token should be 'begin', token should NOT be a " + S.currentToken().name)
             quit()
         S.nextToken() #scanner starts at declSeq
 
@@ -25,7 +25,7 @@ class Prog:
         self.ss.parse(S)
 
         if S.currentToken() != Core.END:
-            print("ERROR: Token should be 'end'")
+            print("ERROR: Token should be 'end', token should NOT be a " + S.currentToken().name)
             quit()
         S.nextToken()
         if S.currentToken() != Core.EOF:
