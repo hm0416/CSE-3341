@@ -49,3 +49,17 @@ class Stmt:
             self.outputNonTerm.print(numOfIndents)
         if self.declNonTerm != None:
             self.declNonTerm.print(numOfIndents)
+
+    def execute(self):
+        if self.assignNonTerm != None:
+            self.assignNonTerm.execute()
+        if self.ifNonTerm != None:
+            self.ifNonTerm.execute()
+        if self.loopNonTerm != None:
+            self.loopNonTerm.execute()
+        if self.inputNonTerm != None:
+            self.inputNonTerm.execute()
+        if self.outputNonTerm != None:
+            self.outputNonTerm.execute()
+        if self.declNonTerm != None:
+            self.declNonTerm.execute()

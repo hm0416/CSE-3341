@@ -43,3 +43,14 @@ class IF:
             print(("\t" * numIndents) + "endif")
         else:
             print(("\t" * numIndents) + "endif")
+
+    def execute(self):
+        if self.elseSS == None: #no else statement
+            if self.condNonTerm.execute():
+                self.ss.execute()
+        else: #there is an else stmt
+            if self.condNonTerm.execute():
+                self.ss.execute()
+            else:
+                self.elseSS.execute()
+

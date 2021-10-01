@@ -18,3 +18,8 @@ class DeclSeq:
         self.d.print(numOfIndents)
         if self.ds != None:
             self.ds.print(numOfIndents)
+
+    def execute(self):
+        self.d.execute()
+        if self.ds != None:
+            self.ds.execute()

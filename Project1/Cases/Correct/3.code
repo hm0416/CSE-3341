@@ -1,0 +1,7 @@
+program
+	int x;
+begin
+	x=2;
+	x=x+x*x;
+	output x;
+end

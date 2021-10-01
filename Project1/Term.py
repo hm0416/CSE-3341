@@ -23,3 +23,10 @@ class Term:
         if self.operator == 1:
             print("*", end = '')
             self.termNonTerm.print()
+
+    def execute(self):
+        value = self.factorNonTerm.execute()
+        if self.operator == 1:
+            value = value * self.termNonTerm.execute()
+
+        return value

@@ -1,5 +1,3 @@
-import symtable
-
 from Scanner import Scanner
 import sys
 from Prog import Prog
@@ -11,7 +9,8 @@ def main():
     root = Prog()
     root.parse(S)
     # root.semantic()
-    root.print(1)
+    # root.print(1)
+    # root.execute()
 
 if __name__ == "__main__":
     main()

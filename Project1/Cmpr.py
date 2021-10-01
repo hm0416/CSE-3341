@@ -43,3 +43,23 @@ class Cmpr:
         elif self.operator == 3:
             print("<=", end = '')
             self.exprNonTerm2.print()
+
+    def execute(self):
+        value = self.exprNonTerm1.execute()
+        if self.operator == 1:
+            if value == self.exprNonTerm2.execute():
+                value = True
+            else:
+                value = False
+        elif self.operator == 2:
+            if value < self.exprNonTerm2.execute():
+                value = True
+            else:
+                value = False
+        elif self.operator == 3:
+            if value <= self.exprNonTerm2.execute():
+                value = True
+            else:
+                value = False
+
+        return value

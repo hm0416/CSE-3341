@@ -1,0 +1,9 @@
+program
+ int x, y;
+begin
+ x=100;
+ while 0<x begin
+  input y;
+  x = x-1;
+ endwhile
+end

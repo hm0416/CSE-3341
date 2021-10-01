@@ -1,0 +1,11 @@
+program
+	ref x, y, z;
+begin
+	x = new;
+	y = new;
+	z = new;
+	x = 5;
+	y = 10;
+	z = x - y * 5 - 5;
+	output z;
+end

@@ -29,10 +29,7 @@ class Loop:
             quit()
         S.nextToken()
 
-    def print(self, numIndents):
-        print(("\t" * numIndents) + "while ", end = '')
-        self.condNonTerm.print()
-        print(" begin")
-        self.ss.print(numIndents + 1) #has to be there
-        print(("\t" * numIndents) + "endwhile")
+    def execute(self):
+        while self.condNonTerm.execute():
+            self.ss.execute()
 

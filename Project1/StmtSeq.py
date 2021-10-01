@@ -18,4 +18,9 @@ class StmtSeq:
         if self.ss != None:
             self.ss.print(numOfIndents)
 
+    def execute(self):
+        self.s.execute()
+        if self.ss != None:
+            self.ss.execute()
+
 from Stmt import Stmt

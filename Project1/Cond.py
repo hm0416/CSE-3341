@@ -44,3 +44,14 @@ class Cond:
             self.condNonTerm.print()
         else:
             self.cmprNonTerm.print()
+
+    def execute(self):
+        value = False
+        if self.whichStr == 1:
+            value = not (self.condNonTerm.execute())
+        elif self.whichStr == 2:
+            value = self.cmprNonTerm.execute() or self.condNonTerm.execute()
+        else:
+            value = self.cmprNonTerm.execute()
+
+        return value

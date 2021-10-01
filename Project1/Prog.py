@@ -40,3 +40,9 @@ class Prog:
         print("begin")
         self.ss.print(numOfIndents) #has to be there
         print("end")
+
+    def execute(self):
+        if self.ds != None:
+            self.ds.execute()
+        self.ss.execute()
+

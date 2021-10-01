@@ -37,3 +37,11 @@ class Factor:
             print("(", end = '')
             self.exprNonTerm.print()
             print(")", end = '')
+
+    def execute(self):
+        if self.whichStr == 1:
+            return self.identifier
+        elif self.whichStr == 2:
+            return self.const
+        elif self.exprNonTerm != None:
+            return self.exprNonTerm.execute()

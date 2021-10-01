@@ -25,4 +25,8 @@ class Decl:
         elif self.whichStr == "ref":
             self.dClass.print(numOfIndents)
 
-
+    def execute(self):
+        if self.whichStr == "int":
+            self.dInt.execute()
+        elif self.whichStr == "ref":
+            self.dClass.execute()

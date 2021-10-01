@@ -1,0 +1,15 @@
+program
+	ref x, y, z;
+	int a, b, c;
+begin
+	x = new;
+	y = new;
+	z = new;
+	x = 5;
+	y = 2;
+	z = x - y * 5 - 5;
+	a = z;
+	b = z;
+	c = x + y - z * (a * b);
+	output c;
+end

@@ -38,3 +38,13 @@ class Expr:
             elif self.operator == 2:
                 print("-", end = '')
                 self.exprNonTerm.print()
+
+    def execute(self):
+        value = self.term.execute()
+        if self.exprNonTerm != None:
+            if self.operator == 1:
+                value = value + self.exprNonTerm.execute()
+            elif self.operator == 2:
+                value = value - self.exprNonTerm.execute()
+
+        return value
