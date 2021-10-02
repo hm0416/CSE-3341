@@ -27,3 +27,4 @@ class IN:
         print(("\t" * numIndents) + "input ", end = '')
         print(self.identifier + ";")
 
+    def execute(self):
