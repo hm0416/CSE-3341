@@ -1,35 +1,37 @@
 from Core import Core
 from Cond import Cond
-from StmtSeq import StmtSeq
+import StmtSeq
 
 class Loop:
-    def __init__(self):
-        self.condNonTerm = None
-        self.ss = None
+	
+	def parse(self, parser):
+		parser.scanner.nextToken()
+		self.cond = Cond()
+		self.cond.parse(parser)
+		parser.expectedToken(Core.BEGIN)
+		parser.scanner.nextToken()
+		self.ss = StmtSeq.StmtSeq()
+		self.ss.parse(parser)
+		parser.expectedToken(Core.ENDWHILE)
+		parser.scanner.nextToken()
+	
+	def semantic(self, parser):
+		self.cond.semantic(parser)
+		parser.scopes.append({})
+		self.ss.semantic(parser)
+		parser.scopes.pop()
+	
+	def print(self, indent):
+		for x in range(indent):
+			print("  ", end='')
+		print("while ", end='')
+		self.cond.print()
+		print(" begin\n", end='')
+		self.ss.print(indent+1)
+		for x in range(indent):
+			print("  ", end='')
+		print("endwhile\n", end='')
 
-    def parse(self, S): #should not output anything unless error case
-        if S.currentToken() != Core.WHILE:
-            print("ERROR: Token should be 'while'")
-            quit()
-        S.nextToken()
-        self.condNonTerm = Cond()
-        self.condNonTerm.parse(S)
-
-        if S.currentToken() == Core.BEGIN:
-            S.nextToken()
-        else:
-            print("ERROR: Token should be 'begin', token should NOT be a " + S.currentToken().name)
-            quit()
-
-        self.ss = StmtSeq()
-        self.ss.parse(S)
-
-        if S.currentToken() != Core.ENDWHILE:
-            print("ERROR: Token should be 'endwhile', token should NOT be a " + S.currentToken().name)
-            quit()
-        S.nextToken()
-
-    def execute(self):
-        while self.condNonTerm.execute():
-            self.ss.execute()
-
+	def execute(self, parser):
+		while self.cond.execute(parser):
+			self.ss.execute(parser)

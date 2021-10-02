@@ -1,50 +1,65 @@
-from Core import Core
+from Id import Id
 from Expr import Expr
-
+from Core import Core
+import sys
 
 class Assign:
-    def __init__(self):
-        self.exprNonTerm = None
-        self.whichString = ""
-        self.identifier1 = ""
-        self.identifier2 = ""
+	
+	def parse(self, parser):
+		# self.assignTo will store the id on the LHS of the assignment
+		self.assignTo = Id()
+		self.assignTo.parse(parser)
+		parser.expectedToken(Core.ASSIGN)
+		parser.scanner.nextToken()
+		# self.type will store 1 if "new" assignment, 2 if "ref" assignment, 3 if "<expr>" assignment
+		if parser.scanner.currentToken() == Core.NEW:
+			self.type = 1
+			parser.scanner.nextToken()
+		elif parser.scanner.currentToken() == Core.REF:
+			self.type = 2
+			parser.scanner.nextToken()
+			self.assignFrom = Id()
+			self.assignFrom.parse(parser)
+		else:
+			self.type = 3
+			self.expr = Expr()
+			self.expr.parse(parser)
+		parser.expectedToken(Core.SEMICOLON)
+		parser.scanner.nextToken()
+	
+	def semantic(self, parser):
+		self.assignTo.semantic(parser)
+		if self.type == 1:
+			if self.assignTo.checkType(parser) != Core.REF:
+				print("ERROR: int variable used in new assignment\n", end='')
+				sys.exit()
+		elif self.type == 2:
+			if self.assignTo.checkType(parser) != Core.REF:
+				print("ERROR: int variable used in class assignment\n", end='')
+				sys.exit()
+			if self.assignFrom.checkType(parser) != Core.REF:
+				print("ERROR: int variable used in class assignment\n", end='')
+				sys.exit()
+		else:
+			self.expr.semantic(parser)
+	
+	def print(self, indent):
+		for x in range(indent):
+			print("  ", end='')
+		self.assignTo.print()
+		print("=", end='')
+		if self.type == 1:
+			print("new", end='')
+		elif self.type == 2:
+			print("ref ", end='')
+			self.assignFrom.print()
+		else:
+			self.expr.print()
+		print(";\n", end='')
 
-    def parse(self, S): #should not output anything unless error case
-        if S.currentToken() != Core.ID:
-            print("ERROR: Token should be an 'id'")
-            quit()
-        self.identifier1 = S.getID() #gets first ID value
-        S.nextToken()
-
-        if S.currentToken() == Core.ASSIGN:
-            S.nextToken()
-        else:
-            print("ERROR: Token should be 'assign (=)', token should NOT be a " + S.currentToken().name)
-            quit()
-
-        if S.currentToken() == Core.NEW:
-            self.whichString = "new"
-            S.nextToken()
-        elif S.currentToken() == Core.REF:
-            self.whichString = "ref"
-            S.nextToken()
-            self.identifier2 = S.getID() #gets second ID value
-            S.nextToken() #extra to get the begin tok
-        else:
-            self.exprNonTerm = Expr()
-            self.exprNonTerm.parse(S)
-
-        if S.currentToken() != Core.SEMICOLON:
-            print("ERROR: Token should be ';', token should NOT be a " + S.currentToken().name)
-            quit()
-        S.nextToken()
-
-    def print(self, numIndents):
-        if self.exprNonTerm != None: #if expr non terminal is used
-            print(("\t" * numIndents) + self.identifier1 + "=", end = '') #indent by 1
-            self.exprNonTerm.print()
-            print(";")
-        elif self.whichString == "new":
-            print(("\t" * numIndents) + self.identifier1 + "=" + "new;")
-        elif self.whichString == "ref":
-            print(("\t" * numIndents) + self.identifier1 + "=" + "ref " + self.identifier2 + ";")
+	def execute(self, parser):
+		# self.id = Id()
+		if hasattr(self, 'expr'):
+			value = self.expr.execute(parser) #gets the value on the RHS
+			# self.id.setValOfID(value, self.assignTo) #set the LHS to the RHS
+			self.assignTo.setValOfID(value, parser) #set the LHS to the RHS

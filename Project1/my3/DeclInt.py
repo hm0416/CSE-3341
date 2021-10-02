@@ -1,26 +1,24 @@
 from Core import Core
-from Expr import Expr
+from IdList import IdList
 
-
-class OUT:
+class DeclInt:
     def __init__(self):
-        self.exprNonTerm = None
+        self.idL = None
 
     def parse(self, S): #should not output anything unless error case
-        if S.currentToken() == Core.OUTPUT:
-            S.nextToken()
-        else:
-            print("ERROR: Token should be 'output'")
+        if S.currentToken() != Core.INT:
+            print("ERROR: Token should be 'int'")
             quit()
-        self.exprNonTerm = Expr()
-        self.exprNonTerm.parse(S)
-
+        S.nextToken()
+        self.idL = IdList()
+        self.idL.parse(S)
         if S.currentToken() != Core.SEMICOLON:
             print("ERROR: Token should be ';', token should NOT be a " + S.currentToken().name)
             quit()
         S.nextToken()
 
     def print(self, numIndents):
-        print(("\t" * numIndents) + "output ", end = '')
-        self.exprNonTerm.print()
+        print(("\t" * numIndents) + "int ", end = '')
+        self.idL.print(0)
         print(";")
+

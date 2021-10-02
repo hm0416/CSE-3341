@@ -1,50 +1,40 @@
-from Core import Core
 from Term import Term
-
+from Core import Core
 
 class Expr:
-    def __init__(self):
-        self.term = None
-        self.exprNonTerm = None
-        self.operator = 0  # 0 if no operation, 1 if addition, 2 if subtraction
+	
+	def parse(self, parser):
+		self.option = 0
+		self.term = Term()
+		self.term.parse(parser)
+		if parser.scanner.currentToken() == Core.ADD:
+			self.option = 1
+		elif parser.scanner.currentToken() == Core.SUB:
+			self.option = 2
+		if not self.option == 0:
+			parser.scanner.nextToken()
+			self.expr = Expr()
+			self.expr.parse(parser)
+	
+	def semantic(self, parser):
+		self.term.semantic(parser)
+		if hasattr(self, 'expr'):
+			self.expr.semantic(parser)
+	
+	def print(self):
+		self.term.print()
+		if self.option == 1:
+			print("+", end='')
+			self.expr.print()
+		elif self.option == 2:
+			print("-", end='')
+			self.expr.print()
 
-    def parse(self, S):
-        self.term = Term()
-        self.term.parse(S)
+	def execute(self, parser):
+		value = self.term.execute(parser)
+		if self.option == 1:
+			value = value + self.expr.execute(parser)
+		elif self.option == 2:
+			value = value - self.expr.execute(parser)
 
-        if S.currentToken() == Core.ADD:
-            S.nextToken()
-            if S.currentToken() == Core.ADD:
-                print("ERROR: Can't have ++")
-                quit()
-            self.operator = 1
-            self.exprNonTerm = Expr()
-            self.exprNonTerm.parse(S)
-        elif S.currentToken() == Core.SUB:
-            S.nextToken()
-            if S.currentToken() == Core.SUB:
-                print("ERROR: Can't have --")
-                quit()
-            self.operator = 2
-            self.exprNonTerm = Expr()
-            self.exprNonTerm.parse(S)
-
-    def print(self):
-        self.term.print()
-        if self.exprNonTerm != None:
-            if self.operator == 1:
-                print("+", end = '')
-                self.exprNonTerm.print()
-            elif self.operator == 2:
-                print("-", end = '')
-                self.exprNonTerm.print()
-
-    def execute(self):
-        value = self.term.execute()
-        if self.exprNonTerm != None:
-            if self.operator == 1:
-                value = value + self.exprNonTerm.execute()
-            elif self.operator == 2:
-                value = value - self.exprNonTerm.execute()
-
-        return value
+		return value

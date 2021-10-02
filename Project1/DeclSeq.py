@@ -1,25 +1,26 @@
-from Core import Core
 from Decl import Decl
+from Core import Core
 
 class DeclSeq:
-    def __init__(self):
-        self.d = None
-        self.ds = None
+	
+	def parse(self, parser):
+		self.decl = Decl()
+		self.decl.parse(parser)
+		if not parser.scanner.currentToken() == Core.BEGIN:
+			self.ds = DeclSeq()
+			self.ds.parse(parser)
+	
+	def semantic(self, parser):
+		self.decl.semantic(parser)
+		if hasattr(self, 'ds'):
+			self.ds.semantic(parser)
+	
+	def print(self, indent):
+		self.decl.print(indent)
+		if hasattr(self, 'ds'):
+			self.ds.print(indent)
 
-    def parse(self, S): #should not output anything unless error case
-        self.d = Decl()
-        self.d.parse(S)
-
-        if S.currentToken() == Core.INT or S.currentToken() == Core.REF:
-            self.ds = DeclSeq() # this class will handle the consuming of toks
-            self.ds.parse(S) #consume all toks that make up declSeq
-
-    def print(self, numOfIndents):
-        self.d.print(numOfIndents)
-        if self.ds != None:
-            self.ds.print(numOfIndents)
-
-    def execute(self):
-        self.d.execute()
-        if self.ds != None:
-            self.ds.execute()
+	def execute(self, parser):
+		self.decl.execute(parser)
+		if hasattr(self, 'ds'):
+			self.ds.execute(parser)

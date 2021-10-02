@@ -1,32 +1,30 @@
-from Core import Core
 from Factor import Factor
+from Core import Core
 
 class Term:
-    def __init__(self):
-        self.factorNonTerm = None
-        self.termNonTerm = None
-        self.operator = 0 #0 none, 1 is mult
+	
+	def parse(self, parser):
+		self.factor = Factor()
+		self.factor.parse(parser)
+		if parser.scanner.currentToken() == Core.MULT:
+			parser.scanner.nextToken()
+			self.term = Term()
+			self.term.parse(parser)
+	
+	def semantic(self, parser):
+		self.factor.semantic(parser)
+		if hasattr(self, 'term'):
+			self.term.semantic(parser)
+	
+	def print(self):
+		self.factor.print()
+		if hasattr(self, 'term'):
+			print("*", end='')
+			self.term.print()
 
-    #no error checking needed here
-    def parse(self, S):
-        self.factorNonTerm = Factor()
-        self.factorNonTerm.parse(S)
+	def execute(self, parser):
+		value = self.factor.execute(parser)
+		if hasattr(self, 'term'):
+			value = value * self.term.execute(parser)
 
-        if S.currentToken() == Core.MULT:
-            self.operator = 1
-            S.nextToken()
-            self.termNonTerm = Term()
-            self.termNonTerm.parse(S)
-
-    def print(self):
-        self.factorNonTerm.print()
-        if self.operator == 1:
-            print("*", end = '')
-            self.termNonTerm.print()
-
-    def execute(self):
-        value = self.factorNonTerm.execute()
-        if self.operator == 1:
-            value = value * self.termNonTerm.execute()
-
-        return value
+		return value

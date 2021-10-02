@@ -1,24 +1,25 @@
-from Core import Core
 from IdList import IdList
+from Core import Core
 
 class DeclInt:
-    def __init__(self):
-        self.idL = None
+	
+	def parse(self, parser):
+		parser.expectedToken(Core.INT)
+		parser.scanner.nextToken()
+		self.list = IdList()
+		self.list.parse(parser)
+		parser.expectedToken(Core.SEMICOLON)
+		parser.scanner.nextToken()
+	
+	def semantic(self, parser):
+		self.list.semanticIntVars(parser)
+	
+	def print(self, indent):
+		for x in range(indent):
+			print("  ", end='')
+		print("int ", end='')
+		self.list.print()
+		print(";\n", end='')
 
-    def parse(self, S): #should not output anything unless error case
-        if S.currentToken() != Core.INT:
-            print("ERROR: Token should be 'int'")
-            quit()
-        S.nextToken()
-        self.idL = IdList()
-        self.idL.parse(S)
-        if S.currentToken() != Core.SEMICOLON:
-            print("ERROR: Token should be ';', token should NOT be a " + S.currentToken().name)
-            quit()
-        S.nextToken()
-
-    def print(self, numIndents):
-        print(("\t" * numIndents) + "int ", end = '')
-        self.idL.print(0)
-        print(";")
-
+	def execute(self, parser):
+		pass

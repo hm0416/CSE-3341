@@ -2,56 +2,50 @@ from Core import Core
 from Cmpr import Cmpr
 
 class Cond:
+	
+	def parse(self, parser):
+		if parser.scanner.currentToken() == Core.NEGATION:
+			parser.scanner.nextToken()
+			parser.expectedToken(Core.LPAREN)
+			parser.scanner.nextToken()
+			self.cond = Cond()
+			self.cond.parse(parser)
+			parser.expectedToken(Core.RPAREN)
+			parser.scanner.nextToken()
+		else:
+			self.cmpr = Cmpr()
+			self.cmpr.parse(parser)
+			if parser.scanner.currentToken() == Core.OR:
+				parser.scanner.nextToken()
+				self.cond = Cond()
+				self.cond.parse(parser)
+	
+	def semantic(self, parser):
+		if not hasattr(self, 'cmpr'):
+			self.cond.semantic(parser)
+		else:
+			self.cmpr.semantic(parser)
+			if hasattr(self, 'cond'):
+				self.cond.semantic(parser)
+	
+	def print(self):
+		if not hasattr(self, 'cmpr'):
+			print("!(", end='')
+			self.cond.print()
+			print(")", end='')
+		else:
+			self.cmpr.print()
+			if hasattr(self, 'cond'):
+				print(" or ", end='')
+				self.cond.print()
 
-    def __init__(self):
-        self.condNonTerm = None
-        self.cmprNonTerm = None
-        self.whichStr = 0 #0 none, 1 for OR, 2 for negation
+	def execute(self, parser):
+		value = False
+		if not hasattr(self, 'cmpr'):
+			value = not (self.cond.execute(parser))
+		else:
+			value = self.cmpr.execute(parser)
+			if hasattr(self, 'cond'):
+				value = self.cmpr.execute(parser) or self.cond.execute(parser)
 
-    def parse(self, S): #should not output anything unless error case
-        if S.currentToken() == Core.NEGATION:
-            self.whichStr = 1
-            S.nextToken()
-            if S.currentToken() == Core.LPAREN:
-                S.nextToken()
-                self.condNonTerm = Cond()
-                self.condNonTerm.parse(S)
-                if S.currentToken() == Core.RPAREN:
-                    S.nextToken()
-                else:
-                    print("ERROR: Right parenthesis expected")
-                    quit()
-            else:
-                print("ERROR: Left parenthesis expected, token should NOT be a " + S.currentToken().name)
-                quit()
-        else:
-            self.cmprNonTerm = Cmpr()
-            self.cmprNonTerm.parse(S)
-            if S.currentToken() == Core.OR:
-                self.whichStr = 2
-                S.nextToken()
-                self.condNonTerm = Cond()
-                self.condNonTerm.parse(S)
-
-    def print(self):
-        if self.whichStr == 1:
-            print("!(", end = '')
-            self.condNonTerm.print()
-            print(")", end = '')
-        elif self.whichStr == 2:
-            self.cmprNonTerm.print()
-            print(" or ", end = '')
-            self.condNonTerm.print()
-        else:
-            self.cmprNonTerm.print()
-
-    def execute(self):
-        value = False
-        if self.whichStr == 1:
-            value = not (self.condNonTerm.execute())
-        elif self.whichStr == 2:
-            value = self.cmprNonTerm.execute() or self.condNonTerm.execute()
-        else:
-            value = self.cmprNonTerm.execute()
-
-        return value
+		return value

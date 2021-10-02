@@ -1,27 +1,35 @@
+from Id import Id
 from Core import Core
 
-
 class IdList:
-    def __init__(self):
-        self.idL = None
-        self.identifier = ""
-        self.comma = 0 #0 for no comma, 1 for comma
+	
+	def parse(self, parser):
+		self.id = Id()
+		self.id.parse(parser)
+		if parser.scanner.currentToken() == Core.COMMA:
+			parser.scanner.nextToken()
+			self.list = IdList()
+			self.list.parse(parser)
+	
+	# called by DeclInt.semantic
+	def semanticIntVars(self, parser):
+		self.id.doublyDeclared(parser)
+		self.id.addToScopes(parser, Core.INT)
+		if hasattr(self, 'list'):
+			self.list.semanticIntVars(parser)
 
-    def parse(self, S): #should not output anything unless error case
-        if S.currentToken() != Core.ID:
-            print("ERROR: Token should be 'id', token should NOT be a " + S.currentToken().name)
-            quit()
-        self.identifier = S.getID()
-        S.nextToken()
+	# called by DeclClass.semantic
+	def semanticRefVars(self, parser):
+		self.id.doublyDeclared(parser)
+		self.id.addToScopes(parser, Core.REF)
+		if hasattr(self, 'list'):
+			self.list.semanticRefVars(parser)
+	
+	def print(self):
+		self.id.print()
+		if hasattr(self, 'list'):
+			print(",", end='')
+			self.list.print()
 
-        if S.currentToken() == Core.COMMA:
-            self.comma = 1
-            S.nextToken()
-            self.idL = IdList()
-            self.idL.parse(S)
-
-    def print(self, numIndents):
-        print(("\t" * numIndents) + self.identifier, end = '')
-        if self.idL != None:
-            print(",", end = '')
-            self.idL.print(0)
+	def execute(self, parser):
+		pass

@@ -1,32 +1,32 @@
-from Core import Core
 from DeclInt import DeclInt
 from DeclClass import DeclClass
+from Core import Core
 
 class Decl:
+	
+	def parse(self, parser):
+		if parser.scanner.currentToken() == Core.INT:
+			self.declInt = DeclInt()
+			self.declInt.parse(parser)
+		else:
+			self.declRef = DeclClass()
+			self.declRef.parse(parser)
 
-    def __init__(self):
-        self.dInt = None
-        self.dClass = None
-        self.whichStr = ""
+	
+	def semantic(self, parser):
+		if hasattr(self, 'declInt'):
+			self.declInt.semantic(parser)
+		elif hasattr(self, 'declRef'):
+			self.declRef.semantic(parser)
+	
+	def print(self, indent):
+		if hasattr(self, 'declInt'):
+			self.declInt.print(indent)
+		elif hasattr(self, 'declRef'):
+			self.declRef.print(indent)
 
-    def parse(self, S): #should not output anything unless error case
-        if S.currentToken() == Core.INT:
-            self.whichStr = "int"
-            self.dInt = DeclInt()
-            self.dInt.parse(S)
-        elif S.currentToken() == Core.REF:
-            self.whichStr = "ref"
-            self.dClass = DeclClass()
-            self.dClass.parse(S)
-
-    def print(self, numOfIndents):
-        if self.whichStr == "int":
-            self.dInt.print(numOfIndents)
-        elif self.whichStr == "ref":
-            self.dClass.print(numOfIndents)
-
-    def execute(self):
-        if self.whichStr == "int":
-            self.dInt.execute()
-        elif self.whichStr == "ref":
-            self.dClass.execute()
+	def execute(self, parser):
+		if hasattr(self, 'declInt'):
+			self.declInt.execute(parser)
+		elif hasattr(self, 'declRef'):
+			self.declRef.execute(parser)
