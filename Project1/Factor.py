@@ -38,10 +38,10 @@ class Factor:
 		else:
 			print(self.constant, end='')
 
-	def execute(self, parser):
+	def execute(self, parser, inputData, inputID, outputID):
 		if hasattr(self, 'id'):
-			return self.id.execute(parser)
+			return self.id.execute(parser, inputData, inputID, outputID)
 		elif hasattr(self, 'expr'):
-			return self.expr.execute(parser)
+			return self.expr.execute(parser, inputData, inputID, outputID)
 		else:
 			return self.constant

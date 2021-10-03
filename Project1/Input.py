@@ -20,5 +20,6 @@ class Input:
 		self.id.print()
 		print(";\n", end='')
 
-	def execute(self, parser):
-		self.id.setValOfID(self.id, parser)
+	def execute(self, parser, inputData, inputID, outputID):
+		# self.tokAfterInput = parser.scanner.getID() #gets the id after input keyword
+		self.id.setValOfID(self.id, parser, inputData)

@@ -13,6 +13,7 @@ class StmtSeq:
 		if parser.scanner.currentToken() == Core.ID:
 			self.stmt = Assign()
 		elif parser.scanner.currentToken() == Core.INPUT:
+			self.isInput = True
 			self.stmt = Input()
 		elif parser.scanner.currentToken() == Core.OUTPUT:
 			self.stmt = Output()
@@ -43,7 +44,8 @@ class StmtSeq:
 		if hasattr(self, 'ss'):
 			self.ss.print(indent)
 
-	def execute(self, parser):
-		self.stmt.execute(parser)
+	def execute(self, parser, inputData, inputID, outputID):
+
+		self.stmt.execute(parser, inputData, inputID, outputID)
 		if hasattr(self, 'ss'):
-			self.ss.execute(parser)
+			self.ss.execute(parser, inputData, inputID, outputID)

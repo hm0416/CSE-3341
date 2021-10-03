@@ -35,7 +35,7 @@ class Program:
 		self.ss.print(1)
 		print("end\n", end='')
 
-	def execute(self, parser):
+	def execute(self, parser, inputData, inputID, outputID):
 		if self.ds != None:
-			self.ds.execute(parser)
-		self.ss.execute(parser)
+			self.ds.execute(parser, inputData, inputID, outputID)
+		self.ss.execute(parser, inputData, inputID, outputID)

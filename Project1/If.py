@@ -45,12 +45,12 @@ class If:
 			print("  ", end='')
 		print("endif\n", end='')
 
-	def execute(self, parser):
+	def execute(self, parser, inputData, inputID, outputID):
 		if not hasattr(self, 'ss2'):  # no else statement
-			if self.cond.execute(parser):
-				self.ss1.execute(parser)
+			if self.cond.execute(parser, inputData, inputID, outputID):
+				self.ss1.execute(parser, inputData, inputID, outputID)
 		else:  # there is an else stmt
-			if self.cond.execute(parser):
-				self.ss1.execute(parser)
+			if self.cond.execute(parser, inputData, inputID, outputID):
+				self.ss1.execute(parser, inputData, inputID, outputID)
 			else:
-				self.ss2.execute(parser)
+				self.ss2.execute(parser, inputData, inputID, outputID)

@@ -25,8 +25,8 @@ class Decl:
 		elif hasattr(self, 'declRef'):
 			self.declRef.print(indent)
 
-	def execute(self, parser):
+	def execute(self, parser, inputData, inputID, outputID):
 		if hasattr(self, 'declInt'):
-			self.declInt.execute(parser)
+			self.declInt.execute(parser, inputData, inputID, outputID)
 		elif hasattr(self, 'declRef'):
-			self.declRef.execute(parser)
+			self.declRef.execute(parser, inputData, inputID, outputID)

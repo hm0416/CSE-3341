@@ -20,7 +20,7 @@ class DeclSeq:
 		if hasattr(self, 'ds'):
 			self.ds.print(indent)
 
-	def execute(self, parser):
-		self.decl.execute(parser)
+	def execute(self, parser, inputData, inputID, outputID):
+		self.decl.execute(parser, inputData, inputID, outputID)
 		if hasattr(self, 'ds'):
-			self.ds.execute(parser)
+			self.ds.execute(parser, inputData, inputID, outputID)

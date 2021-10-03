@@ -39,13 +39,13 @@ class Cond:
 				print(" or ", end='')
 				self.cond.print()
 
-	def execute(self, parser):
+	def execute(self, parser, inputData, inputID, outputID):
 		value = False
 		if not hasattr(self, 'cmpr'):
-			value = not (self.cond.execute(parser))
+			value = not (self.cond.execute(parser, inputData, inputID, outputID))
 		else:
-			value = self.cmpr.execute(parser)
+			value = self.cmpr.execute(parser, inputData, inputID, outputID)
 			if hasattr(self, 'cond'):
-				value = self.cmpr.execute(parser) or self.cond.execute(parser)
+				value = self.cmpr.execute(parser, inputData, inputID, outputID) or self.cond.execute(parser, inputData, inputID, outputID)
 
 		return value

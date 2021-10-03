@@ -32,6 +32,6 @@ class Loop:
 			print("  ", end='')
 		print("endwhile\n", end='')
 
-	def execute(self, parser):
-		while self.cond.execute(parser):
-			self.ss.execute(parser)
+	def execute(self, parser, inputData, inputID, outputID):
+		while self.cond.execute(parser, inputData, inputID, outputID):
+			self.ss.execute(parser, inputData, inputID, outputID)

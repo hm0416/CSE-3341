@@ -31,5 +31,5 @@ class IdList:
 			print(",", end='')
 			self.list.print()
 
-	def execute(self, parser):
+	def execute(self, parser, inputData, inputID, outputID):
 		pass

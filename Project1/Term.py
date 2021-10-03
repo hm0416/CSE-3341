@@ -22,9 +22,9 @@ class Term:
 			print("*", end='')
 			self.term.print()
 
-	def execute(self, parser):
-		value = self.factor.execute(parser)
+	def execute(self, parser, inputData, inputID, outputID):
+		value = self.factor.execute(parser, inputData, inputID, outputID)
 		if hasattr(self, 'term'):
-			value = value * self.term.execute(parser)
+			value = value * self.term.execute(parser, inputData, inputID, outputID)
 
 		return value

@@ -34,20 +34,20 @@ class Cmpr:
 			print("<=", end='')
 		self.expr2.print()
 
-	def execute(self, parser):
-		value = self.expr1.execute(parser)
+	def execute(self, parser, inputData, inputID, outputID):
+		value = self.expr1.execute(parser, inputData, inputID, outputID)
 		if self.option == 0:
-			if value == self.expr2.execute(parser):
+			if value == self.expr2.execute(parser, inputData, inputID, outputID):
 				value = True
 			else:
 				value = False
 		elif self.option == 1:
-			if value < self.expr2.execute(parser):
+			if value < self.expr2.execute(parser, inputData, inputID, outputID):
 				value = True
 			else:
 				value = False
 		elif self.option == 2:
-			if value <= self.expr2.execute(parser):
+			if value <= self.expr2.execute(parser, inputData, inputID, outputID):
 				value = True
 			else:
 				value = False

@@ -30,11 +30,11 @@ class Expr:
 			print("-", end='')
 			self.expr.print()
 
-	def execute(self, parser):
-		value = self.term.execute(parser)
+	def execute(self, parser, inputData, inputID, outputID):
+		value = self.term.execute(parser, inputData, inputID, outputID)
 		if self.option == 1:
-			value = value + self.expr.execute(parser)
+			value = value + self.expr.execute(parser, inputData, inputID, outputID)
 		elif self.option == 2:
-			value = value - self.expr.execute(parser)
+			value = value - self.expr.execute(parser, inputData, inputID, outputID)
 
 		return value

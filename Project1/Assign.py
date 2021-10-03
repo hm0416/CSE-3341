@@ -57,9 +57,15 @@ class Assign:
 			self.expr.print()
 		print(";\n", end='')
 
-	def execute(self, parser):
+	def execute(self, parser, inputData, inputID, outputID):
 		# self.id = Id()
 		if hasattr(self, 'expr'):
-			value = self.expr.execute(parser) #gets the value on the RHS
+			value = self.expr.execute(parser, inputData, inputID, outputID) #gets the value on the RHS
 			# self.id.setValOfID(value, self.assignTo) #set the LHS to the RHS
-			self.assignTo.setValOfID(value, parser) #set the LHS to the RHS
+			self.assignTo.setValOfID(value, parser, inputData) #set the LHS to the RHS
+		elif self.type == 2:
+			valForLHS = parser.ids.get(self.assignTo.identifier)
+			parser.ids[self.assignFrom.identifier] = valForLHS
+			# rhs = parser.ids[self.assignFrom.identifier]
+			# parser.ids[self.assignTo.identifier] = rhs
+			# self.assignTo.replaceValOfID(self.assignFrom.identifier, self.assignTo.identifier, parser)

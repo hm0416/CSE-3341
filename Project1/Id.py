@@ -37,9 +37,14 @@ class Id:
 	# def setValOfID(self, val, id):
 	# 	self.ids[id] = val #ids needs to be unique
 
-	def setValOfID(self, val, parser):
+	def setValOfID(self, val, parser, inputData):
 		parser.ids[self.identifier] = val #ids needs to be unique
 
-	def execute(self, parser):
+	def replaceValOfID(self, idToReplace, id, parser):
+		rhsValue = parser.ids[idToReplace]
+		parser.ids[id] = rhsValue #ids needs to be unique
+
+	def execute(self, parser, inputData, inputID, outputID):
 		return parser.ids[self.identifier]
+
 
