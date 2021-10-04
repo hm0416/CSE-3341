@@ -1,8 +1,14 @@
 program
-	ref x, y;
+	ref x, y, n;
 begin
 	x = new;
+	n = new;
+	n = 5;
 	x = 4;
 	y = ref x;
-    y = y-1;
+	while !(x==0) begin
+		n = n*x;
+		y = y-1;
+		output n;
+	endwhile
 end

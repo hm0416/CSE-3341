@@ -21,18 +21,18 @@ def main():
   tempS = Scanner(sys.argv[1])
   inputID = None
   outputID = None
-  # while tempS.currentToken() != Core.EOF:
-  #   if tempS.currentToken() == Core.INPUT:
-  #     tempS.nextToken()
-  #     inputID = tempS.getID()
-  #   elif tempS.currentToken() == Core.OUTPUT:
-  #     tempS.nextToken()
-  #     if tempS.currentToken() == Core.ID:
-  #       outputID = tempS.getID()
-  #     elif tempS.currentToken() == Core.CONST:
-  #       outputID = tempS.getCONST()
-  #   else:
-  #     tempS.nextToken()
+  while tempS.currentToken() != Core.EOF:
+    if tempS.currentToken() == Core.INPUT:
+      tempS.nextToken()
+      inputID = tempS.getID()
+    elif tempS.currentToken() == Core.OUTPUT:
+      tempS.nextToken()
+      if tempS.currentToken() == Core.ID:
+        outputID = tempS.getID()
+      elif tempS.currentToken() == Core.CONST:
+        outputID = tempS.getCONST()
+    else:
+      tempS.nextToken()
 
   p = Program()
   p.parse(parser)

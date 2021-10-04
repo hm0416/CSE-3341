@@ -13,7 +13,6 @@ class StmtSeq:
 		if parser.scanner.currentToken() == Core.ID:
 			self.stmt = Assign()
 		elif parser.scanner.currentToken() == Core.INPUT:
-			self.isInput = True
 			self.stmt = Input()
 		elif parser.scanner.currentToken() == Core.OUTPUT:
 			self.stmt = Output()
