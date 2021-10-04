@@ -1,10 +1,8 @@
 from Core import Core
 import sys
+import globals
 
 class Id:
-
-	# def __init__(self):
-	# 	self.ids = {}
 	
 	def parse(self, parser):
 		parser.expectedToken(Core.ID)
@@ -34,16 +32,14 @@ class Id:
 	def print(self):
 		print(self.identifier, end='')
 
-	# def setValOfID(self, val, id):
-	# 	self.ids[id] = val #ids needs to be unique
-
 	def setValOfID(self, val, parser, inputData):
 		parser.ids[self.identifier] = val #ids needs to be unique
+		if globals.isRef == True:
+			parser.ids[globals.refID] = parser.ids[self.identifier]
 
-
-	def replaceValOfID(self, idToReplace, id, parser):
-		rhsValue = parser.ids[idToReplace]
-		parser.ids[id] = rhsValue #ids needs to be unique
+	# def replaceValOfID(self, idToReplace, id, parser):
+	# 	rhsValue = parser.ids[idToReplace]
+	# 	parser.ids[id] = rhsValue #ids needs to be unique
 
 	def execute(self, parser, inputData, inputID, outputID):
 		return parser.ids.get(self.identifier)
