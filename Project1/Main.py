@@ -12,7 +12,7 @@ def main():
   # Initialize the parser object (contains the scanner and some helper functions)
   parser = Parser(sys.argv[1])
 
-  if len(sys.argv) > 1:
+  if len(sys.argv) > 1: #fixxxxxx
     S = Scanner(sys.argv[2]) #gets the data file to handle input class
   inputData = []
   while S.currentToken() != Core.EOF:
@@ -39,8 +39,8 @@ def main():
 
   p = Program()
   p.parse(parser)
-  p.execute(parser, inputData, inputID, outputID)
   # p.semantic(parser)
+  p.execute(parser, inputData, inputID, outputID)
   # p.print()
 
 

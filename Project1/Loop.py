@@ -34,4 +34,6 @@ class Loop:
 
 	def execute(self, parser, inputData, inputID, outputID):
 		while self.cond.execute(parser, inputData, inputID, outputID):
+			parser.ids.append({})
 			self.ss.execute(parser, inputData, inputID, outputID)
+			parser.ids.pop()

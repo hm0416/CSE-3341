@@ -11,7 +11,7 @@ class Parser:
 	def __init__(self, s):
 		self.scanner = Scanner(s)
 		self.scopes = [{}]
-		self.ids = {}
+		self.ids = [{}]
 	
 	#helper method for the semantic checks
 	#returns Core.INT or Core.REF if the string x is the name of a variable that is in scope, Core.ERROR otherwise

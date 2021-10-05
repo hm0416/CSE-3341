@@ -33,3 +33,15 @@ class IdList:
 
 	def execute(self, parser, inputData, inputID, outputID):
 		pass
+
+	def executeInt(self, parser, inputData, inputID, outputID):
+		self.id.doublyDeclared(parser)
+		self.id.addToScopes(parser, Core.INT)
+		if hasattr(self, 'list'):
+			self.list.semanticIntVars(parser)
+
+	def executeRef(self, parser, inputData, inputID, outputID):
+		self.id.doublyDeclared(parser)
+		self.id.addToScopes(parser, Core.REF)
+		if hasattr(self, 'list'):
+			self.list.semanticRefVars(parser)

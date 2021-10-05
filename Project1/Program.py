@@ -36,6 +36,9 @@ class Program:
 		print("end\n", end='')
 
 	def execute(self, parser, inputData, inputID, outputID):
+		parser.ids.append({}) #global scope -- first one
 		if self.ds != None:
 			self.ds.execute(parser, inputData, inputID, outputID)
+		parser.ids.append({}) #local scope - 2nd ele
 		self.ss.execute(parser, inputData, inputID, outputID)
+		parser.ids.pop()

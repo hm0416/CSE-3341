@@ -25,6 +25,9 @@ class Id:
 	def addToScopes(self, parser, declaredType):
 		parser.scopes[-1][self.identifier] = declaredType
 
+	def addToIds(self, parser, declaredType):
+		parser.scopes[-1][self.identifier] = declaredType
+
 	# Called by Assign semantic function to check the declared type of the variable
 	def checkType(self, parser):
 		return parser.nestedScopeCheck(self.identifier)
@@ -33,15 +36,15 @@ class Id:
 		print(self.identifier, end='')
 
 	def setValOfID(self, val, parser, inputData):
-		parser.ids[self.identifier] = val #ids needs to be unique
+		parser.ids[-1][self.identifier] = val #ids needs to be unique
 		if globals.isRef == True:
-			parser.ids[globals.refID] = parser.ids[self.identifier]
+			parser.ids[-1][globals.refID] = parser.ids[-1][self.identifier]
 
 	# def replaceValOfID(self, idToReplace, id, parser):
 	# 	rhsValue = parser.ids[idToReplace]
 	# 	parser.ids[id] = rhsValue #ids needs to be unique
 
 	def execute(self, parser, inputData, inputID, outputID):
-		return parser.ids.get(self.identifier)
+		return parser.ids[-1].get(self.identifier)
 
 

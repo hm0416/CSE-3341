@@ -48,9 +48,15 @@ class If:
 	def execute(self, parser, inputData, inputID, outputID):
 		if not hasattr(self, 'ss2'):  # no else statement
 			if self.cond.execute(parser, inputData, inputID, outputID):
+				parser.ids.append({})
 				self.ss1.execute(parser, inputData, inputID, outputID)
+				parser.ids.pop()
 		else:  # there is an else stmt
 			if self.cond.execute(parser, inputData, inputID, outputID):
+				parser.ids.append({})
 				self.ss1.execute(parser, inputData, inputID, outputID)
+				parser.ids.pop()
 			else:
+				parser.ids.append({})
 				self.ss2.execute(parser, inputData, inputID, outputID)
+				parser.ids.pop()

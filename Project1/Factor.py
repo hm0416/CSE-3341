@@ -40,6 +40,7 @@ class Factor:
 
 	def execute(self, parser, inputData, inputID, outputID):
 		if hasattr(self, 'id'):
+			globalVars = parser.scopes[0]
 			return self.id.execute(parser, inputData, inputID, outputID)
 		elif hasattr(self, 'expr'):
 			return self.expr.execute(parser, inputData, inputID, outputID)

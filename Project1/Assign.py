@@ -60,11 +60,16 @@ class Assign:
 		print(";\n", end='')
 
 	def execute(self, parser, inputData, inputID, outputID):
+
+		# if self.assignTo.identifier == globals.valAfterRef:
+		# 	if parser.ids
+		# 	print("ERROR: Error is assignment to null ref variable")
+
 		if self.type == 1:
 			self.assignTo.setValOfID(0, parser, inputData)
 		elif self.type == 2:
-			valForX = parser.ids.get(self.assignFrom.identifier) # gets 4
-			parser.ids[self.assignTo.identifier] = valForX # y = 4
+			valForX = parser.ids[-1].get(self.assignFrom.identifier) # gets 4
+			parser.ids[-1][self.assignTo.identifier] = valForX # y = 4
 			globals.isRef = True
 		elif self.type == 3:
 			value = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS

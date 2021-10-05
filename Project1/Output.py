@@ -21,9 +21,6 @@ class Output:
 		print(";\n", end='')
 
 	def execute(self, parser, inputData, inputID, outputID):
-		#only do this if input statement shows up
-		# print(inputData.pop(0))
-		# self.tokAfterOutput = parser.scanner.getID()
 		if inputID == outputID:
 			print(inputData.pop(0))
 		else:

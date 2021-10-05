@@ -44,7 +44,6 @@ class StmtSeq:
 			self.ss.print(indent)
 
 	def execute(self, parser, inputData, inputID, outputID):
-
 		self.stmt.execute(parser, inputData, inputID, outputID)
 		if hasattr(self, 'ss'):
 			self.ss.execute(parser, inputData, inputID, outputID)

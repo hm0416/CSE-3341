@@ -22,4 +22,5 @@ class DeclInt:
 		print(";\n", end='')
 
 	def execute(self, parser, inputData, inputID, outputID):
+		# self.list.executeInt(parser, inputData, inputID, outputID)
 		pass
