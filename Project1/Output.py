@@ -25,6 +25,9 @@ class Output:
 		# print(inputData.pop(0))
 		# self.tokAfterOutput = parser.scanner.getID()
 		if inputID == outputID:
+			if len(inputData) == 0:
+				print("ERROR: .data file has no more values.")
+				quit()
 			print(inputData.pop(0))
 		else:
 			print(self.expr.execute(parser, inputData, inputID, outputID))
