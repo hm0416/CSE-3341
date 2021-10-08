@@ -64,6 +64,13 @@ class Assign:
 		# if self.assignTo.identifier == globals.valAfterRef:
 		# 	if parser.ids
 		# 	print("ERROR: Error is assignment to null ref variable")
+		x = self.parser.scanner.currentToken()
+		if self.assignTo.identifier == globals.varAfterRef and self.parser.scanner.currentToken() == Core.NEW:
+			if (self.type != 1):
+				print("ERROR: Error is assignment to null ref variable")
+				quit()
+			else:
+				pass
 
 		if self.type == 1:
 			self.assignTo.setValOfID(0, parser, inputData)
@@ -72,5 +79,9 @@ class Assign:
 			parser.ids[-1][self.assignTo.identifier] = valForX # y = 4
 			globals.isRef = True
 		elif self.type == 3:
+			#need to check if assigned new to this variable that's trying to get set
 			value = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
 			self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
+		# else:
+		# 	print("ERROR: Error is assignment to null ref variable")
+		# 	quit()

@@ -14,28 +14,28 @@ def main():
 
   if len(sys.argv) > 1: #fixxxxxx
     S = Scanner(sys.argv[2]) #gets the data file to handle input class
-  inputData = []
+  inputData = [] #gets data from input file
   while S.currentToken() != Core.EOF:
     if S.currentToken() == Core.CONST:
       val = S.getCONST()
       inputData.append(val)
       S.nextToken()
 
-  tempS = Scanner(sys.argv[1])
+  # tempS = Scanner(sys.argv[1])
   inputID = None
   outputID = None
-  while tempS.currentToken() != Core.EOF:
-    if tempS.currentToken() == Core.INPUT:
-      tempS.nextToken()
-      inputID = tempS.getID()
-    elif tempS.currentToken() == Core.OUTPUT:
-      tempS.nextToken()
-      if tempS.currentToken() == Core.ID:
-        outputID = tempS.getID()
-      elif tempS.currentToken() == Core.CONST:
-        outputID = tempS.getCONST()
-    else:
-      tempS.nextToken()
+  # while tempS.currentToken() != Core.EOF:
+  #   if tempS.currentToken() == Core.INPUT:
+  #     tempS.nextToken()
+  #     inputID = tempS.getID()
+  #   elif tempS.currentToken() == Core.OUTPUT:
+  #     tempS.nextToken()
+  #     if tempS.currentToken() == Core.ID:
+  #       outputID = tempS.getID()
+  #     elif tempS.currentToken() == Core.CONST:
+  #       outputID = tempS.getCONST()
+  #   else:
+  #     tempS.nextToken()
 
   p = Program()
   p.parse(parser)

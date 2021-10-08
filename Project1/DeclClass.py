@@ -25,4 +25,4 @@ class DeclClass:
 
 	def execute(self, parser, inputData, inputID, outputID):
 		# self.list.executeRef(parser, inputData, inputID, outputID)
-		pass
+		globals.varAfterRef = parser.scanner.getID()

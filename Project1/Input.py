@@ -21,5 +21,9 @@ class Input:
 		print(";\n", end='')
 
 	def execute(self, parser, inputData, inputID, outputID):
-		# self.tokAfterInput = parser.scanner.getID() #gets the id after input keyword
-		self.id.setValOfID(self.id, parser, inputData)
+		if len(inputData) != 0:
+			val = inputData.pop(0)
+		else:
+			print("ERROR: Error is .data file not having enough values")
+			quit()
+		self.id.setValOfID(val, parser, inputData)

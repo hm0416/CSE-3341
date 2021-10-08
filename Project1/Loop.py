@@ -1,6 +1,7 @@
 from Core import Core
 from Cond import Cond
 import StmtSeq
+import globals
 
 class Loop:
 	
@@ -34,6 +35,8 @@ class Loop:
 
 	def execute(self, parser, inputData, inputID, outputID):
 		while self.cond.execute(parser, inputData, inputID, outputID):
-			parser.ids.append({})
+			# parser.ids.append({})
+			globals.goInStmt = True
 			self.ss.execute(parser, inputData, inputID, outputID)
-			parser.ids.pop()
+			if globals.needToPop == True:
+				parser.ids.pop()

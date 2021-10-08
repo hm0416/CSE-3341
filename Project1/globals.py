@@ -1,7 +1,13 @@
 def initialize():
     global isRef
     global refID
-    global valAfterRef
+    global varAfterRef
+    global needToPop
+    global goInStmt
+    global refDeclared;
     isRef = False
     refID = ""
-    valAfterRef = ""
+    varAfterRef = ""
+    needToPop = False
+    goInStmt = False
+    refDeclared = False

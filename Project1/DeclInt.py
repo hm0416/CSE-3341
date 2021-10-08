@@ -1,5 +1,6 @@
 from IdList import IdList
 from Core import Core
+import globals
 
 class DeclInt:
 	
@@ -22,5 +23,9 @@ class DeclInt:
 		print(";\n", end='')
 
 	def execute(self, parser, inputData, inputID, outputID):
+		if globals.goInStmt == True:
+			parser.ids.append({})
+			globals.needToPop = True
+		else:
+			pass
 		# self.list.executeInt(parser, inputData, inputID, outputID)
-		pass

@@ -2,4 +2,5 @@ program
 	ref x;
 begin
 	x=1;
+	output x;
 end

@@ -42,7 +42,9 @@ class Cmpr:
 			else:
 				value = False
 		elif self.option == 1:
-			if value < self.expr2.execute(parser, inputData, inputID, outputID):
+			# parser.ids.pop()
+			val2 = self.expr2.execute(parser, inputData, inputID, outputID)
+			if value < val2:
 				value = True
 			else:
 				value = False

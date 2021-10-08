@@ -1,6 +1,7 @@
 from DeclInt import DeclInt
 from DeclClass import DeclClass
 from Core import Core
+import globals
 
 class Decl:
 	
@@ -29,4 +30,5 @@ class Decl:
 		if hasattr(self, 'declInt'):
 			self.declInt.execute(parser, inputData, inputID, outputID)
 		elif hasattr(self, 'declRef'):
+			globals.refDeclared = True
 			self.declRef.execute(parser, inputData, inputID, outputID)

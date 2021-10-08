@@ -6,6 +6,7 @@ from Loop import Loop
 from Decl import Decl
 from Core import Core
 import sys
+import globals
 
 class StmtSeq:
 
