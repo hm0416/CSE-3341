@@ -7,6 +7,7 @@ class DeclInt:
 	def parse(self, parser):
 		parser.expectedToken(Core.INT)
 		parser.scanner.nextToken()
+		globals.addInt = True
 		self.list = IdList()
 		self.list.parse(parser)
 		parser.expectedToken(Core.SEMICOLON)
@@ -23,9 +24,13 @@ class DeclInt:
 		print(";\n", end='')
 
 	def execute(self, parser, inputData, inputID, outputID):
+		globals.isInt.append(parser.scanner.getID())
 		if globals.goInStmt == True:
 			parser.ids.append({})
 			globals.needToPop = True
 		else:
 			pass
-		# self.list.executeInt(parser, inputData, inputID, outputID)
+
+		# if hasattr(self, 'list'):
+		# 	self.list.semanticIntVars(parser)
+		# # self.list.executeInt(parser, inputData, inputID, outputID)

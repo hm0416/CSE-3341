@@ -1,16 +1,21 @@
 from Id import Id
 from Core import Core
+import globals
 
 class IdList:
 	
 	def parse(self, parser):
 		self.id = Id()
 		self.id.parse(parser)
+		if globals.addInt == True:
+			globals.isInt.append(parser.scanner.getID())
 		if parser.scanner.currentToken() == Core.COMMA:
 			parser.scanner.nextToken()
 			self.list = IdList()
 			self.list.parse(parser)
-	
+			if globals.addInt == True:
+				globals.isInt.append(parser.scanner.getID())
+
 	# called by DeclInt.semantic
 	def semanticIntVars(self, parser):
 		self.id.doublyDeclared(parser)

@@ -40,8 +40,9 @@ class Factor:
 
 	def execute(self, parser, inputData, inputID, outputID):
 		if hasattr(self, 'id'):
-			globalVars = parser.scopes[0]
-			return self.id.execute(parser, inputData, inputID, outputID)
+			# scope = parser.scopeCheckForID(self.id.identifier) #gets scope index that id is in
+			scope = 1
+			return self.id.execute(parser, inputData, inputID, outputID, scope)
 		elif hasattr(self, 'expr'):
 			return self.expr.execute(parser, inputData, inputID, outputID)
 		else:

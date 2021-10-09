@@ -12,6 +12,7 @@ class Assign:
 		self.assignTo.parse(parser)
 		parser.expectedToken(Core.ASSIGN)
 		parser.scanner.nextToken()
+
 		# self.type will store 1 if "new" assignment, 2 if "ref" assignment, 3 if "<expr>" assignment
 		if parser.scanner.currentToken() == Core.NEW:
 			self.type = 1
@@ -64,24 +65,43 @@ class Assign:
 		# if self.assignTo.identifier == globals.valAfterRef:
 		# 	if parser.ids
 		# 	print("ERROR: Error is assignment to null ref variable")
-		x = self.parser.scanner.currentToken()
-		if self.assignTo.identifier == globals.varAfterRef and self.parser.scanner.currentToken() == Core.NEW:
-			if (self.type != 1):
-				print("ERROR: Error is assignment to null ref variable")
-				quit()
-			else:
-				pass
+		# x = self.parser.scanner.currentToken()
+		# if self.assignTo.identifier == globals.varAfterRef:
+		# 	if (self.type != 1):
+		# 		print("ERROR: Error is assignment to null ref variable")
+		# 		quit()
+		# 	else:
+		# 		pass
+		# else:
 
 		if self.type == 1:
+			globals.arrOfDeclared[self.assignTo.identifier] = "new"
+			globals.isRefThen = True
+			v = globals.arrOfDeclared
 			self.assignTo.setValOfID(0, parser, inputData)
 		elif self.type == 2:
 			valForX = parser.ids[-1].get(self.assignFrom.identifier) # gets 4
 			parser.ids[-1][self.assignTo.identifier] = valForX # y = 4
+			globals.arrOfDeclared[self.assignTo.identifier] = "ref"
 			globals.isRef = True
 		elif self.type == 3:
 			#need to check if assigned new to this variable that's trying to get set
-			value = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
-			self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
+			# if globals.isRefThen == False:
+			# 	value = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
+			# 	self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
+			i = globals.isInt
+			p = globals.arrOfDeclared
+			#if declared as an int then do expr execute
+			#if not declared as an int but in the arrOfdeclared then that means ref and did new
+			if self.assignTo.identifier in globals.arrOfDeclared: #if ref var thats been assigned new
+				value = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
+				self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
+			elif self.assignTo.identifier in globals.isInt: #if int
+				value = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
+				self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
+			else:
+				print("ERROR: Error is assignment to null ref variable")
+				quit()
 		# else:
 		# 	print("ERROR: Error is assignment to null ref variable")
 		# 	quit()

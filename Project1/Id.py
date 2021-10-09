@@ -44,7 +44,9 @@ class Id:
 	# 	rhsValue = parser.ids[idToReplace]
 	# 	parser.ids[id] = rhsValue #ids needs to be unique
 
-	def execute(self, parser, inputData, inputID, outputID):
+	def execute(self, parser, inputData, inputID, outputID, scope):
+		# if len(parser.ids) > 3:
+		# 	parser.ids.pop()
 		return parser.ids[-1].get(self.identifier)
 
 
