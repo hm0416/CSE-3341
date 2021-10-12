@@ -1,0 +1,24 @@
+program
+begin
+	ref x;
+	x = new;
+	x = 1;
+	if x==x then
+		ref x;
+		x = new;
+		x = 2;
+		if x==x then
+			ref x;
+			x = new;
+			x = 3;
+			if x==x then
+				ref x;
+				x = new;
+				x = 4;
+			endif
+			output x;
+		endif
+		output x;
+	endif
+	output x;
+end

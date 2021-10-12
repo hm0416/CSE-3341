@@ -1,0 +1,19 @@
+program
+	int x;
+begin
+	x = 1;
+	ref y;
+	y = new;
+	y = 10;
+	ref z;
+	z = ref y;
+	while !(x==y) begin
+		ref x;
+		x = ref y;
+		while 1 <= z begin
+			z = z-1;
+		endwhile
+		x = x + 1;
+	endwhile
+	output x;
+end

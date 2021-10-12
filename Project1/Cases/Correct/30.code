@@ -1,0 +1,18 @@
+program
+begin
+	ref x, y, z;
+	x = new;
+	y = ref x;
+	z = ref y;
+	x = 10;
+	while !(z==0) begin
+		x = x-1;
+		ref y;
+		y = new;
+		y = 1;
+		while !(y==64) begin
+			y = 2*y;
+			output y;
+		endwhile
+	endwhile
+end

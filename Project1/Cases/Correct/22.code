@@ -1,6 +1,6 @@
 program
 	ref x, y, z;
-	ref a, b, c;
+	int a, b, c;
 begin
 	x = new;
 	y = new;

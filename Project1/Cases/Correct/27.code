@@ -1,0 +1,15 @@
+program
+	ref x;
+begin
+	x = new;
+	x = 4;
+	ref y;
+	y = ref x;
+	while !(x==0) begin
+		ref z;
+		z = new;
+		z = x;
+		x = z-1;
+	endwhile
+	output y;
+end

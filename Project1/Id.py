@@ -37,8 +37,13 @@ class Id:
 
 	def setValOfID(self, val, parser, inputData):
 		parser.ids[-1][self.identifier] = val #ids needs to be unique
-		if globals.isRef == True:
+		if globals.isRef == True: #changing x to be z, needs to be other way around
+			# 	parser.ids[-1][self.identifier] = parser.ids[-1][globals.refID]
+
 			parser.ids[-1][globals.refID] = parser.ids[-1][self.identifier]
+		# else:
+		# 	parser.ids[-1][self.identifier] = parser.ids[-1][globals.refID]
+
 
 	# def replaceValOfID(self, idToReplace, id, parser):
 	# 	rhsValue = parser.ids[idToReplace]

@@ -61,27 +61,15 @@ class Assign:
 		print(";\n", end='')
 
 	def execute(self, parser, inputData, inputID, outputID):
-
-		# if self.assignTo.identifier == globals.valAfterRef:
-		# 	if parser.ids
-		# 	print("ERROR: Error is assignment to null ref variable")
-		# x = self.parser.scanner.currentToken()
-		# if self.assignTo.identifier == globals.varAfterRef:
-		# 	if (self.type != 1):
-		# 		print("ERROR: Error is assignment to null ref variable")
-		# 		quit()
-		# 	else:
-		# 		pass
-		# else:
-
 		if self.type == 1:
 			globals.arrOfDeclared[self.assignTo.identifier] = "new"
 			globals.isRefThen = True
 			v = globals.arrOfDeclared
 			self.assignTo.setValOfID(0, parser, inputData)
-		elif self.type == 2:
-			valForX = parser.ids[-1].get(self.assignFrom.identifier) # gets 4
-			parser.ids[-1][self.assignTo.identifier] = valForX # y = 4
+		elif self.type == 2: #y = ref x, need a case for when ref x; then y = x;
+			# valForX = parser.ids[-1].get(self.assignFrom.identifier) # gets 4
+			# parser.ids[-1][self.assignTo.identifier] = valForX # y = 4
+			parser.ids[-1][self.assignTo.identifier] = parser.ids[-1][self.assignFrom.identifier]
 			globals.arrOfDeclared[self.assignTo.identifier] = "ref"
 			globals.isRef = True
 		elif self.type == 3:
@@ -91,8 +79,12 @@ class Assign:
 			# 	self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
 			i = globals.isInt
 			p = globals.arrOfDeclared
-			#if declared as an int then do expr execute
-			#if not declared as an int but in the arrOfdeclared then that means ref and did new
+			valueForRef = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
+			r = globals.refID
+			if globals.refID == valueForRef:
+				globals.onlyChar = True
+			# if globals.refID in globals.arrOfDeclared and globals.refID == valueForRef:
+			# 	parser.ids[-1][self.assignTo.identifier] = parser.ids[-1][globals.refID]
 			if self.assignTo.identifier in globals.arrOfDeclared: #if ref var thats been assigned new
 				value = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
 				self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
@@ -102,6 +94,3 @@ class Assign:
 			else:
 				print("ERROR: Error is assignment to null ref variable")
 				quit()
-		# else:
-		# 	print("ERROR: Error is assignment to null ref variable")
-		# 	quit()

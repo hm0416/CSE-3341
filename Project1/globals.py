@@ -9,6 +9,8 @@ def initialize():
     global isInt
     global addInt
     global isRefThen
+    global onlyChar
+    global ids
     isRef = False
     refID = ""
     varAfterRef = ""
@@ -19,3 +21,5 @@ def initialize():
     isInt = []
     isRefThen = False
     addInt = False
+    onlyChar = False
+    ids = [{}]

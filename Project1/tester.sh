@@ -15,7 +15,7 @@ fi
 score=0
 error=0
 
-for value in {1..26}
+for value in {1..30}
 do
 	echo ""
 	echo "Running ${value}.code"
@@ -50,9 +50,11 @@ if [ $mainmenuinput = "y" ]; then
 	error=$(($error + 1))
 fi
 
-echo "Correct cases score out of 26:"
+echo ""
+echo "Correct cases score out of 30:"
 echo $score
 echo "Error cases score out of 2:"
 echo $error
+echo ""
 
 echo "Done!"
