@@ -62,6 +62,7 @@ class Assign:
 
 	def execute(self, parser, inputData, inputID, outputID):
 		if self.type == 1:
+			parser.heap.append(0)
 			globals.arrOfDeclared[self.assignTo.identifier] = "new"
 			globals.isRefThen = True
 			v = globals.arrOfDeclared
@@ -73,18 +74,6 @@ class Assign:
 			globals.arrOfDeclared[self.assignTo.identifier] = "ref"
 			globals.isRef = True
 		elif self.type == 3:
-			#need to check if assigned new to this variable that's trying to get set
-			# if globals.isRefThen == False:
-			# 	value = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
-			# 	self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
-			i = globals.isInt
-			p = globals.arrOfDeclared
-			valueForRef = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
-			r = globals.refID
-			if globals.refID == valueForRef:
-				globals.onlyChar = True
-			# if globals.refID in globals.arrOfDeclared and globals.refID == valueForRef:
-			# 	parser.ids[-1][self.assignTo.identifier] = parser.ids[-1][globals.refID]
 			if self.assignTo.identifier in globals.arrOfDeclared: #if ref var thats been assigned new
 				value = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
 				self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
