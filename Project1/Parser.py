@@ -12,7 +12,10 @@ class Parser:
 		self.scanner = Scanner(s)
 		self.scopes = [{}]
 		self.ids = [{}]
-		self.heap = []
+		self.heap = {}
+		self.stack = []
+		self.static = []
+		self.scope = 0 #0 - global, 1- local,
 	
 	#helper method for the semantic checks
 	#returns Core.INT or Core.REF if the string x is the name of a variable that is in scope, Core.ERROR otherwise

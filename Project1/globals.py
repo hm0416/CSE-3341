@@ -11,6 +11,7 @@ def initialize():
     global isRefThen
     global onlyChar
     global ids
+    global assignFrom
     isRef = False
     refID = ""
     varAfterRef = ""
@@ -23,3 +24,4 @@ def initialize():
     addInt = False
     onlyChar = False
     ids = [{}]
+    assignFrom = ""

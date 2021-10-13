@@ -34,9 +34,14 @@ class Loop:
 		print("endwhile\n", end='')
 
 	def execute(self, parser, inputData, inputID, outputID):
+		parser.stack.append({})
+
 		while self.cond.execute(parser, inputData, inputID, outputID):
 			# parser.ids.append({})
+			# parser.stack.append({})
 			globals.goInStmt = True
 			self.ss.execute(parser, inputData, inputID, outputID)
 			if globals.needToPop == True:
 				parser.ids.pop()
+			# parser.stack.pop()
+

@@ -46,6 +46,69 @@ class Id:
 	def execute(self, parser, inputData, inputID, outputID, scope):
 		# if len(parser.ids) > 3:
 		# 	parser.ids.pop()
-		return parser.ids[-1].get(self.identifier)
+		# return parser.ids[-1].get(self.identifier)
+		#index of id then get value
+		indxKey = 0
+		# if parser.scope == 0:
+		if parser.scope == 0:
+			for ele in parser.static:
+				if self.identifier in ele:
+					indxKey = parser.static.index(ele)  # gets index of pair
 
+			if self.identifier in parser.heap:
+				assignFromVal = parser.heap.get(self.identifier) #gets val of x
+				return assignFromVal
+			else:
+				dict = parser.static[indxKey]  # gets the dict at the index
+				valsForKey = dict[self.identifier]  # array looking for 0th key
+
+				if len(parser.heap) != 0:
+					vals = parser.heap.values() #gets all values in heap, want 0th
+					vals_list = list(vals)
+					return vals_list[valsForKey[0]]
+				else:
+					return valsForKey[0]
+
+		elif parser.scope == 1:
+			for ele in parser.stack:
+				if self.identifier in ele:
+					indxKey = parser.stack.index(ele)  # gets index of pair
+
+			if self.identifier in parser.heap:
+				assignFromVal = parser.heap.get(self.identifier) #gets val of x
+				return assignFromVal
+			else:
+				dict = parser.stack[indxKey]  # gets the dict at the index
+				valsForKey = dict[self.identifier]  # array looking for 0th key
+				if len(parser.heap) != 0:
+					vals = parser.heap.values() #gets all values in heap, want 0th
+					vals_list = list(vals)
+					return vals_list[valsForKey[0]]
+				else:
+					return valsForKey[0]
+
+
+
+
+
+		# 	if self.identifier in parser.heap:
+		# 		assignFromVal = parser.heap.get(self.identifier) #gets val of x
+		# 		return assignFromVal
+		#
+		# 	# for ele in parser.static:
+		# 	# 	if self.identifier in ele:
+		# 	# 		indxKey = parser.static.index(ele)  # gets index of pair
+		# 	# dict = parser.static[indxKey]  # gets the dict at the index
+		# 	# valForKey = dict.get(self.identifier)
+		# 	# return valForKey
+		# elif parser.scope == 1:
+		# 	if self.identifier in parser.heap:
+		# 		assignFromVal = parser.heap.get(self.identifier) #gets val of x
+		# 		return assignFromVal
+
+			# for ele in parser.stack:
+			# 	if self.identifier in ele:
+			# 		indxKey = parser.stack.index(ele)  # gets index of pair
+			# dict = parser.stack[indxKey]  # gets the dict at the index
+			# valForKey = dict.get(self.identifier)
 
