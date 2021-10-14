@@ -34,6 +34,8 @@ class Loop:
 		print("endwhile\n", end='')
 
 	def execute(self, parser, inputData, inputID, outputID):
+		# parser.ids.append({})
+
 		while self.cond.execute(parser, inputData, inputID, outputID):
 			# parser.ids.append({})
 			globals.goInStmt = True
