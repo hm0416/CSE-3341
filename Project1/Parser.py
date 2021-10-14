@@ -13,8 +13,8 @@ class Parser:
 		self.scopes = [{}]
 		self.ids = [{}]
 		self.heap = {}
-		self.stack = []
-		self.static = []
+		self.stack = [{}]
+		self.static = [{}]
 		self.scope = 0 #0 - global, 1- local,
 	
 	#helper method for the semantic checks

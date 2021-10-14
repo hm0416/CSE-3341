@@ -2,6 +2,7 @@ def initialize():
     global isRef
     global refID
     global varAfterRef
+    global varAfterInt
     global needToPop
     global goInStmt
     global refDeclared
@@ -25,3 +26,4 @@ def initialize():
     onlyChar = False
     ids = [{}]
     assignFrom = ""
+    varAfterInt = ""

@@ -27,6 +27,8 @@ class DeclClass:
 		for ele in parser.static:
 			if globals.varAfterRef in ele:
 				parser.scope = 0
+			elif globals.varAfterInt in ele:
+				parser.scope = 0
 			elif all(len(ele) == 0 for ele in parser.static):
 				parser.scope = 0
 			else:
@@ -44,7 +46,7 @@ class DeclClass:
 				parser.static[-1][self.list.id.identifier] = [None, "ref"]
 		else:
 			for ele in parser.static:
-				if globals.varAfterRef in ele:
+				if globals.varAfterRef in ele or globals.varAfterInt in ele:
 					parser.scope = 0
 					parser.static[-1][self.list.id.identifier] = [None, "ref"]
 				elif parser.scope == 0:
@@ -55,7 +57,7 @@ class DeclClass:
 				parser.stack[-1][self.list.id.identifier] = [None, "ref"]
 		else:
 			for ele in parser.stack:
-				if globals.varAfterRef in ele:
+				if globals.varAfterRef in ele or globals.varAfterInt in ele:
 					parser.scope = 1
 					parser.stack[-1][self.list.id.identifier] = [None, "ref"]
 				elif parser.scope == 1:

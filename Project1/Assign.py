@@ -75,7 +75,7 @@ class Assign:
 			# for ele in parser.heap:
 			# 	if self.assignFrom.identifier in ele:
 			# 		indxKeyAssignFrom = parser.heap.index(ele)  # gets index of ref var in the heap
-
+				indxKey = 0
 				if parser.scope == 0:
 					for ele in parser.static:
 						if self.assignTo.identifier in ele:

@@ -7,6 +7,7 @@ class DeclInt:
 	def parse(self, parser):
 		parser.expectedToken(Core.INT)
 		parser.scanner.nextToken()
+		globals.varAfterInt = parser.scanner.getID()
 		globals.addInt = True
 		self.list = IdList()
 		self.list.parse(parser)
@@ -27,6 +28,8 @@ class DeclInt:
 		for ele in parser.static:
 			if globals.varAfterRef in ele:
 				parser.scope = 0
+			elif globals.varAfterInt in ele:
+				parser.scope = 0
 			elif all(len(ele) == 0 for ele in parser.static):
 				parser.scope = 0
 			else:
@@ -44,7 +47,7 @@ class DeclInt:
 				parser.static[-1][self.list.id.identifier] = [0, "int"]
 		else:
 			for ele in parser.static:
-				if globals.varAfterRef in ele:
+				if globals.varAfterRef in ele or globals.varAfterInt in ele:
 					parser.scope = 0
 					parser.static[-1][self.list.id.identifier] = [0, "int"]
 				elif parser.scope == 0:
@@ -55,7 +58,7 @@ class DeclInt:
 				parser.stack[-1][self.list.id.identifier] = [0, "int"]
 		else:
 			for ele in parser.stack:
-				if globals.varAfterRef in ele:
+				if globals.varAfterRef in ele or globals.varAfterInt in ele:
 					parser.scope = 1
 					parser.stack[-1][self.list.id.identifier] = [0, "int"]
 				elif parser.scope == 1:

@@ -48,6 +48,20 @@ class Id:
 		# 	parser.ids.pop()
 		# return parser.ids[-1].get(self.identifier)
 		#index of id then get value
+		for ele in parser.static:
+			if self.identifier in ele:
+				parser.scope = 0
+			elif all(len(ele) == 0 for ele in parser.static):
+				parser.scope = 0
+			else:
+				for ele2 in parser.ids:
+					if self.identifier in ele2 and not(self.identifier in ele):
+						ele2ListVals = ele2.values()
+						valList = list(ele2ListVals)
+						indxOf = list(ele2).index(self.identifier) #index of y
+						return valList[indxOf]
+				parser.scope = 1
+
 		indxKey = 0
 		# if parser.scope == 0:
 		if parser.scope == 0:

@@ -1,6 +1,8 @@
 program
 begin
-	ref x, y, z;
+	ref x;
+	ref y;
+	ref z;
 	x = new;
 	y = ref x;
 	z = ref y;
