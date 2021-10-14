@@ -41,25 +41,25 @@ class DeclInt:
 
 		if all(len(ele) == 0 for ele in parser.static):
 			if parser.scope == 0:
-				parser.static[-1][self.list.id.identifier] = [None, "ref"]
+				parser.static[-1][self.list.id.identifier] = [0, "int"]
 		else:
 			for ele in parser.static:
 				if globals.varAfterRef in ele:
 					parser.scope = 0
-					# parser.static[-1][self.list.id.identifier] = [None, "ref"]
+					parser.static[-1][self.list.id.identifier] = [0, "int"]
 				elif parser.scope == 0:
-					parser.static[-1][self.list.id.identifier] = [None, "ref"]
+					parser.static[-1][self.list.id.identifier] = [0, "int"]
 
 		if all(len(ele) == 0 for ele in parser.stack):
 			if parser.scope == 1:
-				parser.stack[-1][self.list.id.identifier] = [None, "ref"]
+				parser.stack[-1][self.list.id.identifier] = [0, "int"]
 		else:
 			for ele in parser.stack:
 				if globals.varAfterRef in ele:
 					parser.scope = 1
-					# parser.stack[-1][self.list.id.identifier] = [None, "ref"]
+					parser.stack[-1][self.list.id.identifier] = [0, "int"]
 				elif parser.scope == 1:
-					parser.stack[-1][self.list.id.identifier] = [None, "ref"]
+					parser.stack[-1][self.list.id.identifier] = [0, "int"]
 
 		globals.isInt.append(parser.scanner.getID())
 		if globals.goInStmt == True:

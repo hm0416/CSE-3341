@@ -68,7 +68,6 @@ class Id:
 					return vals_list[valsForKey[0]]
 				else:
 					return valsForKey[0]
-
 		elif parser.scope == 1:
 			for ele in parser.stack:
 				if self.identifier in ele:

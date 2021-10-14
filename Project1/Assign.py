@@ -158,7 +158,7 @@ class Assign:
 			# 			valsForKey = dict[self.assignTo.identifier]  # array
 			# 			valsForKey[0] = indxKeyAssignFrom  # sets to the index of ref var in the heap
 
-
+			temp = None
 			for ele in parser.static:
 				if self.assignTo.identifier in ele:
 					parser.scope = 0
@@ -168,7 +168,7 @@ class Assign:
 					parser.scope = 1
 					temp = parser.stack.copy()
 
-			while len(temp) != 0:
+			while temp != None and len(temp) != 0:
 				pair = temp.pop(len(temp)-1) #the last item in stack -- most recent decl
 				indxKey = 0
 				if parser.scope == 0:
