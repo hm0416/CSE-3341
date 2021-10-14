@@ -71,6 +71,8 @@ class DeclInt:
 		else:
 			pass
 
-		# if hasattr(self, 'list'):
+		self.list.executeInt(parser, inputData, inputID, outputID)
+
+# if hasattr(self, 'list'):
 		# 	self.list.semanticIntVars(parser)
 		# # self.list.executeInt(parser, inputData, inputID, outputID)

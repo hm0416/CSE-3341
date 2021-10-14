@@ -7,14 +7,16 @@ class IdList:
 	def parse(self, parser):
 		self.id = Id()
 		self.id.parse(parser)
-		if globals.addInt == True:
+		if globals.addInt == True or globals.addRef == True:
 			globals.isInt.append(parser.scanner.getID())
+			globals.isRefArr.append(parser.scanner.getID())
 		if parser.scanner.currentToken() == Core.COMMA:
 			parser.scanner.nextToken()
 			self.list = IdList()
 			self.list.parse(parser)
-			if globals.addInt == True:
+			if globals.addInt == True or globals.addRef == True:
 				globals.isInt.append(parser.scanner.getID())
+				globals.isRefArr.append(parser.scanner.getID())
 
 	# called by DeclInt.semantic
 	def semanticIntVars(self, parser):
@@ -40,13 +42,23 @@ class IdList:
 		pass
 
 	def executeInt(self, parser, inputData, inputID, outputID):
-		self.id.doublyDeclared(parser)
-		self.id.addToScopes(parser, Core.INT)
+		if parser.scope == 0:
+			if hasattr(self, 'list'):
+				parser.static[-1][self.list.id.identifier] = [0, "int"]
+		elif parser.scope == 1:
+			if hasattr(self, 'list'):
+				parser.stack[-1][self.list.id.identifier] = [0, "int"]
+
 		if hasattr(self, 'list'):
-			self.list.semanticIntVars(parser)
+			self.list.executeInt(parser, inputData, inputID, outputID)
 
 	def executeRef(self, parser, inputData, inputID, outputID):
-		self.id.doublyDeclared(parser)
-		self.id.addToScopes(parser, Core.REF)
+		if parser.scope == 0:
+			if hasattr(self, 'list'):
+				parser.static[-1][self.list.id.identifier] = [None, "ref"]
+		elif parser.scope == 1:
+			if hasattr(self, 'list'):
+				parser.stack[-1][self.list.id.identifier] = [None, "ref"]
+
 		if hasattr(self, 'list'):
-			self.list.semanticRefVars(parser)
+			self.list.executeRef(parser, inputData, inputID, outputID)

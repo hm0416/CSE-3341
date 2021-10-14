@@ -200,7 +200,7 @@ class Assign:
 			if self.assignTo.identifier in globals.arrOfDeclared: #if ref var thats been assigned new
 				value = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
 				self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
-			elif self.assignTo.identifier in globals.isInt: #if int
+			elif self.assignTo.identifier in globals.isInt or self.assignTo.identifier in globals.isRefArr: #if int
 				value = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
 				self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
 			else:

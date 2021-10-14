@@ -8,11 +8,13 @@ def initialize():
     global refDeclared
     global arrOfDeclared
     global isInt
+    global addRef
     global addInt
     global isRefThen
     global onlyChar
     global ids
     global assignFrom
+    global isRefArr
     isRef = False
     refID = ""
     varAfterRef = ""
@@ -27,3 +29,5 @@ def initialize():
     ids = [{}]
     assignFrom = ""
     varAfterInt = ""
+    isRefArr = []
+    addRef = False
