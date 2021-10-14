@@ -11,5 +11,4 @@ begin
 		y = y-1;
 		output n;
 	endwhile
-	output x;
 end
