@@ -26,14 +26,19 @@ class DeclClass:
 
 	def execute(self, parser, inputData, inputID, outputID):
 		for ele in parser.static:
-			if globals.varAfterRef in ele:
-				parser.scope = 0
-			elif globals.varAfterInt in ele:
-				parser.scope = 0
-			elif all(len(ele) == 0 for ele in parser.static):
-				parser.scope = 0
-			else:
-				parser.scope = 1
+			if len(ele) != 0:
+			# 	vals2 = ele.values()
+			# 	val2List = list(vals2)
+			# else:
+			# 	pass
+				if globals.varAfterRef in ele and parser.scope != 3:
+					parser.scope = 0
+				elif globals.varAfterInt in ele and parser.scope != 3:
+					parser.scope = 0
+				elif all(len(ele) == 0 for ele in parser.static):
+					parser.scope = 0
+				else:
+					parser.scope = 1
 
 		# for ele in parser.stack:
 		# 	if globals.varAfterRef in ele:
@@ -45,7 +50,7 @@ class DeclClass:
 		if all(len(ele) == 0 for ele in parser.static):
 			if parser.scope == 0:
 				parser.static[-1][self.list.id.identifier] = [None, "ref"]
-		else:
+		elif parser.scope == 0:
 			for ele in parser.static:
 				if globals.varAfterRef in ele or globals.varAfterInt in ele:
 					parser.scope = 0
@@ -56,7 +61,7 @@ class DeclClass:
 		if all(len(ele) == 0 for ele in parser.stack):
 			if parser.scope == 1:
 				parser.stack[-1][self.list.id.identifier] = [None, "ref"]
-		else:
+		elif parser.scope == 1:
 			for ele in parser.stack:
 				if globals.varAfterRef in ele or globals.varAfterInt in ele:
 					parser.scope = 1

@@ -7,16 +7,21 @@ class IdList:
 	def parse(self, parser):
 		self.id = Id()
 		self.id.parse(parser)
-		if globals.addInt == True or globals.addRef == True:
+		if globals.addInt == True:
 			globals.isInt.append(parser.scanner.getID())
+		elif globals.addRef == True:
 			globals.isRefArr.append(parser.scanner.getID())
 		if parser.scanner.currentToken() == Core.COMMA:
 			parser.scanner.nextToken()
 			self.list = IdList()
 			self.list.parse(parser)
-			if globals.addInt == True or globals.addRef == True:
+			if globals.addInt == True:
 				globals.isInt.append(parser.scanner.getID())
+			elif globals.addRef == True:
 				globals.isRefArr.append(parser.scanner.getID())
+
+		globals.addInt = False
+		globals.addRef = False
 
 	# called by DeclInt.semantic
 	def semanticIntVars(self, parser):
