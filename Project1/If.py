@@ -51,6 +51,7 @@ class If:
 			if self.cond.execute(parser, inputData, inputID, outputID):
 				# parser.ids.append({})
 				globals.goInStmt = True
+				parser.stack.append({})
 				self.ss1.execute(parser, inputData, inputID, outputID)
 				# g = globals.needToPop
 				if globals.needToPop == True:
@@ -59,12 +60,14 @@ class If:
 			if self.cond.execute(parser, inputData, inputID, outputID):
 				# parser.ids.append({})
 				globals.goInStmt = True
+				parser.stack.append({})
 				self.ss1.execute(parser, inputData, inputID, outputID)
 				if globals.needToPop == True:
 					parser.ids.pop()
 			else:
 				# parser.ids.append({})
 				globals.goInStmt = True
+				parser.stack.append({})
 				self.ss2.execute(parser, inputData, inputID, outputID)
 				if globals.needToPop == True:
 					parser.ids.pop()

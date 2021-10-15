@@ -71,6 +71,9 @@ class Assign:
 			if self.assignFrom.identifier in parser.heap:
 				indxKeyAssignFrom = list(parser.heap).index(self.assignFrom.identifier)
 				assignFromVal = parser.heap.get(self.assignFrom.identifier)
+			# elif self.assignFrom.identifier in parser.stack:
+			# 	indxKeyAssignFrom = list(parser.stack).index(self.assignFrom.identifier)
+			# 	assignFromVal = parser.stack.get(self.assignFrom.identifier)
 
 			# for ele in parser.heap:
 			# 	if self.assignFrom.identifier in ele:
