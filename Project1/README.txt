@@ -8,7 +8,7 @@ README.txt - Documentation of files included and any comments about the project.
 Non-terminals as classes:
 These classes listed below are all the non-terminals in the grammar. Each class contains a parse method, semantic method, print method, and execute method.
 Other methods may be included as well (some from the professors project 2 code and some are mine (such as the execute methods and the setValOfID method)).
-Each class parses/executes the non-terminal that's specified in the grammar.
+Each class parses/executes the non-terminal that's specified in the class name and in the grammar.
 
 Assign.py
 Cmpr.py
@@ -27,9 +27,9 @@ Output.py
 Stmt.py
 StmtSeq.py
 Term.py
-Program.py
+Program.py - the root/starting terminal
 
-Id.py - The professors class that he made, but i added a new method called setValOfID and an execute method
+Id.py - The professors class that he made, but I added a new method called setValOfID and an execute method
 globals.py - a bunch of global variables that are used throughout my code to easily change variable values. Each variable
 has a comment next to it in the globals.py file. More details in that file.
 
@@ -53,5 +53,5 @@ Known Bugs/issues: The last 4 test cases that were given to us do not work. I be
 3 regions of memory (so making a static, stack and heap out of a list of dictionaries -- having 3 separate list of dictionaries) but that also did not work for me.
 I tried a variety of different things to make it work but nothing seemed to work. The nested scopes worked fine in the other test cases, but
 when a ref gets declared inside the nested scope that's when bugs occur that I do not know why/what is causing them :(. I tried my best to get it working
--- spent easily 15+ hours debugging/re-writing my code (excluding the 8-10 hours of writing the actual code).
+-- spent easily 15+ hours debugging/re-writing my code (excluding the 8-10 hours of writing the actual code), but again, nothing worked.
 
