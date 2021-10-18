@@ -35,7 +35,10 @@ class Loop:
 
 	def execute(self, parser, inputData):
 		while self.cond.execute(parser, inputData):
+			parser.ids.append({})
 			globals.goInStmt = True #have gone into new scope/if stmt
 			self.ss.execute(parser, inputData)
-			if globals.needToPop == True: #checks to see if need to pop dict
-				parser.ids.pop()
+			# if globals.needToPop == True: #checks to see if need to pop dict
+			# 	parser.ids.pop()
+
+			parser.ids.pop()

@@ -49,18 +49,29 @@ class If:
 	def execute(self, parser, inputData):
 		if not hasattr(self, 'ss2'):  #if there is no else statement
 			if self.cond.execute(parser, inputData):
+				parser.ids.append({})
+
 				globals.goInStmt = True #have gone into new scope/if stmt
 				self.ss1.execute(parser, inputData)
 				if globals.needToPop == True: #checks to see if need to pop dict
 					parser.ids.pop()
+				parser.ids.pop()
+
 		else:  # if there is an else stmt
 			if self.cond.execute(parser, inputData):
+				parser.ids.append({})
+
 				globals.goInStmt = True
 				self.ss1.execute(parser, inputData)
 				if globals.needToPop == True:
 					parser.ids.pop()
+				parser.ids.pop()
+
 			else:
+				parser.ids.append({})
+
 				globals.goInStmt = True
 				self.ss2.execute(parser, inputData)
 				if globals.needToPop == True:
 					parser.ids.pop()
+				parser.ids.pop()

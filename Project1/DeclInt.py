@@ -24,9 +24,9 @@ class DeclInt:
 		print(";\n", end='')
 
 	def execute(self, parser, inputData):
-		globals.isInt.append(parser.scanner.getID()) #appends the id of the int that's been declared - isInt is an array of ints that's been declared
-		if globals.goInStmt == True: #if code is inside if/loop stmt then want to append another dict
-			parser.ids.append({})
-			globals.needToPop = True #sets needToPop to true to determine if a dict needs to be popped
-		else:
-			pass
+		# globals.isInt.append(parser.scanner.getID()) #appends the id of the int that's been declared - isInt is an array of ints that's been declared
+		# if globals.goInStmt == True: #if code is inside if/loop stmt then want to append another dict
+		# 	parser.ids.append({})
+		# 	globals.needToPop = True #sets needToPop to true to determine if a dict needs to be popped
+		# else:
+		pass
