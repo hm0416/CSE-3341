@@ -15,34 +15,18 @@ def main():
   if len(sys.argv) > 1: #fixxxxxx
     S = Scanner(sys.argv[2]) #gets the data file to handle input class
   inputData = [] #gets data from input file
+  #gets the constants one by one from the input data file and appends to an array that will get passed to the execute function
   while S.currentToken() != Core.EOF:
     if S.currentToken() == Core.CONST:
       val = S.getCONST()
       inputData.append(val)
       S.nextToken()
 
-  # tempS = Scanner(sys.argv[1])
-  inputID = None
-  outputID = None
-  # while tempS.currentToken() != Core.EOF:
-  #   if tempS.currentToken() == Core.INPUT:
-  #     tempS.nextToken()
-  #     inputID = tempS.getID()
-  #   elif tempS.currentToken() == Core.OUTPUT:
-  #     tempS.nextToken()
-  #     if tempS.currentToken() == Core.ID:
-  #       outputID = tempS.getID()
-  #     elif tempS.currentToken() == Core.CONST:
-  #       outputID = tempS.getCONST()
-  #   else:
-  #     tempS.nextToken()
-
   p = Program()
   p.parse(parser)
+  p.execute(parser, inputData)
   # p.semantic(parser)
-  p.execute(parser, inputData, inputID, outputID)
   # p.print()
-
 
 if __name__ == "__main__":
     main()

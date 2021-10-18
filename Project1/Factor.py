@@ -38,12 +38,10 @@ class Factor:
 		else:
 			print(self.constant, end='')
 
-	def execute(self, parser, inputData, inputID, outputID):
+	def execute(self, parser, inputData):
 		if hasattr(self, 'id'):
-			# scope = parser.scopeCheckForID(self.id.identifier) #gets scope index that id is in
-			scope = 1
-			return self.id.execute(parser, inputData, inputID, outputID, scope)
+			return self.id.execute(parser, inputData) #returns the value of the ID
 		elif hasattr(self, 'expr'):
-			return self.expr.execute(parser, inputData, inputID, outputID)
+			return self.expr.execute(parser, inputData) #returns the value of the expr
 		else:
-			return self.constant
+			return self.constant #returns the constant

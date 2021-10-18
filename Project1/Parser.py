@@ -11,7 +11,7 @@ class Parser:
 	def __init__(self, s):
 		self.scanner = Scanner(s)
 		self.scopes = [{}]
-		self.ids = [{}]
+		self.ids = [{}] #list of dictionaries to handle variables in the program
 	
 	#helper method for the semantic checks
 	#returns Core.INT or Core.REF if the string x is the name of a variable that is in scope, Core.ERROR otherwise
@@ -25,17 +25,6 @@ class Parser:
 				match = self.nestedScopeCheck(x) #recurse and keep checking each dict
 			self.scopes.append(temp)
 		return match
-
-	# def scopeCheckForID(self, x):
-	# 	indexOfScope = 0
-	# 	if not len(self.ids) == 0:
-	# 		temp = self.ids.pop() #check every dict
-	# 		if x in temp:
-	# 			indexOfScope = self.ids.index(temp) #gets index of specific dict at specific scope
-	# 		else:
-	# 			indexOfScope = self.scopeCheckForID(x) #recurse and keep checking each dict
-	# 		self.ids.append(temp)
-	# 	return indexOfScope
 	
 	#helper method for the semantic checks
 	#returns Core.INT or Core.REF if the string x is the name of a variable that was declared in the current scope, Core.ERROR otherwise

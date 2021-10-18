@@ -26,9 +26,10 @@ class Decl:
 		elif hasattr(self, 'declRef'):
 			self.declRef.print(indent)
 
-	def execute(self, parser, inputData, inputID, outputID):
+	#chcks to see which declaration is made - an int or ref
+	def execute(self, parser, inputData):
 		if hasattr(self, 'declInt'):
-			self.declInt.execute(parser, inputData, inputID, outputID)
+			self.declInt.execute(parser, inputData)
 		elif hasattr(self, 'declRef'):
-			globals.refDeclared = True
-			self.declRef.execute(parser, inputData, inputID, outputID)
+			# globals.refDeclared = True
+			self.declRef.execute(parser, inputData)

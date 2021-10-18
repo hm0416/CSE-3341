@@ -20,7 +20,7 @@ class Assign:
 		elif parser.scanner.currentToken() == Core.REF:
 			self.type = 2
 			parser.scanner.nextToken()
-			globals.refID = parser.scanner.getID()
+			globals.refID = parser.scanner.getID() #gets ID of the variable to be referenced
 			self.assignFrom = Id()
 			self.assignFrom.parse(parser)
 		else:
@@ -60,36 +60,23 @@ class Assign:
 			self.expr.print()
 		print(";\n", end='')
 
-	def execute(self, parser, inputData, inputID, outputID):
+	def execute(self, parser, inputData):
 		if self.type == 1:
-			globals.arrOfDeclared[self.assignTo.identifier] = "new"
-			globals.isRefThen = True
-			v = globals.arrOfDeclared
-			self.assignTo.setValOfID(0, parser, inputData)
-		elif self.type == 2: #y = ref x, need a case for when ref x; then y = x;
-			# valForX = parser.ids[-1].get(self.assignFrom.identifier) # gets 4
-			# parser.ids[-1][self.assignTo.identifier] = valForX # y = 4
+			globals.arrOfDeclared[self.assignTo.identifier] = "new" #array to help determine which if-stmt to go into
+			# globals.isRefThen = True
+			self.assignTo.setValOfID(0, parser, inputData) #initializes the variable that's being set to new to zero
+		elif self.type == 2:
+			#LHS of the expression is now pointing to the value that's getting referenced on the RHS
 			parser.ids[-1][self.assignTo.identifier] = parser.ids[-1][self.assignFrom.identifier]
-			globals.arrOfDeclared[self.assignTo.identifier] = "ref"
+			globals.arrOfDeclared[self.assignTo.identifier] = "ref" #array to help determine which if-stmt to go into
 			globals.isRef = True
 		elif self.type == 3:
 			#need to check if assigned new to this variable that's trying to get set
-			# if globals.isRefThen == False:
-			# 	value = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
-			# 	self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
-			i = globals.isInt
-			p = globals.arrOfDeclared
-			valueForRef = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
-			r = globals.refID
-			if globals.refID == valueForRef:
-				globals.onlyChar = True
-			# if globals.refID in globals.arrOfDeclared and globals.refID == valueForRef:
-			# 	parser.ids[-1][self.assignTo.identifier] = parser.ids[-1][globals.refID]
-			if self.assignTo.identifier in globals.arrOfDeclared: #if ref var thats been assigned new
-				value = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
+			if self.assignTo.identifier in globals.arrOfDeclared: #if ref variable has been assigned new
+				value = self.expr.execute(parser, inputData)  # gets the value on the RHS
 				self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
-			elif self.assignTo.identifier in globals.isInt: #if int
-				value = self.expr.execute(parser, inputData, inputID, outputID)  # gets the value on the RHS
+			elif self.assignTo.identifier in globals.isInt: #if int var has been assigned ref
+				value = self.expr.execute(parser, inputData)  # gets the value on the RHS
 				self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
 			else:
 				print("ERROR: Error is assignment to null ref variable")

@@ -7,7 +7,7 @@ class DeclClass:
 	def parse(self, parser):
 		parser.expectedToken(Core.REF)
 		parser.scanner.nextToken()
-		globals.varAfterRef = parser.scanner.getID() #gets the variable after ref declaration
+		# globals.varAfterRef = parser.scanner.getID() #gets the variable after ref declaration
 		self.list = IdList()
 		self.list.parse(parser)
 		parser.expectedToken(Core.SEMICOLON)
@@ -23,6 +23,7 @@ class DeclClass:
 		self.list.print()
 		print(";\n", end='')
 
-	def execute(self, parser, inputData, inputID, outputID):
-		# self.list.executeRef(parser, inputData, inputID, outputID)
-		globals.varAfterRef = parser.scanner.getID()
+	#nothing to do here
+	def execute(self, parser, inputData):
+		pass
+		# globals.varAfterRef = parser.scanner.getID()

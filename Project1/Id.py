@@ -35,23 +35,14 @@ class Id:
 	def print(self):
 		print(self.identifier, end='')
 
+	#finds the ID in the list of dictionaries and sets it to the value it's been set to
 	def setValOfID(self, val, parser, inputData):
 		parser.ids[-1][self.identifier] = val #ids needs to be unique
-		if globals.isRef == True: #changing x to be z, needs to be other way around
-			# parser.ids[-1][self.identifier] = parser.ids[-1][globals.refID]
-
+		if globals.isRef == True: #if a variable is set to the reference of another variable, point that variable to the value of the variable that's been referenced on the RHS
 			parser.ids[-1][globals.refID] = parser.ids[-1][self.identifier]
-		# else:
-		# 	parser.ids[-1][self.identifier] = parser.ids[-1][globals.refID]
 
-
-	# def replaceValOfID(self, idToReplace, id, parser):
-	# 	rhsValue = parser.ids[idToReplace]
-	# 	parser.ids[id] = rhsValue #ids needs to be unique
-
-	def execute(self, parser, inputData, inputID, outputID, scope):
-		# if len(parser.ids) > 3:
-		# 	parser.ids.pop()
+	#gets the value of the ID from the list of dictionaries
+	def execute(self, parser, inputData):
 		return parser.ids[-1].get(self.identifier)
 
 

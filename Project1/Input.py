@@ -20,10 +20,11 @@ class Input:
 		self.id.print()
 		print(";\n", end='')
 
-	def execute(self, parser, inputData, inputID, outputID):
+	def execute(self, parser, inputData):
+		# if there are still ints in the inputData file, pop each off else print an error
 		if len(inputData) != 0:
 			val = inputData.pop(0)
 		else:
 			print("ERROR: Error is .data file not having enough values")
 			quit()
-		self.id.setValOfID(val, parser, inputData)
+		self.id.setValOfID(val, parser, inputData) #sets the value of the input variable to the values in the input file

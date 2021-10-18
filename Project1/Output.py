@@ -20,8 +20,6 @@ class Output:
 		self.expr.print()
 		print(";\n", end='')
 
-	def execute(self, parser, inputData, inputID, outputID):
-		# if inputID == outputID:
-		# 	print(inputData.pop(0))
-		# else:
-		print(self.expr.execute(parser, inputData, inputID, outputID))
+	#prints out the value of the variable the program wants to output
+	def execute(self, parser, inputData):
+		print(self.expr.execute(parser, inputData))

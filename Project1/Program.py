@@ -35,10 +35,10 @@ class Program:
 		self.ss.print(1)
 		print("end\n", end='')
 
-	def execute(self, parser, inputData, inputID, outputID):
+	def execute(self, parser, inputData):
 		parser.ids.append({}) #global scope -- first one
 		if self.ds != None:
-			self.ds.execute(parser, inputData, inputID, outputID)
-		parser.ids.append({}) #local scope - 2nd ele
-		self.ss.execute(parser, inputData, inputID, outputID)
+			self.ds.execute(parser, inputData)
+		parser.ids.append({}) #local scope - 2nd one
+		self.ss.execute(parser, inputData)
 		parser.ids.pop()

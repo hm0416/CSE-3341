@@ -34,24 +34,21 @@ class Cmpr:
 			print("<=", end='')
 		self.expr2.print()
 
-	def execute(self, parser, inputData, inputID, outputID):
-		value = self.expr1.execute(parser, inputData, inputID, outputID)
+	def execute(self, parser, inputData):
+		value = self.expr1.execute(parser, inputData) #gets first value to compare
 		if self.option == 0:
-			if value == self.expr2.execute(parser, inputData, inputID, outputID):
-				value = True
+			if value == self.expr2.execute(parser, inputData):
+				value = True #if condition is met, value is set to true and is returned
 			else:
-				value = False
+				value = False #condition not met, so false
 		elif self.option == 1:
-			# parser.ids.pop()
-			val2 = self.expr2.execute(parser, inputData, inputID, outputID)
-			if value < val2:
+			if value < self.expr2.execute(parser, inputData):
 				value = True
 			else:
 				value = False
 		elif self.option == 2:
-			if value <= self.expr2.execute(parser, inputData, inputID, outputID):
+			if value <= self.expr2.execute(parser, inputData):
 				value = True
 			else:
 				value = False
-
 		return value

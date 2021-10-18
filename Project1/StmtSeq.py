@@ -6,7 +6,6 @@ from Loop import Loop
 from Decl import Decl
 from Core import Core
 import sys
-import globals
 
 class StmtSeq:
 
@@ -44,7 +43,8 @@ class StmtSeq:
 		if hasattr(self, 'ss'):
 			self.ss.print(indent)
 
-	def execute(self, parser, inputData, inputID, outputID):
-		self.stmt.execute(parser, inputData, inputID, outputID)
+	#recursively calls stmt and ss
+	def execute(self, parser, inputData):
+		self.stmt.execute(parser, inputData)
 		if hasattr(self, 'ss'):
-			self.ss.execute(parser, inputData, inputID, outputID)
+			self.ss.execute(parser, inputData)
