@@ -21,7 +21,7 @@ class Input:
 		print(";\n", end='')
 
 	def execute(self, parser, inputData):
-		# if there are still ints in the inputData file, pop each off else print an error
+		# if there are still ints in the inputData file, pop each off otherwise print an error
 		if len(inputData) != 0:
 			val = inputData.pop(0)
 		else:

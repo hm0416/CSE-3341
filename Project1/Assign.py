@@ -62,20 +62,18 @@ class Assign:
 
 	def execute(self, parser, inputData):
 		if self.type == 1:
-			globals.arrOfDeclared[self.assignTo.identifier] = "new" #array to help determine which if-stmt to go into
-			# globals.isRefThen = True
+			globals.arrOfDeclaredWithNew[self.assignTo.identifier] = "new" #array to help determine which if-stmt to go into when self.type is == 3
 			self.assignTo.setValOfID(0, parser, inputData) #initializes the variable that's being set to new to zero
 		elif self.type == 2:
 			#LHS of the expression is now pointing to the value that's getting referenced on the RHS
 			parser.ids[-1][self.assignTo.identifier] = parser.ids[-1][self.assignFrom.identifier]
-			globals.arrOfDeclared[self.assignTo.identifier] = "ref" #array to help determine which if-stmt to go into
-			globals.isRef = True
+			globals.arrOfDeclaredWithNew[self.assignTo.identifier] = "ref" #array to help determine which if-stmt to go into when self.type is == 3
+			globals.isRef = True #knows to copy the value of the referenced variable to the variable onto the LHS when setValOfID is called
 		elif self.type == 3:
-			#need to check if assigned new to this variable that's trying to get set
-			if self.assignTo.identifier in globals.arrOfDeclared: #if ref variable has been assigned new
+			if self.assignTo.identifier in globals.arrOfDeclaredWithNew: #if ref variable has been assigned new
 				value = self.expr.execute(parser, inputData)  # gets the value on the RHS
 				self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
-			elif self.assignTo.identifier in globals.isInt: #if int var has been assigned ref
+			elif self.assignTo.identifier in globals.arrOfDeclared: #if int var has been assigned ref
 				value = self.expr.execute(parser, inputData)  # gets the value on the RHS
 				self.assignTo.setValOfID(value, parser, inputData)  # set the LHS to the RHS
 			else:

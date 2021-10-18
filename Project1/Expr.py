@@ -33,7 +33,7 @@ class Expr:
 	def execute(self, parser, inputData):
 		value = self.term.execute(parser, inputData) #gets the first value
 		if self.option == 1:
-			value = value + self.expr.execute(parser, inputData) #if expr is addition, get the second value and add to the first
+			value = value + self.expr.execute(parser, inputData) #if expr is addition, get the second value and adds to the first
 		elif self.option == 2:
-			value = value - self.expr.execute(parser, inputData) #if expr is subtraction, get the second value and subtract from the first
+			value = value - self.expr.execute(parser, inputData) #if expr is subtraction, get the second value and subtracts from the first
 		return value

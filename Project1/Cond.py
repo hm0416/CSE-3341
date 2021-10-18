@@ -41,8 +41,8 @@ class Cond:
 
 	#checks to see if there's a comparision or condition
 	def execute(self, parser, inputData):
-		value = False
-		if not hasattr(self, 'cmpr'):
+		value = False #initial value
+		if not hasattr(self, 'cmpr'): #helps decide which production to use
 			value = not(self.cond.execute(parser, inputData)) #whatever condition is here, negates it
 		else:
 			value = self.cmpr.execute(parser, inputData)

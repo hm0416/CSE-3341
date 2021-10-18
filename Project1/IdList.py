@@ -7,14 +7,14 @@ class IdList:
 	def parse(self, parser):
 		self.id = Id()
 		self.id.parse(parser)
-		# if globals.addInt == True: #if additional int is present after first int, append
-		globals.isInt.append(parser.scanner.getID()) #append the first int that's been declared
+		if globals.addDeclaredVar == True: #if additional int is present after first int, append
+			globals.arrOfDeclared.append(parser.scanner.getID()) #append the first int that's been declared
 		if parser.scanner.currentToken() == Core.COMMA:
 			parser.scanner.nextToken()
 			self.list = IdList()
 			self.list.parse(parser)
-			if globals.addInt == True: #if additional int is present after first int, append
-				globals.isInt.append(parser.scanner.getID())
+			if globals.addDeclaredVar == True: #if additional int is present after first int, append
+				globals.arrOfDeclared.append(parser.scanner.getID()) #append the first int that's been declared
 
 	# called by DeclInt.semantic
 	def semanticIntVars(self, parser):

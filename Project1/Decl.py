@@ -31,5 +31,4 @@ class Decl:
 		if hasattr(self, 'declInt'):
 			self.declInt.execute(parser, inputData)
 		elif hasattr(self, 'declRef'):
-			# globals.refDeclared = True
 			self.declRef.execute(parser, inputData)

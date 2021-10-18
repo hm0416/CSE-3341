@@ -20,6 +20,6 @@ class Output:
 		self.expr.print()
 		print(";\n", end='')
 
-	#prints out the value of the variable the program wants to output
+	#prints out the value of the ID or CONST the program wants to output
 	def execute(self, parser, inputData):
 		print(self.expr.execute(parser, inputData))
