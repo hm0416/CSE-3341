@@ -1,10 +1,2 @@
-program
-	int x;
-begin
-	while 1<1 begin
-		int y;
-		x=1;
-		y=x;
-	endwhile
-	output 4;
-end
+0
+0

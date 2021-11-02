@@ -1,6 +1,17 @@
 program
 	int x;
+	A(ref r) begin 
+		if r<9 then 
+			input x;
+			r=x;
+			begin A(r); 
+		endif
+	endfunc
 begin
-	x = 10;
-	output x;
+	input x;
+	ref y;
+	y=new;
+	y=x;
+	begin A(y);
+	output y;
 end

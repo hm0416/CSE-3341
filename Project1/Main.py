@@ -1,17 +1,18 @@
-import symtable
+from Parser import Parser
+from Program import Program
+import globals
 
-from Scanner import Scanner
 import sys
-from Prog import Prog
-
 
 def main():
-    S = Scanner(sys.argv[1])
+  globals.initialize()
+  # Initialize the parser object (contains the scanner and some helper functions)
+  parser = Parser(sys.argv[1])
+  p = Program()
+  p.parse(parser)
+  # p.print()
+  p.execute(sys.argv[2])
 
-    root = Prog()
-    root.parse(S)
-    # root.semantic()
-    root.print(1)
 
 if __name__ == "__main__":
     main()

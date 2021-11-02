@@ -1,39 +1,51 @@
+from Id import Id
+import Expr
 from Core import Core
-
+import sys
+import globals
 
 class Factor:
-    def __init__(self):
-        self.exprNonTerm = None
-        self.identifier = ""
-        self.const = 0
-        self.whichStr = 0 #0 for none, 1 for ID, 2 for CONST
 
-    def parse(self, S):
-        if S.currentToken() == Core.ID:
-            self.identifier = S.getID()
-            self.whichStr = 1
-            S.nextToken()
-        elif S.currentToken() == Core.CONST:
-            self.const = S.getCONST()
-            self.whichStr = 2
-            S.nextToken()
-        elif S.currentToken() == Core.LPAREN:
-            S.nextToken()
-            from Expr import Expr
-            self.exprNonTerm = Expr()
-            self.exprNonTerm.parse(S)
-            if S.currentToken() == Core.RPAREN:
-                S.nextToken()
-            else:
-                print("ERROR: Right parenthesis is missing")
-                quit()
+	def parse(self, parser):
+		if parser.scanner.currentToken() == Core.ID:
+			self.id = Id()
+			self.id.parse(parser)
+		elif parser.scanner.currentToken() == Core.CONST:
+			self.constant = parser.scanner.getCONST()
+			parser.scanner.nextToken()
+		elif parser.scanner.currentToken() == Core.LPAREN:
+			parser.scanner.nextToken()
+			self.expr = Expr.Expr()
+			self.expr.parse(parser)
+			parser.expectedToken(Core.RPAREN)
+			parser.scanner.nextToken()
+		else:
+			print("ERROR: Expected ID, CONST, or LPAREN, recieved " + parser.scanner.currentToken().name + "\n", end='')
+			sys.exit()
+	
+	def print(self):
+		if hasattr(self, 'id'):
+			self.id.print()
+		elif hasattr(self, 'expr'):
+			print("(", end='')
+			self.expr.print()
+			print(")", end='')
+		else:
+			print(self.constant, end='')
 
-    def print(self, numOfIndents):
-        if self.whichStr == 1:
-            print(self.identifier, end = '')
-        elif self.whichStr == 2:
-            print(self.const, end = '')
-        elif self.exprNonTerm != None:
-            print("(", end = '')
-            self.exprNonTerm.print(0)
-            print(")", end = '')
+	def execute(self, executor):
+		result = 0
+		if hasattr(self, 'id'):
+			try:
+				result = int(self.id.getValue(executor))
+				# if globals.isFunc == True:
+				# 	globals.funcVarsAndVals[self.id] = result
+				# 	print(globals.funcVarsAndVals)
+			except ValueError:
+				print("ERROR: " + self.id.getString() + " is null\n", end='')
+				sys.exit()
+		elif hasattr(self, 'expr'):
+			result = self.expr.execute(executor)
+		else:
+			result = self.constant
+		return result

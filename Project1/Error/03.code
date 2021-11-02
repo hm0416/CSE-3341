@@ -1,7 +1,8 @@
 program
-	int x;
-	int x;
+	A(ref r) begin r=0; endfunc
+	ref x;
 begin
+	x=new;
 	x=1;
-	x=x+x*x;
+	begin A(x)
 end

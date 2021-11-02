@@ -65,8 +65,6 @@ class Scanner:
                 self.token=Core.ENDCLASS
             elif tokString=="int":
                 self.token=Core.INT
-            elif tokString=="ref":
-                self.token=Core.REF
             elif tokString=="endfunc":
                 self.token=Core.ENDFUNC
             elif tokString=="if":
@@ -85,6 +83,10 @@ class Scanner:
                 self.token=Core.INPUT
             elif tokString=="output":
                 self.token=Core.OUTPUT
+            elif tokString=="ref":
+                self.token=Core.REF
+            elif tokString=="or":
+                self.token=Core.OR
             else:
                 self.token=Core.ID
                 self.id=tokString

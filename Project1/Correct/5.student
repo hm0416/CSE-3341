@@ -1,10 +1,2 @@
-program
-	int x;
-begin
-	if 1==1 then
-		x=1;
-	else
-		x=2;
-	endif
-	output x;
-end
+0
+0

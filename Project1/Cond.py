@@ -2,45 +2,41 @@ from Core import Core
 from Cmpr import Cmpr
 
 class Cond:
+	
+	def parse(self, parser):
+		if parser.scanner.currentToken() == Core.NEGATION:
+			parser.scanner.nextToken()
+			parser.expectedToken(Core.LPAREN)
+			parser.scanner.nextToken()
+			self.cond = Cond()
+			self.cond.parse(parser)
+			parser.expectedToken(Core.RPAREN)
+			parser.scanner.nextToken()
+		else:
+			self.cmpr = Cmpr()
+			self.cmpr.parse(parser)
+			if parser.scanner.currentToken() == Core.OR:
+				parser.scanner.nextToken()
+				self.cond = Cond()
+				self.cond.parse(parser)
+	
+	def print(self):
+		if not hasattr(self, 'cmpr'):
+			print("!(", end='')
+			self.cond.print()
+			print(")", end='')
+		else:
+			self.cmpr.print()
+			if hasattr(self, 'cond'):
+				print(" or ", end='')
+				self.cond.print()
 
-    def __init__(self):
-        self.condNonTerm = None
-        self.cmprNonTerm = None
-        self.whichStr = 0 #0 none, 1 for OR, 2 for negation
-
-    def parse(self, S): #should not output anything unless error case
-        if S.currentToken() == Core.NEGATION:
-            self.whichStr = 1
-            S.nextToken()
-            if S.currentToken() == Core.LPAREN:
-                S.nextToken()
-                self.condNonTerm = Cond()
-                self.condNonTerm.parse(S)
-                if S.currentToken() == Core.RPAREN:
-                    S.nextToken()
-                else:
-                    print("ERROR: Right parenthesis expected")
-                    quit()
-            else:
-                print("ERROR: Left parenthesis expected")
-                quit()
-        else:
-            self.cmprNonTerm = Cmpr()
-            self.cmprNonTerm.parse(S)
-            if S.currentToken() == Core.OR:
-                self.whichStr = 2
-                S.nextToken()
-                self.condNonTerm = Cond()
-                self.condNonTerm.parse(S)
-
-    def print(self, numOfIndents):
-        if self.whichStr == 1:
-            print("!(", end = '')
-            self.condNonTerm.print(0)
-            print(")", end = '')
-        elif self.whichStr == 2:
-            self.cmprNonTerm.print(0)
-            print(" or ", end = '')
-            self.condNonTerm.print(0)
-        else:
-            self.cmprNonTerm.print(0)
+	def execute(self, executor):
+		result = False
+		if not hasattr(self, 'cmpr'):
+			result = not self.cond.execute(executor)
+		else:
+			result = self.cmpr.execute(executor)
+			if hasattr(self, 'cond'):
+				result = result or self.cond.execute(executor)
+		return result

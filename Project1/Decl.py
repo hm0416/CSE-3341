@@ -1,28 +1,25 @@
-from Core import Core
 from DeclInt import DeclInt
 from DeclClass import DeclClass
+from Core import Core
 
 class Decl:
+	
+	def parse(self, parser):
+		if parser.scanner.currentToken() == Core.INT:
+			self.declInt = DeclInt()
+			self.declInt.parse(parser)
+		else:
+			self.declClass = DeclClass()
+			self.declClass.parse(parser)
+	
+	def print(self, indent):
+		if hasattr(self, 'declInt'):
+			self.declInt.print(indent)
+		elif hasattr(self, 'declClass'):
+			self.declClass.print(indent)
 
-    def __init__(self):
-        self.dInt = None
-        self.dClass = None
-        self.whichStr = ""
-
-    def parse(self, S): #should not output anything unless error case
-        if S.currentToken() == Core.INT:
-            self.whichStr = "int"
-            self.dInt = DeclInt()
-            self.dInt.parse(S)
-        elif S.currentToken() == Core.REF:
-            self.whichStr = "ref"
-            self.dClass = DeclClass()
-            self.dClass.parse(S)
-
-    def print(self, numOfIndents):
-        if self.whichStr == "int":
-            self.dInt.print(numOfIndents)
-        elif self.whichStr == "ref":
-            self.dClass.print(numOfIndents)
-
-
+	def execute(self, executor):
+		if hasattr(self, 'declInt'):
+			self.declInt.execute(executor)
+		elif hasattr(self, 'declClass'):
+			self.declClass.execute(executor)

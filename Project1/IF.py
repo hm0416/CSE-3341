@@ -1,45 +1,45 @@
 from Core import Core
 from Cond import Cond
-from StmtSeq import StmtSeq
+import StmtSeq
 
-class IF:
-    def __init__(self):
-        self.condNonTerm = None
-        self.ss = None
-        self.elseSS = None #second stmtSeq when there is an else statment
+class If:
+	
+	def parse(self, parser):
+		parser.scanner.nextToken()
+		self.cond = Cond()
+		self.cond.parse(parser)
+		parser.expectedToken(Core.THEN)
+		parser.scanner.nextToken()
+		self.ss1 = StmtSeq.StmtSeq()
+		self.ss1.parse(parser)
+		if parser.scanner.currentToken() == Core.ELSE:
+			parser.scanner.nextToken()
+			self.ss2 = StmtSeq.StmtSeq()
+			self.ss2.parse(parser)
+		parser.expectedToken(Core.ENDIF)
+		parser.scanner.nextToken()
+	
+	def print(self, indent):
+		for x in range(indent):
+			print("  ", end='')
+		print("if ", end='')
+		self.cond.print()
+		print(" then\n", end='')
+		self.ss1.print(indent+1)
+		if hasattr(self, 'ss2'):
+			for x in range(indent):
+				print("  ", end='')
+			print("else\n", end='')
+			self.ss2.print(indent+1)
+		for x in range(indent):
+			print("  ", end='')
+		print("endif\n", end='')
 
-    def parse(self, S): #should not output anything unless error case
-        if S.currentToken() != Core.IF:
-            print("ERROR: Token should be 'if'")
-            quit()
-        S.nextToken()
-        self.condNonTerm = Cond()
-        self.condNonTerm.parse(S)
-
-        if S.currentToken() != Core.THEN:
-            print("ERROR: Token should be 'then'")
-            quit()
-        S.nextToken()
-        self.ss = StmtSeq()
-        self.ss.parse(S)
-
-        if S.currentToken() == Core.ELSE:
-            S.nextToken()
-            self.elseSS = StmtSeq()
-            self.elseSS.parse(S)
-        if S.currentToken() != Core.ENDIF:
-            print("ERROR: Token should be 'endif'")
-            quit()
-        S.nextToken()
-
-    def print(self, numIndents):
-        print(("\t" * numIndents) + "if ", end = '')
-        self.condNonTerm.print(0)
-        print(" then")
-        self.ss.print(numIndents + 1)
-        if self.elseSS != None:
-            print(("\t" * numIndents) + "else")
-            self.elseSS.print(numIndents + 1)
-            print(("\t" * numIndents) + "endif")
-        else:
-            print(("\t" * numIndents) + "endif")
+	def execute(self, executor):
+		condition = self.cond.execute(executor)
+		executor.pushLocalScope()
+		if condition:
+			self.ss1.execute(executor)
+		elif hasattr(self, 'ss2'):
+			self.ss2.execute(executor)
+		executor.popLocalScope()

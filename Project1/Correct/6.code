@@ -1,10 +1,23 @@
 program
-	int x;
+	ref x;
+	ref y;
+	A(ref r, s) begin 
+		x=0; 
+		y=0; 
+	endfunc
 begin
-	while 1 < 1 begin
-		int y;
-		x = 1;
-		y = x;
-	endwhile
-	output 4;
+	x=new;
+	y=new;
+	x=1;
+	y=1;
+	if x==y then
+		ref a, b;
+		a=new;
+		a=5;
+		b=new;
+		b=5;
+		begin A(a, b);
+	endif
+	output x;
+	output y;
 end

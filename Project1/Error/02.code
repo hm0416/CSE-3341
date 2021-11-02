@@ -1,5 +1,7 @@
 program
+	A(ref r)) begin r=0; endfunc
 	int x;
 begin
-	x=y;
+	x=1;
+	output 4;
 end

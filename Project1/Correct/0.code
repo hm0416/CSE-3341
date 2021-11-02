@@ -1,0 +1,12 @@
+program
+	A(ref r) begin 
+		if r<9 then 
+			input r; 
+			begin A(r); 
+		endif 
+	endfunc
+	ref x;
+begin
+	x = new;
+	x = 10;
+end

@@ -1,45 +1,43 @@
 from Core import Core
 from Expr import Expr
+import sys
 
 class Cmpr:
-    def __init__(self):
-        self.exprNonTerm1 = None #first expr
-        self.exprNonTerm2 = None #second expr
-        self.operator = 0 #0 for none, 1 for equal, 2 for less, 3 for lessequal
+	
+	def parse(self, parser):
+		self.expr1 = Expr()
+		self.expr1.parse(parser)
+		if parser.scanner.currentToken() == Core.EQUAL:
+			self.option = 0
+		elif parser.scanner.currentToken() == Core.LESS:
+			self.option = 1
+		elif parser.scanner.currentToken() == Core.LESSEQUAL:
+			self.option = 2
+		else:
+			print("ERROR: Expected EQUAL, LESS, or LESSEQUAL, recieved " + parser.scanner.currentToken().name + "\n", end='')
+			sys.exit()
+		parser.scanner.nextToken()
+		self.expr2 = Expr()
+		self.expr2.parse(parser)
+	
+	def print(self):
+		self.expr1.print()
+		if self.option == 0:
+			print("==", end='')
+		elif self.option == 1:
+			print("<", end='')
+		elif self.option == 2:
+			print("<=", end='')
+		self.expr2.print()
 
-    def parse(self, S): #should not output anything unless error case
-        self.exprNonTerm1 = Expr()
-        self.exprNonTerm1.parse(S)
-        if S.currentToken() == Core.EQUAL:
-            self.operator = 1
-            S.nextToken()
-            if S.currentToken() == Core.ASSIGN:
-                print("ERROR: ASSIGN is in the condition.")
-                quit()
-            self.exprNonTerm2 = Expr()
-            self.exprNonTerm2.parse(S)
-        elif S.currentToken() == Core.LESS:
-            self.operator = 2
-            S.nextToken()
-            self.exprNonTerm2 = Expr()
-            self.exprNonTerm2.parse(S)
-        elif S.currentToken() == Core.LESSEQUAL:
-            self.operator = 3
-            S.nextToken()
-            self.exprNonTerm2 = Expr()
-            self.exprNonTerm2.parse(S)
-        else:
-            print("ERROR: Symbol not valid")
-            quit()
-
-    def print(self, numOfIndents):
-        self.exprNonTerm1.print(1)
-        if self.operator == 1:
-            print("==", end = '')
-            self.exprNonTerm2.print(0)
-        elif self.operator == 2:
-            print("<", end = '')
-            self.exprNonTerm2.print(0)
-        elif self.operator == 3:
-            print("<=", end = '')
-            self.exprNonTerm2.print(0)
+	def execute(self, executor):
+		result = False
+		lhs = self.expr1.execute(executor)
+		rhs = self.expr2.execute(executor)
+		if self.option == 0:
+			result = lhs == rhs
+		elif self.option == 1:
+			result = lhs < rhs
+		elif self.option == 2:
+			result = lhs <= rhs
+		return result

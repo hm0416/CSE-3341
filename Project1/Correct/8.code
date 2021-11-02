@@ -1,8 +1,19 @@
 program
-	int x,y,z;
-	ref a	,b	,c	;
+	A(ref r, s) begin 
+		r=0; 
+		s=0; 
+	endfunc
+	B(ref r, s) begin 
+		begin A(r, s); 
+	endfunc
+	ref x;
+	ref y;
 begin
-	input x;
-	output 4;
-	a	=	new;
+	x=new;
+	y=new;
+	x=1;
+	y=1;
+	begin B(x, y);
+	output x;
+	output y;
 end

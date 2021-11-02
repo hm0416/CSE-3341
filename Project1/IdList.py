@@ -1,27 +1,28 @@
+from Id import Id
 from Core import Core
 
-
 class IdList:
-    def __init__(self):
-        self.idL = None
-        self.identifier = ""
-        self.comma = 0 #0 for no comma, 1 for comma
+	
+	def parse(self, parser):
+		self.id = Id()
+		self.id.parse(parser)
+		if parser.scanner.currentToken() == Core.COMMA:
+			parser.scanner.nextToken()
+			self.list = IdList()
+			self.list.parse(parser)
+	
+	def print(self):
+		self.id.print()
+		if hasattr(self, 'list'):
+			print(",", end='')
+			self.list.print()
 
-    def parse(self, S): #should not output anything unless error case
-        if S.currentToken() != Core.ID:
-            print("ERROR: Token should be 'id'")
-            quit()
-        self.identifier = S.getID()
-        S.nextToken()
+	def executeIntIdList(self, executor):
+		self.id.executeIntAllocate(executor)
+		if hasattr(self, 'list'):
+			self.list.executeIntIdList(executor)
 
-        if S.currentToken() == Core.COMMA:
-            self.comma = 1
-            S.nextToken()
-            self.idL = IdList()
-            self.idL.parse(S)
-
-    def print(self, numIndents):
-        print(("\t" * numIndents) + self.identifier, end = '')
-        if self.idL != None:
-            print(",", end = '')
-            self.idL.print(0)
+	def executeRefIdList(self, executor):
+		self.id.executeRefAllocate(executor)
+		if hasattr(self, 'list'):
+			self.list.executeRefIdList(executor)

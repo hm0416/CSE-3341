@@ -1,38 +1,33 @@
 from Core import Core
 from Cond import Cond
-from StmtSeq import StmtSeq
+import StmtSeq
 
 class Loop:
-    def __init__(self):
-        self.condNonTerm = None
-        self.ss = None
+	
+	def parse(self, parser):
+		parser.scanner.nextToken()
+		self.cond = Cond()
+		self.cond.parse(parser)
+		parser.expectedToken(Core.BEGIN)
+		parser.scanner.nextToken()
+		self.ss = StmtSeq.StmtSeq()
+		self.ss.parse(parser)
+		parser.expectedToken(Core.ENDWHILE)
+		parser.scanner.nextToken()
+	
+	def print(self, indent):
+		for x in range(indent):
+			print("  ", end='')
+		print("while ", end='')
+		self.cond.print()
+		print(" begin\n", end='')
+		self.ss.print(indent+1)
+		for x in range(indent):
+			print("  ", end='')
+		print("endwhile\n", end='')
 
-    def parse(self, S): #should not output anything unless error case
-        if S.currentToken() != Core.WHILE:
-            print("ERROR: Token should be 'while'")
-            quit()
-        S.nextToken()
-        self.condNonTerm = Cond()
-        self.condNonTerm.parse(S)
-
-        if S.currentToken() == Core.BEGIN:
-            S.nextToken()
-        else:
-            print("ERROR: Token should be 'begin'")
-            quit()
-
-        self.ss = StmtSeq()
-        self.ss.parse(S)
-
-        if S.currentToken() != Core.ENDWHILE:
-            print("ERROR: Token should be 'endwhile'")
-            quit()
-        S.nextToken()
-
-    def print(self, numIndents):
-        print(("\t" * numIndents) + "while ", end = '')
-        self.condNonTerm.print(0)
-        print(" begin")
-        self.ss.print(numIndents + 1) #has to be there
-        print(("\t" * numIndents) + "endwhile")
-
+	def execute(self, executor):
+		while self.cond.execute(executor):
+			executor.pushLocalScope()
+			self.ss.execute(executor)
+			executor.popLocalScope()

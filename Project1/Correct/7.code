@@ -1,5 +1,17 @@
 program
-	int x;
+	A(ref r, s) begin r=0; s=0; endfunc
+	B(ref r, s) begin r=10; s=10; endfunc
+	ref x;
+	ref y;
 begin
-	input x;
+	x=new;
+	y=new;
+	x=1;
+	y=1;
+	begin A(x, y);
+	output x;
+	output y;
+	begin B(x, y);
+	output x;
+	output y;
 end

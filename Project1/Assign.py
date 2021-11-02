@@ -1,50 +1,51 @@
-from Core import Core
+from Id import Id
 from Expr import Expr
-
+from Core import Core
+import sys
 
 class Assign:
-    def __init__(self):
-        self.exprNonTerm = None
-        self.whichString = ""
-        self.identifier1 = ""
-        self.identifier2 = ""
+	
+	def parse(self, parser):
+		self.assignTo = Id()
+		self.assignTo.parse(parser)
+		parser.expectedToken(Core.ASSIGN)
+		parser.scanner.nextToken()
+		if parser.scanner.currentToken() == Core.NEW:
+			self.type = 1
+			parser.scanner.nextToken()
+		elif parser.scanner.currentToken() == Core.REF:
+			self.type = 2
+			parser.scanner.nextToken()
+			self.assignFrom = Id()
+			self.assignFrom.parse(parser)
+		else:
+			self.type = 3
+			self.expr = Expr()
+			self.expr.parse(parser)
+		parser.expectedToken(Core.SEMICOLON)
+		parser.scanner.nextToken()
+	
+	def print(self, indent):
+		for x in range(indent):
+			print("  ", end='')
+		self.assignTo.print()
+		print("=", end='')
+		if self.type == 1:
+			print("new")
+		elif self.type == 2:
+			print("ref ")
+			self.assignFrom.print()
+		else:
+			self.expr.print()
+		print(";\n", end='')
 
-    def parse(self, S): #should not output anything unless error case
-        if S.currentToken() != Core.ID:
-            print("ERROR: Token should be an 'id'")
-            quit()
-        self.identifier1 = S.getID() #gets first ID value
-        S.nextToken()
-
-        if S.currentToken() == Core.ASSIGN:
-            S.nextToken()
-        else:
-            print("ERROR: Token should be 'assign (=)'")
-            quit()
-
-        if S.currentToken() == Core.NEW:
-            self.whichString = "new"
-            S.nextToken()
-        elif S.currentToken() == Core.REF:
-            self.whichString = "ref"
-            S.nextToken()
-            self.identifier2 = S.getID() #gets second ID value
-            S.nextToken() #extra to get the begin tok
-        else:
-            self.exprNonTerm = Expr()
-            self.exprNonTerm.parse(S)
-
-        if S.currentToken() != Core.SEMICOLON:
-            print("ERROR: Token should be ';'")
-            quit()
-        S.nextToken()
-
-    def print(self, numIndents):
-        if self.exprNonTerm != None: #if expr non terminal is used
-            print(("\t" * numIndents) + self.identifier1 + "=", end = '') #indent by 1
-            self.exprNonTerm.print(0)
-            print(";")
-        elif self.whichString == "new":
-            print(("\t" * numIndents) + self.identifier1 + "=" + "new;")
-        elif self.whichString == "ref":
-            print(("\t" * numIndents) + self.identifier1 + "=" + "ref " + self.identifier2 + ";")
+	def execute(self, executor):
+		if self.type == 1:
+			# Doing a "new"-assign
+			self.assignTo.heapAllocate(executor)
+		elif self.type == 2:
+			# Doing a "ref"-assign
+			self.assignTo.referenceCopy(executor, self.assignFrom)
+		else:
+			# Doing a regular assign
+			self.assignTo.storeValue(executor, self.expr.execute(executor))

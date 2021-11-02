@@ -1,6 +1,12 @@
 program
-	int x;
+	x(ref a, b) begin a = b; endfunc
 begin
-	x=1;
-	x=x+x*x;
+	ref x, y;
+	x=new;
+	y=new;
+	x = 1;
+	y = 2;
+	begin x(x, y);
+	output x;
+	output y;
 end

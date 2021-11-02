@@ -1,6 +1,2 @@
-program
-	int x;
-begin
-	x=1;
-	x=x+x*x;
-end
+2
+2
