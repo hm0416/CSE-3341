@@ -19,5 +19,5 @@ class DeclInt:
 		print(";\n", end='')
 
 	def execute(self, executor):
-		# Id list has two execute fucntions, call the one for int variables
+		# Id list has two execute functions, call the one for int variables
 		self.list.executeIntIdList(executor)

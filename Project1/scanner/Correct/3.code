@@ -1,9 +1,0 @@
-
-program int X , Y , XY 	; a ( b, c, d) begin a=a+b+c; endfunc;begin
-
-          X = 0;
-		  
-		  output X;
-
-          end  
-      

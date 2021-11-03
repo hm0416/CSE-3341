@@ -14,10 +14,10 @@ class DeclClass:
 	def print(self, indent):
 		for x in range(indent):
 			print("  ", end='')
-		print("class ", end='')
+		print("ref ", end='')
 		self.list.print()
 		print(";\n", end='')
 
 	def execute(self, executor):
-		# Id list has two execute fucntions, call the one for ref variables
+		# Id list has two execute functions, call the one for ref variables
 		self.list.executeRefIdList(executor)

@@ -29,6 +29,16 @@ class FuncDecl:
         parser.expectedToken(Core.ENDFUNC)
         parser.scanner.nextToken()
 
+    def semantic(self, executor):
+        if self.funcName.identifier in executor.func:
+            print("ERROR: A function with name '" + self.funcName.identifier + "' has already been declared. Overloading not allowed.")
+            quit()
+
     # sets the function name to its definition - the self keyword gets all of the self declared variables in the parse function
     def execute(self, executor):
+        # if not hasattr(self, 'funcBody'):
+        #     print("ERROR: Function body missing (no stmt-seq)")
+        #     quit()
+        # else:
+        self.semantic(executor)
         executor.func[self.funcName.getString()] = self

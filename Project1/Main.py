@@ -5,12 +5,12 @@ import globals
 import sys
 
 def main():
+  #initializes globals.py class so globals can be used throughout the my program
   globals.initialize()
   # Initialize the parser object (contains the scanner and some helper functions)
   parser = Parser(sys.argv[1])
   p = Program()
   p.parse(parser)
-  # p.print()
   p.execute(sys.argv[2])
 
 

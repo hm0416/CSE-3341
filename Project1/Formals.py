@@ -18,9 +18,10 @@ class Formals:
             print(",", end='')
             self.list.print()
 
-    def execute(self, executor):
-        params = []
-        if hasattr(self, 'list'):
-            params = self.list.execute(executor)
-        params.insert(0, self.id.getString())
+    def getAllParams(self, executor):
+        params = [] #list of parameters
+        if hasattr(self, 'list'): #if there is more than one paramater
+            params = self.list.getAllParams(executor)
+        params.append(self.id.getString()) #adds parameter to list
+
         return params

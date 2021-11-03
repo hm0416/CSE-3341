@@ -38,9 +38,6 @@ class Factor:
 		if hasattr(self, 'id'):
 			try:
 				result = int(self.id.getValue(executor))
-				# if globals.isFunc == True:
-				# 	globals.funcVarsAndVals[self.id] = result
-				# 	print(globals.funcVarsAndVals)
 			except ValueError:
 				print("ERROR: " + self.id.getString() + " is null\n", end='')
 				sys.exit()

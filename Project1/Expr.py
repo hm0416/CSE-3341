@@ -33,7 +33,8 @@ class Expr:
 		elif self.option == 2:
 			result -= self.expr.execute(executor)
 
-		#if func body present, then replace heap vals with the new vals from the assignments within the function
+		#if func body present, then replaces existing heap values for the actual paramters
+		# with their new values that they get set to within the function
 		if globals.isFunc == True:
 			for i in range(len(executor.heapSpace)):
 				executor.heapSpace[i] = result

@@ -17,6 +17,7 @@ class Executor:
         self.heapSpace = []
         self.dataFile = Scanner(s)
         self.func = {} #for function definitions
+        self.stackFrame = {}  # stack for parameters
 
     def pushLocalScope(self):
         self.stackSpace.append({})

@@ -23,7 +23,7 @@ class StmtSeq:
 			self.stmt = Loop()
 		elif parser.scanner.currentToken() == Core.INT or parser.scanner.currentToken() == Core.REF:
 			self.stmt = Decl()
-		elif parser.scanner.currentToken() == Core.BEGIN:
+		elif parser.scanner.currentToken() == Core.BEGIN: #means there is a function call
 			self.stmt = FuncCall()
 		else:
 			print("ERROR: Bad start to statement: " + parser.scanner.currentToken().name + "\n", end='')
