@@ -1,10 +1,9 @@
 program
-	A(ref r, r) begin r=0; endfunc
-	B(ref r) begin r=0; endfunc
+	A(ref r) begin r=0; endfunc
 	ref x;
 begin
 	x = new;
 	x=1;
-	begin A(x, x);
+	begin B(x);
 	output 4;
 end
