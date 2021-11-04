@@ -18,18 +18,25 @@ class FuncDecl:
         self.formalParams = Formals() #gets the formal parameters of the declared function
         self.formalParams.parse(parser)
         # globals.listOfFuncParams.append(self.formalParams.id.identifier)
-        globals.formals = self.formalParams #stores the formal parameters
+        # globals.formals = self.formalParams #stores the formal parameters
         parser.expectedToken(Core.RPAREN)
         parser.scanner.nextToken()
         parser.expectedToken(Core.BEGIN)
         parser.scanner.nextToken()
         self.funcBody = StmtSeq() #gets func body of the function that's being declared
         self.funcBody.parse(parser)
-        globals.bod = self.funcBody #stores the body of the function
+        # globals.bod = self.funcBody #stores the body of the function
         parser.expectedToken(Core.ENDFUNC)
         parser.scanner.nextToken()
 
     def semantic(self, executor):
+        # fd = executor.func.get(self.funcName.identifier) #gets string name of func
+        # formalParams = fd.formalParams #tree structure
+        # fpList = formalParams.getAllParams()
+        # print(fpList)
+        # if len(fpList) != len(set(fpList)): #got this line of code from https://thispointer.com/python-3-ways-to-check-if-there-are-duplicates-in-a-list/
+        #     print("SEMANTIC ERROR: Function formal parameters are not distinct from each other.")
+        #     quit()
         if self.funcName.identifier in executor.func:
             print("ERROR: A function with name '" + self.funcName.identifier + "' has already been declared. Overloading not allowed.")
             quit()
@@ -39,3 +46,10 @@ class FuncDecl:
         # sets the function name to its definition - the self keyword gets all of the self declared variables in the parse function
         funcNameStr = self.funcName.getString()
         executor.func[funcNameStr] = self
+        fd = executor.func.get(self.funcName.identifier)  # gets string name of func
+        formalParams = fd.formalParams  # tree structure
+        fpList = formalParams.getAllParams()
+        if len(fpList) != len(set(
+                fpList)):  # got this line of code from https://thispointer.com/python-3-ways-to-check-if-there-are-duplicates-in-a-list/
+            print("SEMANTIC ERROR: Function formal parameters are not distinct from each other.")
+            quit()
