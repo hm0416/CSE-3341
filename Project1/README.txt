@@ -47,15 +47,18 @@ assigned the 'new' keyword, a new spot would be created in the heap for that var
 of an expression would be assigned a ref of another variable, the variable on the LHS would point to the referenced variable on the RHS that's
 in the heap to get its value. The stack would then update the value of the LHS variable to equal the index of the referenced variable in the heap, so this
 allows the LHS variable to act as a 'pointer' to the variable on the RHS. For the functions, a new stack gets created. The function name and its definition get
-added to this stack. In my code, the function name maps to the function definition. When a function is called, its arguments are pushed onto the stack that gets created. Once the
-function returns, the arguments are then popped off the stack. In general, a new stack frame is created for each function.
+added to this stack. In my code, the function name maps to the function definition. In general, a new stack frame is created for each function. When a function is called, its arguments are pushed onto the stack that gets created. Once the
+function returns, the arguments are then popped off the stack.
 
 How I tested the interpreter:
 I made a test file and would test out different programs to see where the code breaks or where errors get printed. I also set breakpoints
 throughout my execute methods when I encountered any bugs. Sometimes I may have had to set breakpoints for the parser method.
 
-Known Bugs/issues: The last 4 test cases that were given to us do not work. I believe there is an issue with my nested scoping. I tried re-doing my program and using
-3 regions of memory (so making a static, stack and heap out of a list of dictionaries -- having 3 separate list of dictionaries) but that also did not work for me.
-I tried a variety of different things to make it work but nothing seemed to work. The nested scopes worked fine in the other test cases, but
-when a ref gets declared inside the nested scope that's when bugs occur that I do not know why/what is causing them :(. I tried my best to get it working
--- spent easily 15+ hours debugging/re-writing my code (excluding the 8-10 hours of writing the actual code), but again, nothing worked.
+Known Bugs/issues:
+
+My semantic check for "checking that the formal parameters of a function are distinct from each other" works when there is only one function declaration,
+but when there is more than one, it seems like my program only looks at the lastly declared function and looks at whether the formal parameters for that
+last function are distinct or not, and ignores any functions declared before the last one. So if any functions declared before the last one have parameters
+of the same name, it wont recognize it and it won't throw an error. I tried several ways of fixing this, such as trying to keep track of the parameters
+for each function but that didn't seem to work :-(.
+

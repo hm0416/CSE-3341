@@ -9,37 +9,45 @@ class FuncCall:
     def parse(self, parser):
         parser.expectedToken(Core.BEGIN)
         parser.scanner.nextToken()
-        self.id = Id()
+        self.id = Id() #name of function to be called
         self.id.parse(parser)
         parser.expectedToken(Core.LPAREN)
         parser.scanner.nextToken()
-        self.actualParams = Formals()
+        self.actualParams = Formals() #parameters that get passed to the function that's being called
         self.actualParams.parse(parser)
         parser.expectedToken(Core.RPAREN)
         parser.scanner.nextToken()
         parser.expectedToken(Core.SEMICOLON)
         parser.scanner.nextToken()
 
-    def semantic(self, executor):
-        # if not(self.id.identifier in executor.func) or (range(len(self.actualParams.execute(self)) != range(len(globals.formals.execute(self))))):
-        #     print("SEMANTIC ERROR: Function being called has not been declared/function call has no target.")
+    def semantic(self, executor, formalParams):
+        # if len(formalParams) != len(set(formalParams)): #got this line of code from https://thispointer.com/python-3-ways-to-check-if-there-are-duplicates-in-a-list/
+        #     print("SEMANTIC ERROR: Function " + globals.funcDeclName + " formal parameters are not distinct from each other.")
         #     quit()
         if not(self.id.identifier in executor.func):
             print("SEMANTIC ERROR: Function being called has not been declared/function call has no target.")
             quit()
+        if (range(len(self.actualParams.getAllParams()))) != range(len(globals.formals.getAllParams())):
+            print("SEMANTIC ERROR: Function being called does not match the number of arguments as the function declaration.")
+            quit()
 
     def execute(self, executor):
-        self.semantic(executor) #checks for semantic errors
-        formalParams = globals.formals.getAllParams(self) #gets all formals by calling the execute function in the Formals class
-        actualParams = self.actualParams.getAllParams(self) #gets all the actual params
+        formalParams = globals.formals.getAllParams() #gets all formals by calling the getAllParams function in the Formals class
+        actualParams = self.actualParams.getAllParams() #gets all the actual params
 
-        for i in range(len(formalParams)):
-            #sets the type to REF
+        self.semantic(executor, formalParams) #checks for semantic errors
+
+        for item in formalParams:
+            #gets index of each parameter in the list of formal parameters
+            indexOfParam = formalParams.index(item)
+            #sets the type to REF, CoreVar has type and value as fields
             heapIndex = CoreVar(Core.REF)
-            #for each formal param, find the corresponding actual param on the stack or static and get its value
-            heapIndex.value = executor.getStackOrStatic(actualParams[i]).value
+            #for each formal param, find the corresponding actual param on the stack or static and get its value/look up what the values are
+            #searches stack first then static
+            heapIndex.value = executor.getStackOrStatic(actualParams[indexOfParam]).value
             # sets the formal param value to a index into the heap. the index corresponds to the actual param value
-            executor.stackFrame[formalParams[i]] = heapIndex
+            executor.stackFrame[formalParams[indexOfParam]] = heapIndex
 
-        executor.stackSpace.append(executor.stackFrame) #new frame gets appended to the stack space
+        executor.stackSpace.append(executor.stackFrame) #new frame gets pushed to the stack space
         globals.bod.execute(executor) #function body gets executed
+        executor.stackSpace.pop() #pop frame off so main is the only frame left

@@ -59,9 +59,9 @@ class Executor:
     # Handles "new" assignments
     def heapAllocate(self, identifier):
         x = self.getStackOrStatic(identifier)
-        if x.type != Core.REF:
-            print("ERROR: " + identifier + " is not of type ref, cannot perform \"new\:-assign!\n", end='')
-            sys.exit()
+        # if x.type != Core.REF:
+        #     print("ERROR: " + identifier + " is not of type ref, cannot perform \"new\:-assign!\n", end='')
+        #     sys.exit()
         x.value = len(self.heapSpace)
         self.heapSpace.append(None)
 	
