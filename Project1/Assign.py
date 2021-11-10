@@ -42,7 +42,8 @@ class Assign:
 	def execute(self, executor):
 		if self.type == 1:
 			executor.counter = executor.counter + 1 #increment the number of references because a variable has been declared as "new"
-			print("gc:" + str(executor.counter))
+			if executor.counter >= 0:
+				print("gc:" + str(executor.counter))
 			self.assignTo.heapAllocate(executor)
 		elif self.type == 2:
 			self.assignTo.referenceCopy(executor, self.assignFrom)

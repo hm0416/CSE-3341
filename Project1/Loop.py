@@ -32,4 +32,5 @@ class Loop:
 			self.ss.execute(executor)
 			executor.popLocalScope()
 			executor.counter = executor.counter - 1  # decrement number of references because function popped off and variables have gone out of scope
-			print("gc:" + str(executor.counter))
+			if executor.counter >= 0:
+				print("gc:" + str(executor.counter))
