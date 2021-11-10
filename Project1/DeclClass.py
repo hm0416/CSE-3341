@@ -19,5 +19,4 @@ class DeclClass:
 		print(";\n", end='')
 
 	def execute(self, executor):
-		# Id list has two execute functions, call the one for ref variables
 		self.list.executeRefIdList(executor)

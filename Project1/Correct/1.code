@@ -1,8 +1,7 @@
 program
-	A(ref r) begin r=0; endfunc
-	ref x;
+	int x;
 begin
-	x = new;
-	x=1;
-	output 4;
+	ref y;
+	y = new;
+	y = 10;
 end

@@ -31,6 +31,8 @@ class Program:
 		executor = Executor(dataFileString)
 		if hasattr(self, 'ds'):
 			self.ds.execute(executor)
-		executor.pushLocalScope()
+		executor.pushMainFrame()
 		self.ss.execute(executor)
-		executor.popLocalScope()
+		executor.popFrame()
+		if executor.counter != 0:
+			print("gc:0")

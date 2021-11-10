@@ -1,23 +1,16 @@
 program
-	ref x;
-	ref y;
-	A(ref r, s) begin 
-		x=0; 
-		y=0; 
+	add(ref a, b) begin
+		a = a+b;
+		ref n;
+		b = ref n;
 	endfunc
 begin
-	x=new;
-	y=new;
-	x=1;
-	y=1;
-	if x==y then
-		ref a, b;
-		a=new;
-		a=5;
-		b=new;
-		b=5;
-		begin A(a, b);
-	endif
+	ref x;
+	x = new;
+	x = 1;
+	ref y;
+	y = new;
+	y = 1+x;
+	begin add(x, y);
 	output x;
-	output y;
 end

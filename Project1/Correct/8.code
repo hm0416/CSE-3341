@@ -1,19 +1,17 @@
 program
-	A(ref r, s) begin 
-		r=0; 
-		s=0; 
+	A(ref r) begin 
+		if r < 1 then
+			output r;
+		else
+			ref n;
+			n = new;
+			n = r-1;
+			begin A(n);
+		endif
 	endfunc
-	B(ref r, s) begin 
-		begin A(r, s); 
-	endfunc
-	ref x;
-	ref y;
 begin
-	x=new;
-	y=new;
-	x=1;
-	y=1;
-	begin B(x, y);
-	output x;
-	output y;
+	ref r;
+	r = new;
+	r = 5;
+	begin A(r);
 end

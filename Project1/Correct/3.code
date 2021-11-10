@@ -1,12 +1,10 @@
 program
-	x(ref a, b) begin a = b; endfunc
+	int x;
 begin
-	ref x, y;
-	x=new;
-	y=new;
-	x = 1;
-	y = 2;
-	begin x(x, y);
-	output x;
-	output y;
+	ref y;
+	ref z;
+	y = new;
+	y = 10;
+	z = ref y;
+	output z;
 end

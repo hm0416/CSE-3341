@@ -1,12 +1,11 @@
 program
-	ref x, y;
-	x(ref x, y) begin if y<1 then x=0; else y=y-1; begin x(x, y); endif endfunc
+	int m, n;
+	A(ref x) begin output x; endfunc
 begin
-	x=new;
-	y=new;
-	x = 10;
-	y = 5;
-	begin x(x, y);
-	output x;
-	output y;
+	m = 10;
+	n = 5;
+	ref z;
+	z = new;
+	z = m+n;
+	begin A(z);
 end

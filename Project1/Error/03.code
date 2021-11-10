@@ -1,8 +1,0 @@
-program
-	A(ref r) begin r=0; endfunc
-	ref x;
-begin
-	x=new;
-	x=1;
-	begin A(x)
-end

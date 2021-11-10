@@ -1,16 +1,18 @@
 program
-	A(ref r, s) begin 
-		r=0; 
-		s=0; 
+	int m, n;
+	A(ref x) begin 
+		ref y; 
+		y = new; 
+		y = 8; 
+		output x; 
+		x = ref y; 
 	endfunc
-	ref x;
-	ref y;
 begin
-	x=new;
-	y=new;
-	x=1;
-	y=1;
-	begin A(x, y);
-	output x;
-	output y;
+	m = 10;
+	n = 5;
+	ref z;
+	z = new;
+	z = m+n;
+	begin A(z);
+	output m;
 end

@@ -4,8 +4,8 @@ from Output import Output
 from If import If
 from Loop import Loop
 from Decl import Decl
-from Core import Core
 from FuncCall import FuncCall
+from Core import Core
 import sys
 
 class StmtSeq:
@@ -23,7 +23,7 @@ class StmtSeq:
 			self.stmt = Loop()
 		elif parser.scanner.currentToken() == Core.INT or parser.scanner.currentToken() == Core.REF:
 			self.stmt = Decl()
-		elif parser.scanner.currentToken() == Core.BEGIN: #means there is a function call
+		elif parser.scanner.currentToken() == Core.BEGIN:
 			self.stmt = FuncCall()
 		else:
 			print("ERROR: Bad start to statement: " + parser.scanner.currentToken().name + "\n", end='')

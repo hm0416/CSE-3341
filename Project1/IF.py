@@ -43,3 +43,5 @@ class If:
 		elif hasattr(self, 'ss2'):
 			self.ss2.execute(executor)
 		executor.popLocalScope()
+		executor.counter = executor.counter - 1  # decrement number of references because function popped off and variables have gone out of scope
+		print("gc:" + str(executor.counter))

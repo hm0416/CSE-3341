@@ -2,7 +2,6 @@ from Id import Id
 import Expr
 from Core import Core
 import sys
-import globals
 
 class Factor:
 

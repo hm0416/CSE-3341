@@ -13,19 +13,20 @@ class Executor:
 
     def __init__(self, s):
         self.globalSpace = {}
-        self.stackSpace = []
         self.heapSpace = []
         self.dataFile = Scanner(s)
-        self.func = {} #for function definitions
-        self.stackFrame = {}  # stack for parameters
+        
+        self.stackSpace = []
+        self.funcDefinitions = {}
+        self.refCounts = [] #list of ints - keeps track of reference counts
+        self.counter = 0
 
     def pushLocalScope(self):
-        self.stackSpace.append({})
+        self.stackSpace[-1].append({})
 	
     def popLocalScope(self):
-        self.stackSpace.pop()
+        self.stackSpace[-1].pop()
 	
-    # Handles geting values for input statements
     def getNextData(self):
         data = 0
         if self.dataFile.currentToken() == Core.EOF:
@@ -36,19 +37,17 @@ class Executor:
             self.dataFile.nextToken()
         return data
 	
-    # Handles variable declarations
     def allocate(self, identifier, varType):
         record = CoreVar(varType)
         # If we are in the DeclSeq, the local scope will not be created yet
         if len(self.stackSpace)==0:
             self.globalSpace[identifier] = record
         else:
-            self.stackSpace[-1][identifier] = record
+            self.stackSpace[-1][-1][identifier] = record
 	
-    # Finds out where a variable is stored
     def getStackOrStatic(self, identifier):
         record = None
-        for x in reversed(self.stackSpace):
+        for x in reversed(self.stackSpace[-1]):
             if identifier in x:
                 record = x[identifier]
                 break
@@ -56,18 +55,19 @@ class Executor:
             record = self.globalSpace[identifier]
         return record
 	
-    # Handles "new" assignments
     def heapAllocate(self, identifier):
         x = self.getStackOrStatic(identifier)
+        if x.type != Core.REF:
+            print("ERROR: " + identifier + " is not of type ref, cannot perform \"new\:-assign!\n", end='')
+            sys.exit()
         x.value = len(self.heapSpace)
         self.heapSpace.append(None)
+        self.refCounts.append(None) #heap grew, so ref counts grows too
 	
-    # Returns the declared type of a variable
     def getType(self, identifier):
         x = self.getStackOrStatic(identifier)
         return x.type
 	
-    # Gets the r-value of a variable
     def getValue(self, identifier):
         x = self.getStackOrStatic(identifier)
         value = x.value
@@ -82,7 +82,6 @@ class Executor:
                 sys.exit()
         return value
 	
-    # Used to store values to int and ref variables
     def storeValue(self, identifier, value):
         x = self.getStackOrStatic(identifier)
         if x.type == Core.REF:
@@ -97,8 +96,46 @@ class Executor:
         else:
             x.value = value
 
-    # Handles "ref"-type assignments
     def referenceCopy(self, var1, var2):
         x = self.getStackOrStatic(var1)
         y = self.getStackOrStatic(var2)
         x.value = y.value
+
+
+
+
+    # New methods to handle pushing/popping frames and storing fucntion definitions
+
+    def storeFuncDef(self, name, definition):
+        self.funcDefinitions[name.getString()] = definition
+
+    def getFormalParams(self, name):
+        if name.getString() not in self.funcDefinitions:
+            print("ERROR: Function call " + name.getString() + " has no target!" + "\n", end='')
+            sys.exit()
+        return self.funcDefinitions[name.getString()].getFormalParams()
+
+    def getBody(self, name):
+        return self.funcDefinitions[name.getString()].getBody()
+
+    def pushMainFrame(self):
+        self.stackSpace.append([])
+        self.pushLocalScope()
+
+    def pushFrame(self, formalParams, actualParams):
+        formals = formalParams.execute(self)
+        actuals = actualParams.execute(self)
+
+        newFrame = []
+        newFrame.append({})
+
+        for i in range(len(formals)):
+            temp = CoreVar(Core.REF)
+            temp.value = self.getStackOrStatic(actuals[i]).value
+            newFrame[-1][formals[i]] = temp
+
+        self.stackSpace.append(newFrame)
+        self.pushLocalScope()
+
+    def popFrame(self):
+        self.stackSpace.pop()

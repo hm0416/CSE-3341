@@ -1,17 +1,13 @@
 program
-	A(ref r, s) begin r=0; s=0; endfunc
-	B(ref r, s) begin r=10; s=10; endfunc
-	ref x;
-	ref y;
+	int x;
+	int y;
 begin
-	x=new;
-	y=new;
-	x=1;
+	x=10;
 	y=1;
-	begin A(x, y);
-	output x;
-	output y;
-	begin B(x, y);
-	output x;
-	output y;
+	while y < x begin
+		ref z;
+		z = new;
+		z = 100;
+		y = y+1;
+	endwhile
 end
