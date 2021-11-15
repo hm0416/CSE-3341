@@ -31,6 +31,6 @@ class FuncCall:
         executor.pushFrame(formalParams, self.actualParams)
         body.execute(executor)
         executor.popFrame()
-        executor.counter = executor.counter - 1 #decrement number of references because function popped off and variables have gone out of scope
-        if executor.counter >= 0:
-            print("gc:" + str(executor.counter))
+        # executor.counter = executor.counter - 1 #decrement number of references because function popped off and variables have gone out of scope
+        # if executor.counter >= 0:
+        #     print("gc:" + str(executor.counter))

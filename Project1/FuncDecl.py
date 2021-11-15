@@ -38,6 +38,9 @@ class FuncDecl:
     def execute(self, executor):
         executor.storeFuncDef(self.name, self)
         # executor.counter = executor.counter - 1 #decrement number of references because function popped off and variables have gone out of scope
+        # if executor.counter >= 0:
+        #     print("gc:" + str(executor.counter))
+        # executor.counter = executor.counter - 1 #decrement number of references because function popped off and variables have gone out of scope
         # print("gc:" + str(executor.counter))
 
     def getFormalParams(self):

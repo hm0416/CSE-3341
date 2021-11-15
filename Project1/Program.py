@@ -34,5 +34,9 @@ class Program:
 		executor.pushMainFrame()
 		self.ss.execute(executor)
 		executor.popFrame()
-		if executor.counter != 0:
-			print("gc:0")
+		# if executor.counter >= 0:
+		# 	executor.counter = executor.counter - 1  # decrement number of references because function popped off and variables have gone out of scope
+		# # if executor.counter >= 0:
+		print("gc:" + str(executor.counter))
+		# if executor.counter != 0:
+		# 	print("gc:0")

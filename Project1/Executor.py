@@ -26,7 +26,8 @@ class Executor:
 	
     def popLocalScope(self):
         self.stackSpace[-1].pop()
-	
+        self.counter = self.counter + 1  # increment the number of references because a variable has been declared as "new"
+
     def getNextData(self):
         data = 0
         if self.dataFile.currentToken() == Core.EOF:
@@ -139,3 +140,4 @@ class Executor:
 
     def popFrame(self):
         self.stackSpace.pop()
+        self.counter = self.counter - 1  # increment the number of references because a variable has been declared as "new"
