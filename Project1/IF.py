@@ -44,5 +44,5 @@ class If:
 			self.ss2.execute(executor)
 		executor.popLocalScope()
 		executor.counter = executor.counter - 1  # decrement number of references because function popped off and variables have gone out of scope
-		if executor.counter >= 0:
+		if executor.counter >= 0: #handles negative counts - doesn't output them
 			print("gc:" + str(executor.counter))

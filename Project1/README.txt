@@ -7,7 +7,7 @@ Scanner.py - Professors Scanner.py
 README.txt - Documentation of files included and any comments about the project.
 Non-terminals as classes:
 These classes listed below are all the non-terminals in the grammar. Each class contains a parse method, print method, and execute method.
-I used the professor's project 4 code.
+I used the professor's project 4 code. The Assign, Program, Executor, If, Loop, and FuncCall classes contain code to manage the garbage collector. The counter is declared in Executor.
 Each class parses/executes the non-terminal that's specified in the class name and in the grammar.
 
 Assign.py
@@ -42,5 +42,5 @@ throughout my execute methods when I encountered any bugs.
 
 Known Bugs/issues: For the test cases 6.code and 8.code, they do not print correctly. 6.code prints off everything but the ordering
 is messed up. It seems if there is a function call and then an output statement right after, there is an issue with the ordering
-of the gc prints. 8.code printed an extra gc:0, which I wasn't too sure why it was doing that.
+of the gc prints. 8.code printed an extra gc:0, which I wasn't too sure why it was doing that. Did countless debugging and still couldn't get the correct prints for those two test cases.
 

@@ -34,5 +34,5 @@ class Program:
 		executor.pushMainFrame()
 		self.ss.execute(executor)
 		executor.popFrame()
-		if executor.counter != 0:
+		if executor.counter != 0: #if ref count not already zero, then output zero because at the end of the program
 			print("gc:0")

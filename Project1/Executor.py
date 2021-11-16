@@ -18,8 +18,7 @@ class Executor:
         
         self.stackSpace = []
         self.funcDefinitions = {}
-        self.refCounts = [] #list of ints - keeps track of reference counts
-        self.counter = 0
+        self.counter = 0 #keeps track of reference counts
 
     def pushLocalScope(self):
         self.stackSpace[-1].append({})
@@ -62,8 +61,7 @@ class Executor:
             sys.exit()
         x.value = len(self.heapSpace)
         self.heapSpace.append(None)
-        self.refCounts.append(None) #heap grew, so ref counts grows too
-	
+
     def getType(self, identifier):
         x = self.getStackOrStatic(identifier)
         return x.type
